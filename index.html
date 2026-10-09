@@ -2,11 +2,12 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#faf6ee" />
 <title>Inkwell — English Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=DM+Sans:wght@400;500;600;700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,500..600&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; }
 html, body, #root { margin: 0; padding: 0; }
@@ -24,8 +25,8 @@ html, body, #root { margin: 0; padding: 0; }
   --shadow-md: 0 4px 14px rgba(60, 45, 25, 0.08), 0 1px 3px rgba(60, 45, 25, 0.05);
   --shadow-lg: 0 14px 40px rgba(60, 45, 25, 0.10), 0 2px 6px rgba(60, 45, 25, 0.05);
   --radius-sm: 8px; --radius: 14px; --radius-lg: 20px; --radius-xl: 28px;
-  --font-display: 'Fraunces', 'Georgia', serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-display: 'Fraunces', 'Literata', 'Georgia', serif; /* Literata — кирилиця */
+  --font-body: 'DM Sans', 'Manrope', system-ui, sans-serif; /* Manrope — кирилиця */
 }
 .dark {
   --cream: #1c1a17; --cream-2: #25221d; --cream-3: #2e2a24; --paper: #161412;
@@ -1297,6 +1298,532 @@ body:has(.teacher-lesson-panel) .scroll-top { left: auto; right: 24px; }
   .grammar-block { padding: 20px; }
   .lesson-toc { top: 70px; }
 }
+
+/* ═════════════════════════════════════════════════════════════
+ * INKWELL 2.0 · LITERARY DESIGN SYSTEM
+ * Семантичні токени поверх наявної палітри (cream / ink / sage /
+ * terracotta / mustard / plum / sky). Оголошені і на :root, і на
+ * .dark — щоб var(--paper) тощо перераховувались у темній темі.
+ * Нові класи мають префікс iw-, щоб не конфліктувати зі старими.
+ * ═════════════════════════════════════════════════════════════ */
+:root, .dark {
+  --bg: var(--paper);
+  --surface: var(--paper);
+  --surface-2: var(--cream-2);
+  --surface-3: var(--cream-3);
+  --text: var(--ink);
+  --text-2: var(--ink-2);
+  --text-muted: var(--ink-3);
+  --action: var(--ink);
+  --on-action: var(--paper);
+  --action-hover: var(--terracotta-deep);
+  --brand: var(--terracotta);
+  --brand-deep: var(--terracotta-deep);
+  --success: var(--sage-deep);
+  --success-soft: color-mix(in srgb, var(--sage) 22%, var(--paper));
+  --warning: var(--mustard-deep);
+  --warning-soft: color-mix(in srgb, var(--mustard) 24%, var(--paper));
+  --error: var(--red-wrong);
+  --error-soft: color-mix(in srgb, var(--red-wrong) 14%, var(--paper));
+  --info: var(--sky-deep);
+  --info-soft: color-mix(in srgb, var(--sky) 22%, var(--paper));
+  --lavender-soft: color-mix(in srgb, var(--lavender) 24%, var(--paper));
+  --gold-soft: color-mix(in srgb, var(--gold) 24%, var(--paper));
+  --border: var(--line);
+  --border-soft: var(--line-soft);
+  --hover: var(--cream-2);
+  --focus-ring: color-mix(in srgb, var(--terracotta) 75%, transparent);
+  --disabled: color-mix(in srgb, var(--ink-3) 40%, transparent);
+  --overlay: color-mix(in srgb, #1c1813 45%, transparent);
+}
+:root {
+  --lavender: #9d8fbf; --lavender-deep: #6f6394;
+  --gold: #c9a24d; --gold-deep: #94722a;
+  --surface-raised: #fdfaf4;
+  --ease-out: cubic-bezier(.22, .8, .3, 1);
+  --ease-spring: cubic-bezier(.34, 1.4, .64, 1);
+  --dur-fast: .15s; --dur: .25s; --dur-slow: .5s;
+  --nav-h: 69px;
+}
+.dark {
+  --lavender: #b4a8d6; --lavender-deep: #9284ba;
+  --gold: #d9b566; --gold-deep: #b8924a;
+  --surface-raised: #221f1b;
+  --overlay: color-mix(in srgb, #000 60%, transparent);
+}
+html.dark { color-scheme: dark; background: var(--paper); }
+html { color-scheme: light; }
+
+/* ── Base: виділення, фокус, доступність ── */
+::selection { background: color-mix(in srgb, var(--mustard) 45%, transparent); color: var(--ink); }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.iw-skip { position: fixed; left: 16px; top: -80px; z-index: 200; padding: 10px 16px; border-radius: 10px; background: var(--action); color: var(--on-action); font: 600 14px var(--font-body); text-decoration: none; transition: top var(--dur) var(--ease-out); }
+.iw-skip:focus { top: 12px; }
+
+/* ── Кнопки ── */
+.iw-btn { --h: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: var(--h); padding: 0 16px; border-radius: 11px; border: 1px solid transparent; font: 600 14px/1 var(--font-body); letter-spacing: -0.005em; cursor: pointer; white-space: nowrap; text-decoration: none; transition: background var(--dur-fast) ease, color var(--dur-fast) ease, border-color var(--dur-fast) ease, transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease; }
+.iw-btn:active:not(:disabled) { transform: translateY(1px); }
+.iw-btn:disabled, .iw-btn[aria-disabled="true"] { cursor: not-allowed; opacity: .55; }
+.iw-btn-sm { --h: 32px; padding: 0 12px; font-size: 13px; border-radius: 9px; }
+.iw-btn-lg { --h: 48px; padding: 0 22px; font-size: 15px; border-radius: 13px; }
+.iw-btn-icon { width: var(--h); padding: 0; }
+.iw-btn-primary { background: var(--action); color: var(--on-action); box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 30%, transparent); }
+.iw-btn-primary:hover:not(:disabled) { background: var(--action-hover); }
+.iw-btn-accent { background: var(--brand-deep); color: #fff8ef; }
+.iw-btn-accent:hover:not(:disabled) { background: color-mix(in srgb, var(--brand-deep) 85%, var(--ink)); }
+.iw-btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border); }
+.iw-btn-secondary:hover:not(:disabled) { background: var(--hover); border-color: color-mix(in srgb, var(--ink) 35%, var(--border)); }
+.iw-btn-ghost { background: transparent; color: var(--text-2); }
+.iw-btn-ghost:hover:not(:disabled) { background: var(--hover); color: var(--text); }
+.iw-btn-danger { background: var(--error-soft); color: var(--error); border-color: color-mix(in srgb, var(--error) 30%, transparent); }
+.iw-btn-danger:hover:not(:disabled) { background: var(--error); color: #fff; }
+
+/* ── Картки ── */
+.iw-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow-sm); }
+.iw-card-soft { background: var(--surface-2); box-shadow: none; }
+.iw-card-interactive { cursor: pointer; transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), border-color var(--dur) ease; }
+.iw-card-interactive:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: color-mix(in srgb, var(--ink) 30%, var(--border)); }
+
+/* ── Бейджі та статуси ── */
+.iw-badge { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 9px; border-radius: 999px; font: 700 10.5px/1 var(--font-body); letter-spacing: .06em; text-transform: uppercase; background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border-soft); white-space: nowrap; }
+.iw-badge.tone-brand { background: color-mix(in srgb, var(--terracotta) 18%, var(--paper)); color: var(--brand-deep); border-color: transparent; }
+.iw-badge.tone-success { background: var(--success-soft); color: var(--success); border-color: transparent; }
+.iw-badge.tone-warning { background: var(--warning-soft); color: var(--warning); border-color: transparent; }
+.iw-badge.tone-error { background: var(--error-soft); color: var(--error); border-color: transparent; }
+.iw-badge.tone-info { background: var(--info-soft); color: var(--info); border-color: transparent; }
+.iw-badge.tone-lavender { background: var(--lavender-soft); color: var(--lavender-deep); border-color: transparent; }
+.iw-badge.tone-gold { background: var(--gold-soft); color: var(--gold-deep); border-color: transparent; }
+.dark .iw-badge.tone-lavender { color: var(--lavender); } .dark .iw-badge.tone-gold { color: var(--gold); }
+.iw-status { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px 0 8px; border-radius: 999px; font: 600 12px/1 var(--font-body); white-space: nowrap; border: 1px solid transparent; }
+.iw-status svg { flex-shrink: 0; }
+.iw-status.st-completed { background: var(--success-soft); color: var(--success); }
+.iw-status.st-available { background: color-mix(in srgb, var(--terracotta) 14%, var(--paper)); color: var(--brand-deep); }
+.iw-status.st-progress { background: var(--warning-soft); color: var(--warning); }
+.iw-status.st-notstarted { background: var(--surface); color: var(--text-2); border-color: var(--border); }
+.iw-status.st-locked { background: var(--surface-2); color: var(--text-muted); border: 1px dashed var(--border); }
+
+/* ── Прогрес ── */
+.iw-progress { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.iw-progress-head { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--text-2); }
+.iw-progress-head strong { color: var(--text); font-weight: 600; }
+.iw-progress-track { position: relative; height: 8px; border-radius: 999px; background: color-mix(in srgb, var(--line) 70%, transparent); overflow: hidden; }
+.iw-progress-fill { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: var(--tone, var(--terracotta)); transition: width .8s var(--ease-out); }
+.iw-progress-sm .iw-progress-track { height: 5px; }
+.iw-ring { position: relative; display: inline-grid; place-items: center; flex-shrink: 0; }
+.iw-ring svg { transform: rotate(-90deg); }
+.iw-ring-track { stroke: color-mix(in srgb, var(--line) 80%, transparent); }
+.iw-ring-fill { stroke: var(--tone, var(--terracotta)); transition: stroke-dashoffset 1s var(--ease-out); }
+.iw-ring-label { position: absolute; inset: 0; display: grid; place-items: center; font: 700 var(--ring-font, 15px)/1 var(--font-display); color: var(--text); letter-spacing: -0.02em; }
+.tone-terracotta { --tone: var(--terracotta); } .tone-sage { --tone: var(--sage-deep); } .tone-mustard { --tone: var(--mustard); }
+.tone-plum { --tone: var(--plum); } .tone-sky { --tone: var(--sky); } .tone-gold-fill { --tone: var(--gold); } .tone-lavender-fill { --tone: var(--lavender); }
+
+/* ── Статистика ── */
+.iw-stat { display: flex; align-items: center; gap: 14px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); min-width: 0; }
+.iw-stat-icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; background: color-mix(in srgb, var(--tone, var(--terracotta)) 18%, var(--paper)); color: color-mix(in srgb, var(--tone, var(--terracotta)) 70%, var(--ink)); }
+.iw-stat-value { font: 600 26px/1 var(--font-display); letter-spacing: -0.02em; color: var(--text); }
+.iw-stat-label { margin-top: 5px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.iw-stat-sub { margin-top: 3px; font-size: 12px; color: var(--text-2); }
+.iw-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+
+/* ── Вкладки ── */
+.iw-tabs { display: inline-flex; gap: 2px; padding: 4px; background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 13px; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.iw-tabs::-webkit-scrollbar { display: none; }
+.iw-tab-btn { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; border: 0; border-radius: 10px; background: transparent; color: var(--text-2); font: 600 13.5px/1 var(--font-body); cursor: pointer; white-space: nowrap; transition: background var(--dur-fast) ease, color var(--dur-fast) ease, box-shadow var(--dur-fast) ease; }
+.iw-tab-btn:hover { color: var(--text); }
+.iw-tab-btn[aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
+.iw-tab-count { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; display: inline-grid; place-items: center; font-size: 11px; background: var(--surface-3); color: var(--text-2); }
+.iw-tab-btn[aria-selected="true"] .iw-tab-count { background: var(--action); color: var(--on-action); }
+.iw-tabpanel { animation: iwFade var(--dur) ease backwards; }
+
+/* ── Поля вводу ── */
+.iw-input-wrap { display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 14px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; color: var(--text-muted); transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease; }
+.iw-input-wrap:focus-within { border-color: var(--ink); box-shadow: 3px 3px 0 var(--cream-3); color: var(--text); }
+.iw-input-wrap input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: 15px var(--font-body); color: var(--text); }
+.iw-input-wrap input::placeholder { color: var(--text-muted); }
+
+/* ── Порожні стани, завантаження ── */
+.iw-empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 36px 24px; border: 1.5px dashed var(--border); border-radius: var(--radius-lg); background: color-mix(in srgb, var(--surface-2) 50%, transparent); }
+.iw-empty-art { width: 140px; margin-bottom: 6px; }
+.iw-empty-title { margin: 0; font: 600 20px/1.25 var(--font-display); letter-spacing: -0.015em; color: var(--text); }
+.iw-empty-text { margin: 0; max-width: 420px; font-size: 14px; line-height: 1.55; color: var(--text-2); }
+.iw-empty-action { margin-top: 10px; }
+.iw-skel { display: block; border-radius: 8px; background: linear-gradient(90deg, var(--surface-2) 0%, color-mix(in srgb, var(--surface-2) 40%, var(--paper)) 50%, var(--surface-2) 100%); background-size: 200% 100%; animation: iwShimmer 1.4s ease-in-out infinite; }
+.iw-loader { max-width: 1200px; margin: 0 auto; padding: 40px 28px 80px; display: flex; flex-direction: column; gap: 18px; }
+.iw-loader-label { display: flex; align-items: center; gap: 10px; font: italic 500 15px var(--font-display); color: var(--text-muted); }
+.iw-loader-dots { display: inline-flex; gap: 5px; }
+.iw-loader-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--terracotta); animation: bootBlink 1.2s ease-in-out infinite; }
+.iw-loader-dots span:nth-child(2) { animation-delay: .15s; } .iw-loader-dots span:nth-child(3) { animation-delay: .3s; }
+
+/* ── Аватар ── */
+.iw-avatar { --sz: 32px; width: var(--sz); height: var(--sz); border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; font: 700 calc(var(--sz) * .42)/1 var(--font-body); color: #fffaf2; background: linear-gradient(140deg, var(--a1, var(--terracotta)), var(--a2, var(--mustard))); box-shadow: inset 0 -2px 0 rgba(0,0,0,.12), 0 1px 2px rgba(60,45,25,.15); letter-spacing: 0; }
+.iw-avatar.av-0 { --a1: var(--terracotta); --a2: var(--mustard); }
+.iw-avatar.av-1 { --a1: var(--sage-deep); --a2: var(--sage); }
+.iw-avatar.av-2 { --a1: var(--plum-deep); --a2: var(--plum); }
+.iw-avatar.av-3 { --a1: var(--sky-deep); --a2: var(--sky); }
+.iw-avatar.av-4 { --a1: var(--mustard-deep); --a2: var(--gold); }
+.iw-avatar.av-5 { --a1: var(--lavender-deep); --a2: var(--lavender); }
+
+/* ── Випадне меню ── */
+.iw-menu-anchor { position: relative; }
+.iw-menu { position: absolute; top: calc(100% + 8px); right: 0; z-index: 70; min-width: 250px; padding: 6px; background: var(--surface-raised); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-lg); transform-origin: top right; animation: iwPop .18s var(--ease-out) backwards; }
+.iw-menu-head { display: flex; align-items: center; gap: 12px; padding: 10px 10px 12px; margin-bottom: 4px; border-bottom: 1px solid var(--border-soft); }
+.iw-menu-head-name { font: 600 15px/1.2 var(--font-display); color: var(--text); }
+.iw-menu-head-sub { margin-top: 3px; font-size: 12px; color: var(--text-muted); }
+.iw-menu-item { display: flex; align-items: center; gap: 11px; width: 100%; min-height: 40px; padding: 8px 10px; border: 0; border-radius: 10px; background: transparent; color: var(--text); font: 500 14px var(--font-body); text-align: left; cursor: pointer; }
+.iw-menu-item svg { color: var(--text-muted); flex-shrink: 0; }
+.iw-menu-item:hover, .iw-menu-item:focus-visible { background: var(--hover); outline: none; }
+.iw-menu-item:hover svg { color: var(--text); }
+.iw-menu-item .iw-menu-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); }
+.iw-menu-item.danger { color: var(--error); } .iw-menu-item.danger svg { color: var(--error); }
+.iw-menu-item.danger:hover { background: var(--error-soft); }
+.iw-menu-sep { height: 1px; margin: 5px 6px; background: var(--border-soft); }
+
+/* ── Діалоги ── */
+.iw-modal-overlay { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 20px; background: var(--overlay); backdrop-filter: blur(3px); animation: iwFade .2s ease backwards; }
+.iw-modal { width: 100%; max-width: 440px; max-height: calc(100vh - 40px); overflow: auto; background: var(--surface-raised); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: 26px; animation: iwPop .22s var(--ease-out) backwards; }
+.iw-modal-title { margin: 0 0 8px; font: 600 21px/1.25 var(--font-display); letter-spacing: -0.015em; color: var(--text); }
+.iw-modal-text { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-2); }
+.iw-modal-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+
+/* ── Тости ── */
+.iw-toast-host { position: fixed; left: 50%; bottom: 24px; z-index: 130; display: flex; flex-direction: column; align-items: center; gap: 8px; transform: translateX(-50%); pointer-events: none; width: max-content; max-width: calc(100vw - 32px); }
+.iw-toast { display: flex; align-items: center; gap: 10px; padding: 11px 16px 11px 13px; border-radius: 13px; background: var(--ink); color: var(--paper); font: 500 14px var(--font-body); box-shadow: var(--shadow-lg); animation: iwToastIn .3s var(--ease-spring) backwards; pointer-events: auto; }
+.iw-toast-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mustard); flex-shrink: 0; }
+.iw-toast.tone-success .iw-toast-dot { background: var(--sage); }
+.iw-toast.tone-error .iw-toast-dot { background: var(--red-wrong); }
+
+/* ── Підказки: <button data-tip="…"> ── */
+[data-tip] { position: relative; }
+[data-tip]::after { content: attr(data-tip); position: absolute; left: 50%; top: calc(100% + 8px); z-index: 80; padding: 6px 10px; border-radius: 8px; background: var(--ink); color: var(--paper); font: 500 12px/1.3 var(--font-body); white-space: nowrap; pointer-events: none; opacity: 0; transform: translate(-50%, -3px); transition: opacity var(--dur-fast) ease, transform var(--dur-fast) ease; }
+[data-tip]:hover::after, [data-tip]:focus-visible::after { opacity: 1; transform: translate(-50%, 0); transition-delay: .35s; }
+
+/* ── Заголовок сторінки ── */
+.iw-page-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 28px; margin-bottom: 28px; }
+.iw-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; font-size: 12px; font-weight: 500; color: var(--text-2); margin-bottom: 14px; }
+.iw-page-title { margin: 0; font: 500 clamp(30px, 4.4vw, 46px)/1.05 var(--font-display); letter-spacing: -0.03em; color: var(--text); }
+.iw-page-title em { font-style: italic; color: var(--brand-deep); }
+.iw-page-sub { margin: 12px 0 0; max-width: 620px; font-size: 16px; line-height: 1.6; color: var(--text-2); }
+.iw-page-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.iw-page-art { width: 220px; }
+@media (max-width: 720px) { .iw-page-header { grid-template-columns: 1fr; gap: 12px; } .iw-page-art { width: 150px; order: -1; } }
+
+/* ── Ілюстрації (SVG, м'який 2.5D) ── */
+.iw-ill { display: block; width: 100%; height: auto; overflow: visible; }
+.iw-ill .f-paper { fill: var(--paper); } .iw-ill .f-cream { fill: var(--cream-2); } .iw-ill .f-cream3 { fill: var(--cream-3); }
+.iw-ill .f-ink { fill: var(--ink); } .iw-ill .f-ink2 { fill: var(--ink-2); } .iw-ill .f-line { fill: var(--line); }
+.iw-ill .f-terra { fill: var(--terracotta); } .iw-ill .f-terrad { fill: var(--terracotta-deep); }
+.iw-ill .f-sage { fill: var(--sage); } .iw-ill .f-saged { fill: var(--sage-deep); }
+.iw-ill .f-must { fill: var(--mustard); } .iw-ill .f-mustd { fill: var(--mustard-deep); }
+.iw-ill .f-plum { fill: var(--plum); } .iw-ill .f-plumd { fill: var(--plum-deep); }
+.iw-ill .f-sky { fill: var(--sky); } .iw-ill .f-skyd { fill: var(--sky-deep); }
+.iw-ill .f-gold { fill: var(--gold); } .iw-ill .f-goldd { fill: var(--gold-deep); }
+.iw-ill .f-white { fill: #fffdf8; }
+.iw-ill .f-inkwell { fill: #2a2620; } .dark .iw-ill .f-inkwell { fill: #4a3f35; }
+.iw-ill .f-inkneck { fill: #4a443b; } .dark .iw-ill .f-inkneck { fill: #6b5d4f; }
+.iw-ill .halo { opacity: .32; } .iw-ill .halo-2 { opacity: .26; }
+.dark .iw-ill .halo { opacity: .13; } .dark .iw-ill .halo-2 { opacity: .1; } .dark .iw-ill .f-white { fill: #f3ead8; }
+.iw-ill .s-ink { stroke: var(--ink); } .iw-ill .s-line { stroke: var(--line); } .iw-ill .s-ink3 { stroke: var(--ink-3); }
+.iw-ill .s-terrad { stroke: var(--terracotta-deep); } .iw-ill .s-paper { stroke: var(--paper); }
+.iw-ill .t-ink { fill: var(--ink-2); font-family: var(--font-display); font-style: italic; font-weight: 600; }
+.iw-ill .shine { fill: #fff; opacity: .28; } .dark .iw-ill .shine { opacity: .12; }
+.iw-ill .shade { fill: #2a1d10; opacity: .14; } .dark .iw-ill .shade { fill: #000; opacity: .3; }
+.iw-float { animation: iwFloat 6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.iw-float-2 { animation: iwFloat 7.5s ease-in-out -2s infinite; transform-box: fill-box; transform-origin: center; }
+.iw-float-3 { animation: iwFloat 5.2s ease-in-out -1s infinite; transform-box: fill-box; transform-origin: center; }
+.iw-sway { animation: iwSway 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+
+/* ── Анімації ── */
+@keyframes iwFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes iwPop { from { opacity: 0; transform: translateY(-4px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes iwToastIn { from { opacity: 0; transform: translateY(12px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes iwShimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@keyframes iwFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes iwSway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+.iw-page { animation: iwFade .32s ease backwards; }
+.iw-reveal { animation: fadeUp .45s var(--ease-out) backwards; }
+
+/* ═════════ НАВІГАЦІЯ 2.0 ═════════ */
+.nav-link { position: relative; }
+.nav-link:focus-visible { outline-offset: 1px; }
+.nav-link.active { box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 25%, transparent), inset 0 -2px 0 var(--terracotta); }
+.iw-account-btn { display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 0 10px 0 4px; background: var(--cream-2); border: 1px solid var(--line); border-radius: 999px; cursor: pointer; color: var(--ink); font: 500 13px var(--font-body); transition: background var(--dur-fast) ease, border-color var(--dur-fast) ease; }
+.iw-account-btn:hover, .iw-account-btn[aria-expanded="true"] { background: var(--cream-3); border-color: color-mix(in srgb, var(--ink) 30%, var(--line)); }
+.iw-account-btn .iw-avatar { --sz: 32px; }
+.iw-account-name { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iw-account-btn .user-chip-role { margin-left: -2px; }
+.iw-account-chev { color: var(--ink-3); transition: transform var(--dur) var(--ease-out); }
+.iw-account-btn[aria-expanded="true"] .iw-account-chev { transform: rotate(180deg); }
+.iw-theme-switch { margin-left: auto; width: 34px; height: 20px; border-radius: 999px; background: var(--line); position: relative; transition: background var(--dur) ease; flex-shrink: 0; }
+.iw-theme-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--paper); box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: transform var(--dur) var(--ease-out); }
+.iw-theme-switch.on { background: var(--terracotta-deep); }
+.iw-theme-switch.on::after { transform: translateX(14px); }
+.iw-menu-badge { margin-left: auto; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; display: inline-grid; place-items: center; background: var(--terracotta-deep); color: var(--paper); font-size: 11px; font-weight: 700; }
+
+/* Мобільна нижня панель вкладок */
+.iw-tabbar { display: none; }
+@media (max-width: 720px) {
+  .iw-account-name, .iw-account-btn .user-chip-role, .iw-account-chev { display: none; }
+  .iw-account-btn { padding: 0 4px; }
+  .iw-tabbar { display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); gap: 2px; position: fixed; left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); z-index: 60; padding: 6px; background: color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow-lg); }
+  .iw-tabbar-btn { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 52px; padding: 6px 2px 5px; border: 0; border-radius: 16px; background: transparent; color: var(--ink-3); font: 600 10.5px/1.1 var(--font-body); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background var(--dur-fast) ease, color var(--dur-fast) ease; }
+  .iw-tabbar-btn span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .iw-tabbar-btn.active { background: var(--ink); color: var(--paper); }
+  .iw-tabbar-btn:active { transform: scale(.96); }
+  .iw-tabbar-badge { position: absolute; top: 4px; right: calc(50% - 22px); min-width: 17px; height: 17px; padding: 0 4px; border-radius: 999px; background: var(--terracotta-deep); color: var(--paper); font-size: 10px; display: grid; place-items: center; border: 2px solid var(--paper); }
+  .app-root.has-tabbar { padding-bottom: calc(86px + env(safe-area-inset-bottom, 0px)); }
+  .app-root.has-tabbar .scroll-top { bottom: calc(94px + env(safe-area-inset-bottom, 0px)); }
+  .app-root.has-tabbar .iw-toast-host { bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* Хлібні крихти */
+.crumbs { gap: 2px; }
+.crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
+.crumbs li { display: inline-flex; align-items: center; gap: 2px; min-width: 0; }
+.crumbs .crumb-sep { color: var(--ink-3); opacity: .55; display: inline-flex; }
+.crumbs button { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: background var(--dur-fast) ease, color var(--dur-fast) ease; }
+.crumbs span.current { font-family: var(--font-display); font-weight: 600; max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Кнопка «Назад» */
+.back-btn-floating { transition: all var(--dur-fast) ease; }
+.back-btn-floating:focus-visible { outline-offset: 2px; }
+
+/* Футер */
+.footer-brand-row { display: flex; align-items: center; gap: 12px; }
+.footer-brand-row .brand-mark { width: 44px; height: 44px; }
+.footer-cols button { display: block; padding: 5px 0; background: none; border: 0; cursor: pointer; color: var(--ink-2); font: 13.5px var(--font-body); text-align: left; transition: color var(--dur-fast) ease, transform var(--dur-fast) ease; }
+.footer-cols button:hover { color: var(--terracotta-deep); transform: translateX(2px); }
+.footer-bottom { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 18px; }
+@media (max-width: 720px) {
+  .footer-inner { padding: 40px 18px 24px; gap: 28px; }
+  .footer-brand .brand-name { font-size: 26px; }
+}
+
+/* Головна вчителя: ілюстрація */
+.hero-illust .iw-ill { max-width: 440px; margin-left: auto; }
+#iw-main:focus { outline: none; }
+
+
+/* ═════════ INKWELL 2.0 · ФАЗА 3: УЧНІ ТА ПРОФІЛЬ ═════════ */
+.iw-kicker { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+.iw-card-title { margin: 0 0 14px; font: 600 18px/1.25 var(--font-display); letter-spacing: -0.01em; color: var(--text); }
+.iw-card-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 14px; }
+.iw-card-head .iw-card-title { margin: 0; }
+.iw-muted-num { color: var(--text-muted); font-weight: 500; }
+.iw-help { margin: 0 0 18px; font-size: 13.5px; line-height: 2.1; color: var(--text-2); }
+.iw-help .iw-status { vertical-align: middle; margin: 0 2px; }
+.iw-status-btn { font-family: var(--font-body); cursor: pointer; min-width: 116px; justify-content: center; transition: box-shadow var(--dur-fast) ease, transform var(--dur-fast) ease, filter var(--dur-fast) ease; }
+.iw-status-btn:hover:not(:disabled) { box-shadow: 0 0 0 2px color-mix(in srgb, currentColor 35%, transparent); filter: saturate(1.15); }
+.iw-status-btn:active:not(:disabled) { transform: scale(.97); }
+.iw-status-btn:disabled { opacity: .55; cursor: progress; }
+
+/* Фішки-фільтри */
+.iw-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.iw-chip { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text-2); font: 500 13px var(--font-body); cursor: pointer; transition: all var(--dur-fast) ease; }
+.iw-chip:hover { border-color: color-mix(in srgb, var(--ink) 35%, var(--border)); color: var(--text); }
+.iw-chip[aria-pressed="true"] { background: var(--action); border-color: var(--action); color: var(--on-action); }
+.iw-chip-count { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; display: inline-grid; place-items: center; background: var(--surface-2); color: var(--text-2); font-size: 11px; font-weight: 700; }
+.iw-chip[aria-pressed="true"] .iw-chip-count { background: color-mix(in srgb, var(--on-action) 22%, transparent); color: var(--on-action); }
+
+/* Випадний список (select) */
+.iw-select { position: relative; display: inline-flex; align-items: center; color: var(--text-muted); }
+.iw-select select { appearance: none; -webkit-appearance: none; height: 44px; padding: 0 38px 0 14px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font: 500 14px var(--font-body); cursor: pointer; }
+.iw-select select:hover { border-color: color-mix(in srgb, var(--ink) 35%, var(--border)); }
+.iw-select svg { position: absolute; right: 13px; pointer-events: none; }
+
+/* Перемикач з підписом */
+.iw-switch { display: inline-flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 600; color: var(--text-2); cursor: pointer; white-space: nowrap; }
+
+/* ── Сторінка «Учні» ── */
+.iw-students .iw-page-header { margin-bottom: 22px; }
+.iw-students-stats { margin-bottom: 18px; }
+.iw-students-banners { display: grid; gap: 12px; margin-bottom: 26px; }
+.iw-students-banners .hw-pending-banner { margin: 0; }
+.iw-journal { position: relative; display: grid; grid-template-columns: 116px minmax(0, 1fr) auto; align-items: center; gap: 20px; padding: 14px 22px 14px 14px; border-radius: var(--radius-lg); border: 1px solid color-mix(in srgb, var(--terracotta) 35%, var(--line)); background: linear-gradient(120deg, color-mix(in srgb, var(--mustard) 22%, var(--paper)), color-mix(in srgb, var(--terracotta) 16%, var(--paper)) 60%, color-mix(in srgb, var(--sage) 16%, var(--paper))); color: var(--ink); text-decoration: none; overflow: hidden; transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+.iw-journal:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.iw-journal:hover .iw-journal-art { transform: rotate(-3deg) scale(1.04); }
+.iw-journal-art { width: 116px; margin: -6px 0; transition: transform var(--dur-slow) var(--ease-spring); }
+.iw-journal-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand-deep); }
+.iw-journal-title { margin: 3px 0 4px; font: 600 22px/1.15 var(--font-display); letter-spacing: -0.015em; }
+.iw-journal-sub { font-size: 13.5px; line-height: 1.5; color: var(--text-2); }
+.iw-students-toolbar { display: flex; gap: 10px; margin-bottom: 12px; }
+.iw-students-search { flex: 1; min-width: 0; }
+.iw-students-search input::-webkit-search-cancel-button { display: none; }
+.iw-students .iw-chips { margin-bottom: 18px; }
+.iw-students-count { margin: 0 0 12px; font-size: 13px; color: var(--text-muted); }
+.iw-students-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+
+.iw-scard { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 18px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), border-color var(--dur) ease; }
+.iw-scard:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: color-mix(in srgb, var(--ink) 28%, var(--border)); }
+.iw-scard:focus-within { border-color: color-mix(in srgb, var(--terracotta) 60%, var(--border)); }
+.iw-scard:has(.iw-menu), .iw-scard:focus-within { z-index: 20; }
+.iw-scard-head { display: flex; align-items: center; gap: 12px; }
+.iw-scard-id { flex: 1; min-width: 0; }
+.iw-scard-name { display: block; max-width: 100%; padding: 0; border: 0; background: none; color: var(--text); font: 600 17px/1.25 var(--font-display); letter-spacing: -0.01em; text-align: left; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iw-stretch::after { content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: 1; }
+.iw-stretch:focus-visible { outline: none; }
+.iw-stretch:focus-visible::after { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: var(--radius-lg); }
+.iw-scard-user { margin-top: 2px; font-size: 12.5px; color: var(--text-muted); }
+.iw-scard .iw-menu-anchor { position: relative; z-index: 2; }
+.iw-scard-more { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; border: 1px solid transparent; background: transparent; color: var(--text-muted); cursor: pointer; transition: all var(--dur-fast) ease; }
+.iw-scard-more:hover, .iw-scard-more[aria-expanded="true"] { background: var(--surface-2); border-color: var(--border); color: var(--text); }
+.iw-scard-courses { display: flex; flex-wrap: wrap; gap: 6px; min-height: 22px; }
+.iw-scard-courses .iw-badge { max-width: 100%; overflow: hidden; text-overflow: ellipsis; text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 600; }
+.iw-scard-muted { font-size: 13px; color: var(--text-muted); font-style: italic; }
+.iw-scard-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 12px; border-top: 1px dashed var(--border); }
+.iw-scard-last { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-2); }
+.iw-scard-last.idle { color: var(--brand-deep); }
+
+/* ── Профіль учня ── */
+.iw-profile-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 22px; padding: 24px 26px; margin-bottom: 16px; border: 1px solid var(--border); border-radius: var(--radius-xl); background: radial-gradient(circle at 92% 0%, color-mix(in srgb, var(--mustard) 26%, transparent), transparent 46%), linear-gradient(135deg, var(--surface-2), var(--surface)); }
+.iw-profile-avatar { box-shadow: 0 0 0 5px var(--paper), 0 8px 22px rgba(60, 45, 25, .18); }
+.iw-profile-name { margin: 0; font: 500 clamp(28px, 4vw, 40px)/1.1 var(--font-display); letter-spacing: -0.025em; color: var(--text); }
+.iw-profile-meta { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 8px; font-size: 13.5px; color: var(--text-2); }
+.iw-profile-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.iw-profile-courses { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.iw-profile-courses .iw-badge { text-transform: none; letter-spacing: 0; font-size: 12px; }
+.iw-profile-actions { display: flex; align-items: center; gap: 8px; align-self: start; }
+.iw-profile-stats { margin-bottom: 26px; }
+.iw-profile-tabs > .iw-tabs { margin-bottom: 18px; }
+.iw-profile-tabs .iw-tabpanel:focus-visible { outline-offset: 6px; border-radius: 8px; }
+.iw-profile .access-section { margin: 0; }
+
+/* Огляд */
+.iw-overview { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.iw-overview-courses { display: grid; gap: 16px; }
+.iw-course-sum { display: flex; gap: 22px; align-items: center; padding: 22px; }
+.iw-course-sum-body { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.iw-course-sum-title { margin: 0; font: 600 20px/1.2 var(--font-display); letter-spacing: -0.015em; color: var(--text); }
+.iw-mini-stats { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0; }
+.iw-mini-stats div { display: flex; flex-direction: column-reverse; }
+.iw-mini-stats dt { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.iw-mini-stats dd { margin: 0; font: 600 18px/1.2 var(--font-display); color: var(--text); }
+.iw-mini-stats small { font: 500 12px var(--font-body); color: var(--text-muted); margin-left: 4px; }
+.iw-course-sum-current { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-2); }
+.iw-course-sum .iw-btn-ghost { margin-left: -10px; }
+.iw-dot-live { width: 8px; height: 8px; border-radius: 50%; background: var(--terracotta); box-shadow: 0 0 0 4px color-mix(in srgb, var(--terracotta) 22%, transparent); flex-shrink: 0; }
+.iw-feed-list { list-style: none; margin: 0; padding: 0; position: relative; }
+.iw-feed-list::before { content: ''; position: absolute; left: 13px; top: 8px; bottom: 8px; width: 1.5px; background: var(--border-soft); }
+.iw-feed-item { position: relative; display: flex; gap: 12px; padding: 7px 0; }
+.iw-feed-dot { position: relative; z-index: 1; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; background: var(--success-soft); color: var(--success); box-shadow: 0 0 0 3px var(--surface); }
+.iw-feed-item.hw-submitted .iw-feed-dot { background: var(--warning-soft); color: var(--warning); }
+.iw-feed-item.hw-returned .iw-feed-dot { background: var(--error-soft); color: var(--error); }
+.iw-feed-item.hw-accepted .iw-feed-dot { background: var(--info-soft); color: var(--info); }
+.iw-feed-body { min-width: 0; padding-top: 3px; }
+.iw-feed-title { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.35; }
+.iw-feed-sub { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: 3px; font-size: 12.5px; color: var(--text-muted); }
+
+/* Курс → юніти → уроки */
+.iw-course-block { margin-bottom: 22px; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); }
+.iw-course-block.is-off { background: color-mix(in srgb, var(--surface-2) 60%, transparent); }
+.iw-course-block-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 20px; margin-bottom: 16px; }
+.iw-course-block-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--text-2); }
+.iw-course-block-legend b { font: 600 15px var(--font-display); color: var(--text); }
+.iw-units { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.iw-unit { border: 1px solid var(--border-soft); border-radius: 14px; background: var(--surface); overflow: hidden; transition: border-color var(--dur) ease, box-shadow var(--dur) ease; }
+.iw-unit.open { border-color: var(--border); box-shadow: var(--shadow-sm); }
+.iw-unit.is-current { border-color: color-mix(in srgb, var(--terracotta) 45%, var(--border)); }
+.iw-unit-head { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(110px, 180px) auto auto; align-items: center; gap: 14px; padding: 12px 14px; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.iw-unit-head:hover, .iw-unit-toggle:hover { background: color-mix(in srgb, var(--surface-2) 55%, transparent); }
+.iw-unit-head.as-row { display: flex; padding: 0 12px 0 0; cursor: default; }
+.iw-unit-head.as-row:hover { background: none; }
+.iw-unit-toggle { flex: 1; min-width: 0; display: flex; align-items: center; gap: 14px; padding: 12px 14px; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; border-radius: 13px; }
+.iw-unit-num { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; background: var(--surface-2); border: 1px solid var(--border); font: 600 15px var(--font-display); color: var(--text); }
+.iw-unit.is-completed .iw-unit-num { background: var(--success-soft); border-color: transparent; color: var(--success); }
+.iw-unit.is-current .iw-unit-num { background: var(--brand-deep); border-color: transparent; color: #fff8ef; }
+.iw-unit-titles, .iw-lrow-titles { min-width: 0; display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.iw-unit-title { font: 600 15px/1.3 var(--font-display); color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iw-unit-sub, .iw-lrow-sub { font-size: 12.5px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iw-unit-bar .iw-progress-head span { display: none; }
+.iw-unit-bar .iw-progress-head { justify-content: flex-end; font-size: 11.5px; }
+.iw-unit-chev { color: var(--text-muted); transition: transform var(--dur) var(--ease-out); flex-shrink: 0; }
+.iw-unit.open .iw-unit-chev { transform: rotate(180deg); }
+.iw-lesson-rows { list-style: none; margin: 0; padding: 4px 10px 10px; border-top: 1px dashed var(--border-soft); animation: iwFade var(--dur) ease backwards; }
+.iw-lrow { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto auto auto; align-items: center; gap: 12px; padding: 9px 8px; border-radius: 10px; }
+.iw-lrow + .iw-lrow { border-top: 1px solid color-mix(in srgb, var(--border-soft) 70%, transparent); }
+.iw-lrow:hover { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
+.iw-lrow-num { font: 600 13px var(--font-body); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.iw-lrow-title { font-size: 14px; font-weight: 500; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iw-lrow.is-locked .iw-lrow-title { color: var(--text-muted); }
+.iw-lrow-type { font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); }
+.iw-lrow-date { font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; min-width: 0; }
+.iw-access-tab .iw-lrow { grid-template-columns: 42px minmax(0, 1fr) auto auto; }
+.iw-access-tools { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; margin-bottom: 14px; }
+.iw-access-tools .iw-input-wrap { flex: 1 1 240px; height: 40px; }
+.access-lesson-btn:disabled { opacity: .5; cursor: progress; }
+
+/* Домашні */
+.iw-hw-tab { display: grid; gap: 16px; }
+.iw-hw-list { list-style: none; margin: 0; padding: 0; }
+.iw-hw-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 14px; padding: 12px 4px; }
+.iw-hw-row + .iw-hw-row { border-top: 1px solid var(--border-soft); }
+.iw-hw-kind { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--surface-2); color: var(--text-2); }
+.iw-hw-title { font-size: 14.5px; font-weight: 500; color: var(--text); }
+.iw-hw-sub { margin-top: 2px; font-size: 12.5px; color: var(--text-muted); }
+.iw-hw-comment { margin-top: 6px; padding: 6px 10px; border-left: 2px solid var(--border); font: italic 13px/1.45 var(--font-display); color: var(--text-2); }
+.iw-hw-pending-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.iw-hw-pending-list li { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 6px 4px; }
+.iw-hw-missing { display: flex; gap: 6px; }
+
+/* Нотатки */
+.iw-notes { display: grid; gap: 14px; }
+.iw-note-new { background: color-mix(in srgb, var(--mustard) 9%, var(--surface)); }
+.iw-note-label { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; font-size: 13px; font-weight: 600; color: var(--text-2); }
+.iw-textarea { width: 100%; min-height: 84px; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font: 15px/1.55 var(--font-body); resize: vertical; transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease; }
+.iw-textarea:focus { outline: none; border-color: var(--ink); box-shadow: 3px 3px 0 var(--cream-3); }
+.iw-note-actions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+.iw-note-hint { margin-right: auto; font-size: 12px; color: var(--text-muted); }
+.iw-note-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.iw-note { padding: 16px 18px 10px; background-image: repeating-linear-gradient(transparent 0 27px, color-mix(in srgb, var(--line) 45%, transparent) 27px 28px); background-position: 0 14px; }
+.iw-note-body { margin: 0 0 8px; font: 15.5px/28px var(--font-display); color: var(--text); white-space: pre-wrap; overflow-wrap: anywhere; }
+.iw-note-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; font-size: 12px; color: var(--text-muted); }
+.iw-note-tools { display: inline-flex; gap: 2px; }
+.iw-setup { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 24px; align-items: start; padding: 24px; }
+.iw-setup-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 12px; }
+.iw-setup-sql summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-2); }
+.iw-setup-sql pre { max-height: 260px; overflow: auto; margin: 10px 0 0; padding: 14px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border-soft); font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--text-2); white-space: pre; }
+
+@media (max-width: 900px) {
+  .iw-overview { grid-template-columns: 1fr; }
+  .iw-unit-head { grid-template-columns: auto minmax(0, 1fr) auto auto; }
+  .iw-unit-head .iw-unit-bar { display: none; }
+}
+@media (max-width: 720px) {
+  .iw-journal { grid-template-columns: 78px minmax(0, 1fr); padding: 12px 16px 16px 10px; gap: 12px; }
+  .iw-journal-art { width: 78px; }
+  .iw-journal-cta { grid-column: 1 / -1; justify-self: stretch; }
+  .iw-journal-title { font-size: 19px; }
+  .iw-students .iw-chips, .iw-access-tools .iw-chips, .iw-card-head .iw-chips { flex-wrap: nowrap; overflow-x: auto; margin-left: -18px; margin-right: -18px; padding: 0 18px 2px; scrollbar-width: none; }
+  .iw-students .iw-chips::-webkit-scrollbar { display: none; }
+  .iw-chip { flex-shrink: 0; }
+  .iw-students-grid { grid-template-columns: 1fr; }
+  .iw-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .iw-stat { flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px; }
+  .iw-stat-icon { width: 36px; height: 36px; }
+  .iw-stat-value { font-size: 22px; }
+  .iw-profile-head { grid-template-columns: auto minmax(0, 1fr); padding: 18px; gap: 14px; border-radius: var(--radius-lg); }
+  .iw-profile-head .iw-avatar { --sz: 56px !important; }
+  .iw-profile-actions { grid-column: 1 / -1; }
+  .iw-course-sum { flex-direction: column; align-items: flex-start; }
+  .iw-course-block { padding: 14px; }
+  .iw-unit-head { gap: 10px; padding: 12px 10px; }
+  .iw-unit-head .iw-status { display: none; }
+  .iw-unit-head.as-row { flex-wrap: wrap; padding: 0 10px 10px 0; }
+  .iw-unit-head.as-row .iw-btn { margin-left: 58px; }
+  .iw-lrow, .iw-access-tab .iw-lrow { grid-template-columns: 34px minmax(0, 1fr) auto; gap: 8px; padding: 9px 2px; }
+  .iw-lrow-type, .iw-lrow-date { display: none; }
+  .iw-lrow .iw-status { padding: 0 8px; }
+  .iw-hw-row { grid-template-columns: auto minmax(0, 1fr); }
+  .iw-hw-row > .iw-badge, .iw-hw-row > .iw-btn { grid-column: 2; justify-self: start; }
+  .iw-setup { grid-template-columns: 1fr; }
+  .iw-setup-art { width: 110px; }
+}
+
+/* Доступність: менше руху */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -1470,6 +1997,519 @@ const PanelLeft = (p) => <Icon {...p}><rect x="3" y="3" width="18" height="18" r
 const ExternalLink = (p) => <Icon {...p}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></Icon>;
 const CheckCircle = (p) => <Icon {...p}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></Icon>;
 const RefreshCw = (p) => <Icon {...p}><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></Icon>;
+
+/* ═════════════════════════════════════════════════════════════
+ * INKWELL 2.0 · UI KIT
+ * Спільні компоненти дизайн-системи. Стилі — у блоці
+ * «INKWELL 2.0 · LITERARY DESIGN SYSTEM» (класи iw-*).
+ * ═════════════════════════════════════════════════════════════ */
+const ChevronDown = (p) => <Icon {...p}><polyline points="6 9 12 15 18 9"/></Icon>;
+const Inbox = (p) => <Icon {...p}><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></Icon>;
+const CircleIcon = (p) => <Icon {...p}><circle cx="12" cy="12" r="9"/></Icon>;
+const Palette = (p) => <Icon {...p}><circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="8.5" cy="7.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.56-2.5 5.56-5.55C21.97 6.01 17.46 2 12 2z"/></Icon>;
+
+const cx = (...a) => a.filter(Boolean).join(' ');
+const useSafeId = () => React.useId().replace(/[^a-zA-Z0-9_-]/g, '');
+
+// Плавне «доростання» значення від 0 після монтування (для прогресу)
+function useAnimatedValue(target) {
+  const [v, setV] = useState(0);
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setV(target));
+    return () => cancelAnimationFrame(raf);
+  }, [target]);
+  return v;
+}
+
+function IwButton({ variant = 'secondary', size, icon: I, iconRight: IR, children, className, type = 'button', ...rest }) {
+  const iconSize = size === 'sm' ? 14 : size === 'lg' ? 18 : 16;
+  return (
+    <button type={type} className={cx('iw-btn', `iw-btn-${variant}`, size && `iw-btn-${size}`, !children && 'iw-btn-icon', className)} {...rest}>
+      {I && <I size={iconSize} aria-hidden="true" />}
+      {children}
+      {IR && <IR size={iconSize} aria-hidden="true" />}
+    </button>
+  );
+}
+
+function Badge({ tone, children, className, ...rest }) {
+  return <span className={cx('iw-badge', tone && `tone-${tone}`, className)} {...rest}>{children}</span>;
+}
+
+// П'ять станів уроку (ТЗ 1.5). «Закрито» — лише відображення,
+// доступ і далі визначає вчитель через lesson_access.
+const LESSON_STATUS = {
+  completed:  { label: 'Завершено',    cls: 'st-completed',  icon: CheckCircle },
+  available:  { label: 'Доступний',    cls: 'st-available',  icon: Unlock },
+  progress:   { label: 'У процесі',    cls: 'st-progress',   icon: Clock },
+  notstarted: { label: 'Не розпочато', cls: 'st-notstarted', icon: CircleIcon },
+  locked:     { label: 'Закрито',      cls: 'st-locked',     icon: Lock },
+};
+function StatusBadge({ status, label }) {
+  const s = LESSON_STATUS[status] || LESSON_STATUS.notstarted;
+  const I = s.icon;
+  return <span className={cx('iw-status', s.cls)}><I size={13} aria-hidden="true" />{label || s.label}</span>;
+}
+
+function ProgressBar({ value = 0, max = 100, tone = 'terracotta', label, valueLabel, size, className }) {
+  const pct = max > 0 ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
+  const shown = useAnimatedValue(pct);
+  return (
+    <div className={cx('iw-progress', size && `iw-progress-${size}`, `tone-${tone}`, className)}>
+      {(label || valueLabel) && (
+        <div className="iw-progress-head"><span>{label}</span><strong>{valueLabel != null ? valueLabel : `${Math.round(pct)}%`}</strong></div>
+      )}
+      <div className="iw-progress-track" role="progressbar" aria-label={label || 'Прогрес'} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(pct)}>
+        <div className="iw-progress-fill" style={{ width: `${shown}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function ProgressRing({ value = 0, max = 100, size = 64, stroke = 6, tone = 'terracotta', label, children }) {
+  const pct = max > 0 ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
+  const shown = useAnimatedValue(pct);
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  return (
+    <div className={cx('iw-ring', `tone-${tone}`)} style={{ width: size, height: size, '--ring-font': `${Math.round(size * 0.24)}px` }}
+      role="progressbar" aria-label={label || 'Прогрес'} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(pct)}>
+      <svg width={size} height={size} aria-hidden="true">
+        <circle className="iw-ring-track" cx={size / 2} cy={size / 2} r={r} fill="none" strokeWidth={stroke} />
+        <circle className="iw-ring-fill" cx={size / 2} cy={size / 2} r={r} fill="none" strokeWidth={stroke} strokeLinecap="round"
+          strokeDasharray={c} strokeDashoffset={c - (c * shown) / 100} />
+      </svg>
+      <span className="iw-ring-label">{children != null ? children : `${Math.round(pct)}%`}</span>
+    </div>
+  );
+}
+
+function StatCard({ icon: I, value, label, sub, tone = 'terracotta' }) {
+  return (
+    <div className={cx('iw-stat', `tone-${tone}`)}>
+      {I && <div className="iw-stat-icon"><I size={20} aria-hidden="true" /></div>}
+      <div style={{ minWidth: 0 }}>
+        <div className="iw-stat-value">{value}</div>
+        <div className="iw-stat-label">{label}</div>
+        {sub && <div className="iw-stat-sub">{sub}</div>}
+      </div>
+    </div>
+  );
+}
+
+function EmptyState({ art = 'books', title, text, action }) {
+  return (
+    <div className="iw-empty">
+      {art && <div className="iw-empty-art"><Illustration name={art} /></div>}
+      {title && <h3 className="iw-empty-title">{title}</h3>}
+      {text && <p className="iw-empty-text">{text}</p>}
+      {action && <div className="iw-empty-action">{action}</div>}
+    </div>
+  );
+}
+
+function Skeleton({ w = '100%', h = 16, r = 8, style }) {
+  return <span className="iw-skel" aria-hidden="true" style={{ width: w, height: h, borderRadius: r, ...style }} />;
+}
+
+function PageLoader({ label = 'Гортаю сторінки…' }) {
+  return (
+    <div className="iw-loader" role="status" aria-live="polite">
+      <div className="iw-loader-label"><span className="iw-loader-dots" aria-hidden="true"><span /><span /><span /></span>{label}</div>
+      <Skeleton h={180} r={20} />
+      <div className="iw-stat-grid">
+        <Skeleton h={84} r={14} /><Skeleton h={84} r={14} /><Skeleton h={84} r={14} />
+      </div>
+      <Skeleton h={120} r={20} />
+    </div>
+  );
+}
+
+// Доступні вкладки: стрілки ←/→, Home/End, roving tabindex
+function Tabs({ tabs, value, onChange, label, children, className }) {
+  const base = useSafeId();
+  const refs = useRef({});
+  const onKey = (e) => {
+    const i = tabs.findIndex(t => t.id === value);
+    let n = null;
+    if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+    if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+    if (e.key === 'Home') n = 0;
+    if (e.key === 'End') n = tabs.length - 1;
+    if (n == null) return;
+    e.preventDefault();
+    onChange(tabs[n].id);
+    const el = refs.current[tabs[n].id];
+    if (el) el.focus();
+  };
+  return (
+    <div className={className}>
+      <div className="iw-tabs" role="tablist" aria-label={label} onKeyDown={onKey}>
+        {tabs.map(t => {
+          const I = t.icon;
+          const sel = t.id === value;
+          return (
+            <button key={t.id} ref={el => { refs.current[t.id] = el; }} type="button" role="tab" id={`${base}-tab-${t.id}`}
+              aria-selected={sel} aria-controls={`${base}-panel`} tabIndex={sel ? 0 : -1}
+              className="iw-tab-btn" onClick={() => onChange(t.id)}>
+              {I && <I size={15} aria-hidden="true" />}{t.label}
+              {t.count != null && <span className="iw-tab-count">{t.count}</span>}
+            </button>
+          );
+        })}
+      </div>
+      {children != null && (
+        <div className="iw-tabpanel" role="tabpanel" id={`${base}-panel`} aria-labelledby={`${base}-tab-${value}`} key={value} tabIndex={0}>
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function avatarTone(seed) {
+  const s = String(seed || '');
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h % 6;
+}
+function Avatar({ name, seed, size = 32, className }) {
+  const parts = String(name || '?').trim().split(/\s+/).filter(Boolean);
+  const initials = ((parts[0] || '?')[0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+  return (
+    <span className={cx('iw-avatar', `av-${avatarTone(seed || name)}`, className)} style={{ '--sz': `${size}px` }} aria-hidden="true">
+      {initials}
+    </span>
+  );
+}
+
+// Випадне меню: Esc закриває, ↑/↓ переміщують фокус, клік поза меню закриває
+function DropdownMenu({ label, trigger, children }) {
+  const [open, setOpen] = useState(false);
+  const wrap = useRef(null), btn = useRef(null), menu = useRef(null);
+  const id = useSafeId();
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e) => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false); };
+    const onKey = (e) => {
+      if (e.key === 'Escape') { setOpen(false); if (btn.current) btn.current.focus(); return; }
+      if (e.key === 'Tab') { setOpen(false); return; }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const items = Array.from(menu.current ? menu.current.querySelectorAll('[role^="menuitem"]') : []);
+        if (!items.length) return;
+        const i = items.indexOf(document.activeElement);
+        const n = e.key === 'ArrowDown' ? (i + 1) % items.length : (i - 1 + items.length) % items.length;
+        items[n].focus();
+      }
+    };
+    document.addEventListener('mousedown', onDoc);
+    document.addEventListener('touchstart', onDoc, { passive: true });
+    document.addEventListener('keydown', onKey);
+    const raf = requestAnimationFrame(() => {
+      const first = menu.current && menu.current.querySelector('[role^="menuitem"]');
+      if (first) first.focus({ preventScroll: true });
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener('mousedown', onDoc);
+      document.removeEventListener('touchstart', onDoc);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+  const close = () => setOpen(false);
+  return (
+    <div className="iw-menu-anchor" ref={wrap}>
+      {trigger({ ref: btn, open, toggle: () => setOpen(o => !o), menuProps: { 'aria-haspopup': 'menu', 'aria-expanded': open, 'aria-controls': open ? id : undefined } })}
+      {open && (
+        <div className="iw-menu" role="menu" id={id} aria-label={label} ref={menu}>
+          {typeof children === 'function' ? children(close) : children}
+        </div>
+      )}
+    </div>
+  );
+}
+function MenuItem({ icon: I, children, onSelect, danger, meta, ...rest }) {
+  return (
+    <button type="button" role="menuitem" tabIndex={-1} className={cx('iw-menu-item', danger && 'danger')} onClick={onSelect} {...rest}>
+      {I && <I size={17} aria-hidden="true" />}<span>{children}</span>{meta}
+    </button>
+  );
+}
+
+// Модальне вікно у порталі: Esc, фокус-пастка, повернення фокусу
+function Modal({ open, onClose, title, children, actions, width }) {
+  const box = useRef(null);
+  const titleId = useSafeId();
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.activeElement;
+    const focusables = () => Array.from(box.current ? box.current.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])') : []).filter(el => !el.disabled);
+    const raf = requestAnimationFrame(() => { const f = focusables(); (f[0] || box.current) && (f[0] || box.current).focus(); });
+    const onKey = (e) => {
+      if (e.key === 'Escape' && onClose) { e.stopPropagation(); onClose(); }
+      if (e.key === 'Tab') {
+        const f = focusables(); if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = overflow;
+      if (prev && prev.focus) prev.focus();
+    };
+  }, [open]);
+  if (!open) return null;
+  return ReactDOM.createPortal(
+    <div className="iw-modal-overlay" onMouseDown={(e) => { if (e.target === e.currentTarget && onClose) onClose(); }}>
+      <div className="iw-modal" role="dialog" aria-modal="true" aria-labelledby={titleId} ref={box} tabIndex={-1} style={width ? { maxWidth: width } : undefined}>
+        {title && <h2 className="iw-modal-title" id={titleId}>{title}</h2>}
+        {children}
+        {actions && <div className="iw-modal-actions">{actions}</div>}
+      </div>
+    </div>,
+    document.body
+  );
+}
+function ConfirmDialog({ open, title, text, confirmLabel = 'Підтвердити', cancelLabel = 'Скасувати', danger, busy, onConfirm, onCancel }) {
+  return (
+    <Modal open={open} onClose={busy ? undefined : onCancel} title={title}
+      actions={<React.Fragment>
+        <IwButton variant="ghost" onClick={onCancel} disabled={busy}>{cancelLabel}</IwButton>
+        <IwButton variant={danger ? 'danger' : 'primary'} onClick={onConfirm} disabled={busy}>{busy ? 'Зачекай…' : confirmLabel}</IwButton>
+      </React.Fragment>}>
+      {text && <p className="iw-modal-text">{text}</p>}
+    </Modal>
+  );
+}
+
+// Тости: toast('Збережено', 'success') з будь-якого місця
+const toastListeners = new Set();
+function toast(message, tone) {
+  const t = { id: Date.now() + Math.random(), message, tone };
+  toastListeners.forEach(l => l(t));
+}
+window.inkwellToast = toast;
+function ToastHost() {
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    const add = (t) => {
+      setItems(list => [...list.slice(-2), t]);
+      setTimeout(() => setItems(list => list.filter(x => x.id !== t.id)), 3400);
+    };
+    toastListeners.add(add);
+    return () => toastListeners.delete(add);
+  }, []);
+  return (
+    <div className="iw-toast-host" role="status" aria-live="polite">
+      {items.map(t => <div key={t.id} className={cx('iw-toast', t.tone && `tone-${t.tone}`)}><span className="iw-toast-dot" />{t.message}</div>)}
+    </div>
+  );
+}
+
+function PageHeader({ eyebrow, title, subtitle, art, actions, children }) {
+  return (
+    <header className="iw-page-header">
+      <div style={{ minWidth: 0 }}>
+        {eyebrow && <div className="iw-eyebrow"><span className="dot" />{eyebrow}</div>}
+        <h1 className="iw-page-title">{title}</h1>
+        {subtitle && <p className="iw-page-sub">{subtitle}</p>}
+        {actions && <div className="iw-page-actions">{actions}</div>}
+        {children}
+      </div>
+      {art && <div className="iw-page-art"><Illustration name={art} /></div>}
+    </header>
+  );
+}
+
+/* ── Ілюстрації ──────────────────────────────────────────────
+ * Тимчасові SVG у м'якому 2.5D-стилі Inkwell. Кольори беруться з
+ * токенів, тож працюють і в темній темі. Пізніше можна замінити
+ * на растрові 3D-картинки — достатньо змінити Illustration.
+ * ─────────────────────────────────────────────────────────── */
+function IllDefs({ id }) {
+  return (
+    <defs>
+      <linearGradient id={`${id}lt`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stopColor="#fff" stopOpacity="0.38" />
+        <stop offset="0.45" stopColor="#fff" stopOpacity="0" />
+        <stop offset="1" stopColor="#000" stopOpacity="0.16" />
+      </linearGradient>
+      <linearGradient id={`${id}lx`} x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stopColor="#fff" stopOpacity="0.30" />
+        <stop offset="0.5" stopColor="#fff" stopOpacity="0" />
+        <stop offset="1" stopColor="#000" stopOpacity="0.14" />
+      </linearGradient>
+      <radialGradient id={`${id}gs`} cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stopColor="#3b2a17" stopOpacity="0.26" />
+        <stop offset="1" stopColor="#3b2a17" stopOpacity="0" />
+      </radialGradient>
+      <radialGradient id={`${id}glow`} cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stopColor="#fff" stopOpacity="0.5" />
+        <stop offset="1" stopColor="#fff" stopOpacity="0" />
+      </radialGradient>
+    </defs>
+  );
+}
+
+// Книжка, що лежить корінцем до глядача
+function IllBook({ id, x, y, w, h, c, band = 'f-gold', rot = 0 }) {
+  const lt = `url(#${id}lt)`;
+  return (
+    <g transform={rot ? `rotate(${rot} ${x + w / 2} ${y + h / 2})` : undefined}>
+      <rect x={x} y={y} width={w} height={h} rx={h * 0.24} className={c} />
+      <rect x={x} y={y} width={w} height={h} rx={h * 0.24} fill={lt} />
+      <rect x={x + w * 0.09} y={y} width={3} height={h} className={band} opacity="0.85" />
+      <rect x={x + w * 0.88} y={y} width={3} height={h} className={band} opacity="0.85" />
+      <rect x={x + w * 0.33} y={y + h * 0.28} width={w * 0.34} height={h * 0.44} rx={3} className="f-white" opacity="0.92" />
+      <rect x={x + 6} y={y + 3} width={w - 12} height={2.5} rx={1.2} className="shine" />
+    </g>
+  );
+}
+
+function Illustration({ name = 'books', className, title }) {
+  const id = useSafeId();
+  const lt = `url(#${id}lt)`;
+  const label = title ? { role: 'img', 'aria-label': title } : { 'aria-hidden': true };
+
+  if (name === 'library') {
+    return (
+      <svg viewBox="0 0 440 340" className={cx('iw-ill', className)} {...label}>
+        <IllDefs id={id} />
+        <circle cx="300" cy="128" r="104" className="f-must halo" />
+        <circle cx="300" cy="128" r="70" className="f-must halo-2" />
+        <circle cx="74" cy="92" r="26" className="f-sage iw-float-2" opacity="0.5" />
+        <circle cx="404" cy="236" r="12" className="f-plum iw-float-3" opacity="0.45" />
+        <ellipse cx="226" cy="300" rx="190" ry="20" fill={`url(#${id}gs)`} />
+
+        {/* стос книжок */}
+        <IllBook id={id} x={46} y={250} w={160} h={36} c="f-terra" />
+        <IllBook id={id} x={64} y={216} w={132} h={34} c="f-sage" band="f-paper" rot={-2.5} />
+        <IllBook id={id} x={54} y={186} w={146} h={30} c="f-plum" rot={1.5} />
+        <path d="M58 186 L196 186 L188 176 L68 176 Z" className="f-white s-line" strokeWidth="1" />
+
+        {/* чорнильниця з пером — знак Inkwell */}
+        <ellipse cx="128" cy="178" rx="34" ry="5" className="shade" />
+        <path d="M100 178 L100 152 Q100 138 116 136 L116 128 L140 128 L140 136 Q156 138 156 152 L156 178 Q128 184 100 178 Z" className="f-inkwell" />
+        <path d="M100 178 L100 152 Q100 138 116 136 L116 128 L140 128 L140 136 Q156 138 156 152 L156 178 Q128 184 100 178 Z" fill={`url(#${id}lx)`} />
+        <rect x="112" y="122" width="32" height="9" rx="3" className="f-inkneck" />
+        <rect x="106" y="146" width="10" height="22" rx="5" className="shine" />
+        <g className="iw-sway" style={{ transformOrigin: '0% 100%' }}>
+          <path d="M134 128 C 142 96, 162 62, 196 34 C 192 64, 176 98, 140 126 Z" className="f-white s-line" strokeWidth="1.2" />
+          <path d="M136 126 C 152 100, 170 72, 194 38" className="s-ink3" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+          <path d="M150 104 l 12 -2 M158 90 l 12 -3 M166 76 l 11 -4" className="s-line" strokeWidth="1.2" strokeLinecap="round" />
+        </g>
+
+        {/* розгорнута книга */}
+        <path d="M206 236 L206 294 C 240 284 272 286 304 298 C 336 286 368 284 402 294 L402 236 C 368 228 336 230 304 242 C 272 230 240 228 206 236 Z" className="f-terrad" />
+        <path d="M212 232 C 242 222 276 224 304 238 L304 288 C 276 276 242 274 212 284 Z" className="f-white" />
+        <path d="M396 232 C 366 222 332 224 304 238 L304 288 C 332 276 366 274 396 284 Z" className="f-white" />
+        <path d="M212 232 C 242 222 276 224 304 238 L304 288 C 276 276 242 274 212 284 Z" fill={`url(#${id}lx)`} opacity="0.6" />
+        <path d="M304 238 L304 288" className="s-line" strokeWidth="1.5" />
+        <g className="s-line" strokeWidth="2.6" strokeLinecap="round" fill="none">
+          <path d="M226 246 C 246 241 266 242 288 248" /><path d="M226 257 C 246 252 266 253 288 259" /><path d="M226 268 C 240 264 252 264 266 267" />
+          <path d="M320 248 C 340 242 360 241 382 246" /><path d="M320 259 C 340 253 360 252 382 257" /><path d="M320 270 C 334 265 348 264 362 266" />
+        </g>
+        <path d="M332 232 L332 258 L338 252 L344 258 L344 230" className="f-terra" />
+
+        {/* літери, що злітають зі сторінок */}
+        <g className="iw-float">
+          <rect x="250" y="150" width="44" height="44" rx="11" className="f-white s-line" strokeWidth="1" transform="rotate(-8 272 172)" />
+          <text x="272" y="181" textAnchor="middle" fontSize="27" className="t-ink" transform="rotate(-8 272 172)">A</text>
+        </g>
+        <g className="iw-float-2">
+          <rect x="330" y="112" width="40" height="40" rx="10" className="f-sage" transform="rotate(7 350 132)" />
+          <rect x="330" y="112" width="40" height="40" rx="10" fill={lt} transform="rotate(7 350 132)" />
+          <text x="350" y="141" textAnchor="middle" fontSize="25" className="t-ink" style={{ fill: '#fffaf0' }} transform="rotate(7 350 132)">b</text>
+        </g>
+        <g className="iw-float-3">
+          <rect x="224" y="96" width="32" height="32" rx="9" className="f-must" transform="rotate(-4 240 112)" />
+          <rect x="224" y="96" width="32" height="32" rx="9" fill={lt} transform="rotate(-4 240 112)" />
+          <text x="240" y="119" textAnchor="middle" fontSize="20" className="t-ink" style={{ fill: '#fffaf0' }} transform="rotate(-4 240 112)">c</text>
+        </g>
+        <path d="M384 176 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 Z" className="f-gold iw-float-3" />
+        <path d="M206 160 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" className="f-terra iw-float" opacity="0.8" />
+      </svg>
+    );
+  }
+
+  if (name === 'notebook') {
+    return (
+      <svg viewBox="0 0 220 180" className={cx('iw-ill', className)} {...label}>
+        <IllDefs id={id} />
+        <circle cx="150" cy="70" r="56" className="f-sage halo" />
+        <ellipse cx="110" cy="160" rx="86" ry="10" fill={`url(#${id}gs)`} />
+        <g transform="rotate(-6 100 96)">
+          <rect x="40" y="30" width="118" height="128" rx="12" className="f-terrad" />
+          <rect x="48" y="26" width="112" height="126" rx="10" className="f-white" />
+          <rect x="48" y="26" width="112" height="126" rx="10" fill={lt} opacity="0.5" />
+          <g className="s-line" strokeWidth="2.2" strokeLinecap="round">
+            <path d="M66 56 H144" /><path d="M66 72 H144" /><path d="M66 88 H130" /><path d="M66 104 H144" /><path d="M66 120 H116" />
+          </g>
+          <path d="M66 56 l5 5 9 -11" className="s-terrad" strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          {[38, 58, 78, 98, 118, 138].map(y => <rect key={y} x="42" y={y} width="12" height="5" rx="2.5" className="f-ink2" />)}
+          <rect x="132" y="22" width="14" height="30" className="f-must" />
+          <path d="M132 52 L139 46 L146 52 Z" className="f-paper" />
+        </g>
+        <g className="iw-float" transform="rotate(32 170 110)">
+          <rect x="164" y="58" width="12" height="82" rx="6" className="f-plum" />
+          <rect x="164" y="58" width="12" height="82" rx="6" fill={`url(#${id}lx)`} />
+          <path d="M164 140 L170 156 L176 140 Z" className="f-cream3" />
+          <path d="M168 150 L170 156 L172 150 Z" className="f-ink" />
+          <rect x="164" y="68" width="12" height="5" className="f-gold" />
+        </g>
+      </svg>
+    );
+  }
+
+  if (name === 'trophy') {
+    return (
+      <svg viewBox="0 0 200 180" className={cx('iw-ill', className)} {...label}>
+        <IllDefs id={id} />
+        <circle cx="100" cy="78" r="62" fill={`url(#${id}glow)`} />
+        <circle cx="100" cy="78" r="58" className="f-must halo-2" />
+        <ellipse cx="100" cy="164" rx="62" ry="8" fill={`url(#${id}gs)`} />
+        <path d="M58 46 C 30 46 30 92 66 92" className="s-ink3" strokeWidth="7" fill="none" strokeLinecap="round" opacity="0.5" />
+        <path d="M142 46 C 170 46 170 92 134 92" className="s-ink3" strokeWidth="7" fill="none" strokeLinecap="round" opacity="0.5" />
+        <path d="M58 34 H142 V64 C 142 92 124 110 100 110 C 76 110 58 92 58 64 Z" className="f-gold" />
+        <path d="M58 34 H142 V64 C 142 92 124 110 100 110 C 76 110 58 92 58 64 Z" fill={`url(#${id}lx)`} />
+        <rect x="62" y="38" width="10" height="44" rx="5" className="shine" />
+        <rect x="90" y="108" width="20" height="22" className="f-goldd" />
+        <rect x="68" y="128" width="64" height="16" rx="4" className="f-goldd" />
+        <rect x="58" y="142" width="84" height="18" rx="5" className="f-ink2" />
+        <rect x="58" y="142" width="84" height="18" rx="5" fill={lt} />
+        <path d="M100 52 l5 10 11 1.5 -8 7.5 2 11 -10 -5.5 -10 5.5 2 -11 -8 -7.5 11 -1.5 Z" className="f-white" opacity="0.9" />
+        <path d="M34 30 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5 Z" className="f-terra iw-float" />
+        <path d="M166 106 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" className="f-sage iw-float-2" />
+      </svg>
+    );
+  }
+
+  // 'books' — за замовчуванням: стос книжок з паростком (порожні стани)
+  return (
+    <svg viewBox="0 0 200 170" className={cx('iw-ill', className)} {...label}>
+      <IllDefs id={id} />
+      <circle cx="120" cy="70" r="52" className="f-must halo-2" />
+      <ellipse cx="100" cy="156" rx="80" ry="9" fill={`url(#${id}gs)`} />
+      <IllBook id={id} x={34} y={120} w={132} h={30} c="f-terra" />
+      <IllBook id={id} x={46} y={92} w={110} h={28} c="f-sky" band="f-paper" rot={-3} />
+      <IllBook id={id} x={40} y={66} w={122} h={26} c="f-sage" rot={2} />
+      <path d="M44 66 L158 66 L151 57 L52 57 Z" className="f-white s-line" strokeWidth="1" />
+      <g className="iw-sway" style={{ transformOrigin: '42% 100%' }}>
+        <path d="M100 58 C 100 44 101 34 104 24" className="s-ink3" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+        <path d="M102 36 C 84 36 76 22 78 12 C 92 12 102 22 102 36 Z" className="f-saged" />
+        <path d="M103 30 C 116 32 128 24 130 12 C 116 10 104 18 103 30 Z" className="f-sage" />
+      </g>
+    </svg>
+  );
+}
+/* ═══ кінець UI KIT ═══ */
 
 const LEVELS = ['Beginner', 'Elementary', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Advanced'];
 const AGE_GROUPS = ['Kids 7–9', 'Kids 10–12', 'Teens 13–17', 'Adults'];
@@ -2780,229 +3820,6 @@ function VocabAccessSection({ student, allVocabItems, completions, vocabAccess, 
 // TEACHER: STUDENT STATS SECTION
 // ═══════════════════════════════════════════════════════════
 
-function StudentStatsSection({ student, stats, courseAccess, lessonAccess, completions, vocabAccess, allVocabItems }) {
-  // Загальні цифри
-  const totals = useMemo(() => {
-    // Скільки уроків загалом у курсах, до яких є доступ
-    let totalLessons = 0;
-    let visibleLessons = 0;
-    COURSES.forEach(course => {
-      const hasCourse = courseAccess.has(course.id);
-      course.units.forEach(unit => unit.lessons.forEach(lesson => {
-        if (hasCourse) totalLessons++;
-        const key = `${course.id}:${lesson.id}`;
-        if (hasCourse && (lessonAccess.has(key) || completions.has(key))) visibleLessons++;
-      }));
-    });
-
-    // Домашки
-    const hwPending = stats.hwSubmissions.filter(s => s.status === 'submitted').length;
-    const hwAccepted = stats.hwSubmissions.filter(s => s.status === 'accepted').length;
-    const hwReturned = stats.hwSubmissions.filter(s => s.status === 'returned').length;
-
-    // Флешкартки
-    const wordsPracticed = stats.vocabProgress.length;
-
-    // Активність
-    const lastLessonAt = stats.completedLessons.length > 0 ? stats.completedLessons[0].completed_at : null;
-    const lastHwAt = stats.hwSubmissions.length > 0 ? stats.hwSubmissions[0].submitted_at : null;
-    const lastVocabAt = stats.vocabProgress.length > 0 ? stats.vocabProgress[0].last_reviewed_at : null;
-    const lastActivity = [lastLessonAt, lastHwAt, lastVocabAt].filter(Boolean).sort().pop() || null;
-
-    return {
-      totalLessons,
-      visibleLessons,
-      completedLessons: completions.size,
-      hwPending,
-      hwAccepted,
-      hwReturned,
-      hwTotal: stats.hwSubmissions.length,
-      wordsPracticed,
-      vocabAccessCount: vocabAccess.size,
-      lastActivity,
-    };
-  }, [stats, courseAccess, lessonAccess, completions, vocabAccess]);
-
-  // Прогрес по курсах
-  const courseStats = useMemo(() => {
-    return COURSES.filter(c => courseAccess.has(c.id)).map(course => {
-      let total = 0, visible = 0, completed = 0;
-      course.units.forEach(u => u.lessons.forEach(l => {
-        total++;
-        const key = `${course.id}:${l.id}`;
-        if (lessonAccess.has(key) || completions.has(key)) visible++;
-        if (completions.has(key)) completed++;
-      }));
-      // Останнє завершення в цьому курсі
-      const lastCompleted = stats.completedLessons.find(c2 => c2.course_id === course.id);
-      return {
-        course,
-        total,
-        visible,
-        completed,
-        percent: visible > 0 ? Math.round((completed / visible) * 100) : 0,
-        lastCompletedAt: lastCompleted ? lastCompleted.completed_at : null,
-      };
-    });
-  }, [courseAccess, lessonAccess, completions, stats]);
-
-  // Останні 5 завершених уроків (для стрічки активності)
-  const recentCompletions = useMemo(() => {
-    return stats.completedLessons.slice(0, 5).map(c => {
-      const found = findLesson(c.course_id, c.lesson_id);
-      return {
-        ...c,
-        lessonTitle: found?.lesson?.title || c.lesson_id,
-        lessonNumber: found?.lesson?.number || '?',
-        courseTitle: found?.course?.title || c.course_id,
-      };
-    });
-  }, [stats]);
-
-  // Останні 5 зданих домашок
-  const recentHomework = useMemo(() => {
-    return stats.hwSubmissions.slice(0, 5).map(s => {
-      const found = findLesson(s.course_id, s.lesson_id);
-      return {
-        ...s,
-        lessonTitle: found?.lesson?.title || s.lesson_id,
-        lessonNumber: found?.lesson?.number || '?',
-      };
-    });
-  }, [stats]);
-
-  return (
-    <section className="stats-section">
-      <h2 className="access-section-title">📊 Прогрес учня</h2>
-
-      {/* Хедер-статистика: 4 карточки */}
-      <div className="stats-header-grid">
-        <div className="stats-card stats-card-streak">
-          <div className="stats-card-icon">🔥</div>
-          <div className="stats-card-num">{student.current_streak || 0}</div>
-          <div className="stats-card-label">
-            {(student.current_streak || 0) === 1 ? 'день поспіль' : (student.current_streak || 0) < 5 ? 'дні поспіль' : 'днів поспіль'}
-          </div>
-          {student.longest_streak > 0 && (
-            <div className="stats-card-sub">рекорд: {student.longest_streak}</div>
-          )}
-        </div>
-
-        <div className="stats-card stats-card-lessons">
-          <div className="stats-card-icon">📚</div>
-          <div className="stats-card-num">{totals.completedLessons}</div>
-          <div className="stats-card-label">завершено уроків</div>
-          <div className="stats-card-sub">з {totals.visibleLessons} доступних</div>
-        </div>
-
-        <div className="stats-card stats-card-vocab">
-          <div className="stats-card-icon">🎴</div>
-          <div className="stats-card-num">{totals.wordsPracticed}</div>
-          <div className="stats-card-label">
-            {totals.wordsPracticed === 1 ? 'слово тренував' : totals.wordsPracticed < 5 ? 'слова тренував' : 'слів тренував'}
-          </div>
-          <div className="stats-card-sub">у флешкартках</div>
-        </div>
-
-        <div className="stats-card stats-card-hw">
-          <div className="stats-card-icon">📬</div>
-          <div className="stats-card-num">{totals.hwTotal}</div>
-          <div className="stats-card-label">
-            {totals.hwTotal === 1 ? 'здана домашка' : totals.hwTotal < 5 ? 'здані домашки' : 'зданих домашок'}
-          </div>
-          <div className="stats-card-sub">
-            {totals.hwAccepted > 0 && <span style={{ color: 'var(--sage-deep)' }}>✓ {totals.hwAccepted}</span>}
-            {totals.hwPending > 0 && <span style={{ color: 'var(--mustard-deep)', marginLeft: 6 }}>⏳ {totals.hwPending}</span>}
-            {totals.hwReturned > 0 && <span style={{ color: 'var(--terracotta-deep)', marginLeft: 6 }}>↻ {totals.hwReturned}</span>}
-          </div>
-        </div>
-      </div>
-
-      {totals.lastActivity && (
-        <div className="stats-last-activity">
-          Остання активність: <strong>{formatRelativeTime(totals.lastActivity)}</strong>
-        </div>
-      )}
-
-      {/* Прогрес по курсах */}
-      {courseStats.length > 0 && (
-        <div className="stats-courses">
-          <div className="stats-block-label">Прогрес по курсах</div>
-          {courseStats.map(cs => {
-            const circumference = 2 * Math.PI * 30;
-            const offset = circumference - (circumference * cs.percent / 100);
-            return (
-              <div key={cs.course.id} className={`stats-course-row accent-${cs.course.accent}`}>
-                <div className="stats-course-ring">
-                  <svg width="72" height="72">
-                    <circle cx="36" cy="36" r="30" fill="none" strokeWidth="6" stroke="var(--line)" />
-                    <circle cx="36" cy="36" r="30" fill="none" strokeWidth="6" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={offset} transform="rotate(-90 36 36)" />
-                  </svg>
-                  <div className="stats-course-ring-text">{cs.percent}%</div>
-                </div>
-                <div className="stats-course-body">
-                  <div className="stats-course-title">{cs.course.title}</div>
-                  <div className="stats-course-meta">
-                    <strong>{cs.completed}</strong> завершено · <strong>{cs.visible}</strong> доступно · всього {cs.total}
-                  </div>
-                  {cs.lastCompletedAt && (
-                    <div className="stats-course-last">
-                      Останній урок пройдено: {formatRelativeTime(cs.lastCompletedAt)}
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Recent activity — 2 колонки */}
-      {(recentCompletions.length > 0 || recentHomework.length > 0) && (
-        <div className="stats-recent-grid">
-          {recentCompletions.length > 0 && (
-            <div className="stats-recent-block">
-              <div className="stats-block-label">Нещодавно завершені уроки</div>
-              <ul className="stats-recent-list">
-                {recentCompletions.map((c, i) => (
-                  <li key={i} className="stats-recent-item">
-                    <span className="stats-recent-icon">✓</span>
-                    <div className="stats-recent-body">
-                      <div className="stats-recent-title">L{c.lessonNumber}: {c.lessonTitle}</div>
-                      <div className="stats-recent-date">{formatRelativeTime(c.completed_at)} · {c.courseTitle}</div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {recentHomework.length > 0 && (
-            <div className="stats-recent-block">
-              <div className="stats-block-label">Останні здані домашки</div>
-              <ul className="stats-recent-list">
-                {recentHomework.map((h, i) => (
-                  <li key={i} className="stats-recent-item">
-                    <span className={`stats-recent-icon stats-recent-${h.status}`}>
-                      {h.status === 'accepted' && '✓'}
-                      {h.status === 'submitted' && '⏳'}
-                      {h.status === 'returned' && '↻'}
-                    </span>
-                    <div className="stats-recent-body">
-                      <div className="stats-recent-title">{h.kind === 'writing' ? '✍️' : '🎤'} L{h.lessonNumber}: {h.lessonTitle}</div>
-                      <div className="stats-recent-date">{formatRelativeTime(h.submitted_at)}</div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      )}
-    </section>
-  );
-}
-
 // Форматуємо час у стилі "5 хв тому", "2 год тому", "3 дні тому"
 function formatRelativeTime(dateStr) {
   if (!dateStr) return '';
@@ -3147,13 +3964,99 @@ function CreateStudentModal({ session, onClose, onCreated }) {
   );
 }
 
+// ═══════════════════════════════════════════════════════════
+// INKWELL 2.0 · ФАЗА 3 — «Учні» та профіль учня (вчитель)
+// ═══════════════════════════════════════════════════════════
+
+// ── Єдині правила підрахунку прогресу (ті самі, що на головній учня) ──
+// • Урок «видимий», якщо є lesson_access АБО lesson_completions.
+// • Відсоток курсу = завершені / видимі (як у StudentDashboard).
+// • Юніт завершено, коли завершені ВСІ його уроки.
+// • Поточний юніт — перший, де є відкритий, але не завершений урок;
+//   якщо такого нема — перший незавершений юніт.
+function buildCourseProgress(course, lessonAccess, completions, completionDates) {
+  let total = 0, visible = 0, completed = 0, unitsDone = 0;
+  const units = course.units.map(unit => {
+    let uTotal = 0, uVisible = 0, uDone = 0;
+    const lessons = unit.lessons.map(lesson => {
+      const key = `${course.id}:${lesson.id}`;
+      const isDone = completions.has(key);
+      const isOpen = isDone || lessonAccess.has(key);
+      uTotal++; if (isOpen) uVisible++; if (isDone) uDone++;
+      return { lesson, key, status: isDone ? 'completed' : isOpen ? 'available' : 'locked', completedAt: completionDates ? completionDates.get(key) : null };
+    });
+    total += uTotal; visible += uVisible; completed += uDone;
+    const isComplete = uTotal > 0 && uDone === uTotal;
+    if (isComplete) unitsDone++;
+    return { unit, lessons, total: uTotal, visible: uVisible, completed: uDone, isComplete };
+  });
+  let current = units.find(u => u.lessons.some(l => l.status === 'available'));
+  if (!current) current = units.find(u => !u.isComplete) || null;
+  units.forEach(u => {
+    u.state = u.isComplete ? 'completed' : u === current ? 'current' : u.visible > 0 ? 'available' : 'locked';
+  });
+  return {
+    course, units, total, visible, completed, unitsDone,
+    unitsTotal: units.length,
+    percent: visible > 0 ? Math.round((completed / visible) * 100) : 0,
+    currentUnit: current ? current.unit : null,
+  };
+}
+
+function maxDate(...vals) {
+  let best = null;
+  vals.forEach(v => { if (v && (!best || new Date(v) > new Date(best))) best = v; });
+  return best;
+}
+function daysSince(d) { return d ? (Date.now() - new Date(d).getTime()) / 86400000 : Infinity; }
+function pluralUk(n, one, few, many) {
+  const m10 = n % 10, m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return one;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+  return many;
+}
+
+const MoreHorizontal = (p) => <Icon {...p}><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></Icon>;
+const StickyNote = (p) => <Icon {...p}><path d="M15.5 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3Z"/><path d="M15 3v6h6"/></Icon>;
+const Activity = (p) => <Icon {...p}><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></Icon>;
+const Pencil = (p) => <Icon {...p}><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></Icon>;
+const Flame = (p) => <Icon {...p}><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></Icon>;
+const Mic = (p) => <Icon {...p}><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></Icon>;
+
+const HW_STATUS = {
+  submitted: { label: 'На перевірці', tone: 'warning' },
+  accepted:  { label: 'Прийнято',     tone: 'success' },
+  returned:  { label: 'Повернуто',    tone: 'error' },
+};
+const HW_KIND = { writing: { label: 'Письмо', icon: Pencil }, speaking: { label: 'Говоріння', icon: Mic } };
+
+// ── Сторінка «Мої учні» ──
+const STUDENT_FILTERS = [
+  { id: 'all', label: 'Усі' },
+  { id: 'active', label: 'Активні за 7 днів' },
+  { id: 'review', label: 'Чекають перевірки' },
+  { id: 'nocourse', label: 'Без курсу' },
+  { id: 'idle', label: 'Неактивні 14+ днів' },
+];
+const STUDENT_SORTS = [
+  { id: 'new', label: 'Спершу нові' },
+  { id: 'name', label: 'За іменем' },
+  { id: 'activity', label: 'За активністю' },
+  { id: 'progress', label: 'За прогресом' },
+];
+
 function StudentsPage({ session, goHome, setRoute }) {
   const [students, setStudents] = useState([]);
+  const [rel, setRel] = useState(null); // зведені дані з усіх таблиць
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('all');
+  const [sort, setSort] = useState('new');
   const [showCreate, setShowCreate] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
+  const [toDelete, setToDelete] = useState(null);
+  const [deleting, setDeleting] = useState(false);
 
   async function loadStudents() {
     setLoading(true);
@@ -3170,6 +4073,29 @@ function StudentsPage({ session, goHome, setRoute }) {
     setLoading(false);
   }
 
+  // Додаткові дані для карток (прогрес, активність). Якщо щось не
+  // завантажиться — картки просто покажуть менше інформації.
+  async function loadRelations() {
+    const safe = (p) => p.then(r => r.data || []).catch(() => []);
+    const [ca, la, lc, hw, vp] = await Promise.all([
+      safe(window.SB.from('course_access').select('student_id, course_id')),
+      safe(window.SB.from('lesson_access').select('student_id, course_id, lesson_id')),
+      safe(window.SB.from('lesson_completions').select('student_id, course_id, lesson_id, completed_at')),
+      safe(window.SB.from('homework_submissions').select('student_id, status, submitted_at')),
+      safe(window.SB.from('vocab_progress').select('student_id, last_reviewed_at')),
+    ]);
+    const by = () => new Map();
+    const r = { courses: by(), access: by(), done: by(), lastAt: by(), pending: by() };
+    const push = (map, id, v) => { if (!map.has(id)) map.set(id, new Set()); map.get(id).add(v); };
+    const seen = (id, d) => { r.lastAt.set(id, maxDate(r.lastAt.get(id), d)); };
+    ca.forEach(x => push(r.courses, x.student_id, x.course_id));
+    la.forEach(x => push(r.access, x.student_id, `${x.course_id}:${x.lesson_id}`));
+    lc.forEach(x => { push(r.done, x.student_id, `${x.course_id}:${x.lesson_id}`); seen(x.student_id, x.completed_at); });
+    hw.forEach(x => { seen(x.student_id, x.submitted_at); if (x.status === 'submitted') r.pending.set(x.student_id, (r.pending.get(x.student_id) || 0) + 1); });
+    vp.forEach(x => seen(x.student_id, x.last_reviewed_at));
+    setRel(r);
+  }
+
   async function loadPending() {
     const { count } = await window.SB
       .from('homework_submissions')
@@ -3178,108 +4104,163 @@ function StudentsPage({ session, goHome, setRoute }) {
     setPendingCount(count || 0);
   }
 
-  useEffect(() => { loadStudents(); loadPending(); }, []);
+  useEffect(() => { loadStudents(); loadPending(); loadRelations(); }, []);
 
-  const filtered = students.filter(s => {
-    if (!search.trim()) return true;
-    const q = search.toLowerCase();
-    return (s.display_name || '').toLowerCase().includes(q) || (s.username || '').toLowerCase().includes(q);
-  });
+  const empty = new Set();
+  const rows = useMemo(() => students.map(s => {
+    const courseIds = rel ? (rel.courses.get(s.id) || empty) : empty;
+    const access = rel ? (rel.access.get(s.id) || empty) : empty;
+    const done = rel ? (rel.done.get(s.id) || empty) : empty;
+    const courses = COURSES.filter(c => courseIds.has(c.id)).map(c => buildCourseProgress(c, access, done));
+    const visible = courses.reduce((a, c) => a + c.visible, 0);
+    const completed = courses.reduce((a, c) => a + c.completed, 0);
+    // Остання активність: вхід на головну (last_visit_date), завершення
+    // уроку, здача домашки або повторення слів — що було пізніше.
+    const lastAt = maxDate(s.last_visit_date, rel ? rel.lastAt.get(s.id) : null);
+    return {
+      s, courses, visible, completed,
+      percent: visible > 0 ? Math.round((completed / visible) * 100) : 0,
+      lastAt, pending: rel ? (rel.pending.get(s.id) || 0) : 0,
+      name: s.display_name || s.username,
+    };
+  }), [students, rel]);
+
+  const counts = useMemo(() => ({
+    all: rows.length,
+    active: rows.filter(r => daysSince(r.lastAt) <= 7).length,
+    review: rows.filter(r => r.pending > 0).length,
+    nocourse: rows.filter(r => r.courses.length === 0).length,
+    idle: rows.filter(r => daysSince(r.lastAt) > 14).length,
+  }), [rows]);
+
+  const visibleRows = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    let list = rows.filter(r => {
+      if (filter === 'active' && !(daysSince(r.lastAt) <= 7)) return false;
+      if (filter === 'review' && r.pending === 0) return false;
+      if (filter === 'nocourse' && r.courses.length > 0) return false;
+      if (filter === 'idle' && !(daysSince(r.lastAt) > 14)) return false;
+      if (!q) return true;
+      return (r.s.display_name || '').toLowerCase().includes(q)
+        || (r.s.username || '').toLowerCase().includes(q)
+        || r.courses.some(c => c.course.title.toLowerCase().includes(q));
+    });
+    const by = {
+      new: (a, b) => new Date(b.s.created_at || 0) - new Date(a.s.created_at || 0),
+      name: (a, b) => a.name.localeCompare(b.name, 'uk'),
+      activity: (a, b) => daysSince(a.lastAt) - daysSince(b.lastAt),
+      progress: (a, b) => b.percent - a.percent || b.completed - a.completed,
+    }[sort];
+    return [...list].sort(by);
+  }, [rows, search, filter, sort]);
+
+  async function confirmDelete() {
+    if (!toDelete) return;
+    setDeleting(true);
+    // Та сама дія, що й у профілі: видалення профілю каскадно прибирає доступи
+    const { error } = await window.SB.from('profiles').delete().eq('id', toDelete.id);
+    setDeleting(false);
+    if (error) { toast('Помилка видалення: ' + error.message, 'error'); return; }
+    setStudents(prev => prev.filter(x => x.id !== toDelete.id));
+    toast(`${toDelete.display_name || toDelete.username} — видалено`, 'success');
+    setToDelete(null);
+  }
+
+  const openStudent = (id, tab) => setRoute({ page: 'student', studentId: id, tab });
 
   return (
-    <main className="page">
+    <main className="page iw-students">
       <Crumbs items={[{ label: 'Library', onClick: goHome }, { label: 'Учні', current: true }]} />
-      <header className="page-header">
-        <div className="page-eyebrow"><span className="dot" /> Teacher dashboard</div>
-        <h1 className="page-title">Мої учні</h1>
-        <p style={{ fontSize: 16, color: 'var(--ink-2)', lineHeight: 1.6, marginTop: 14 }}>
-          Створюй учнів, керуй їхнім доступом до курсів та уроків.
-        </p>
-      </header>
+      <PageHeader
+        eyebrow="Teacher dashboard"
+        title={<React.Fragment>Мої <em>учні</em></React.Fragment>}
+        subtitle="Прогрес, доступ до курсів і домашні роботи кожного учня — в одному місці."
+        actions={<IwButton variant="primary" icon={UserPlus} onClick={() => setShowCreate(true)}>Додати учня</IwButton>}
+      />
 
-      <a
-        className="external-link-card external-tutor-journal"
-        href="https://odissey1505.github.io/Tutor-s-journal/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <div className="external-link-icon">📓</div>
-        <div className="external-link-body">
-          <div className="external-link-eyebrow">Інструмент викладача</div>
-          <div className="external-link-title">Журнал викладача</div>
-          <div className="external-link-sub">Розклад занять, облік учнів і відвідуваності, нотатки — усе в одному місці. Відкриється у новій вкладці.</div>
-        </div>
-        <div className="external-link-cta">
-          Відкрити <ExternalLink size={14} />
-        </div>
-      </a>
+      <div className="iw-stat-grid iw-students-stats">
+        <StatCard icon={Users} value={loading ? '–' : counts.all} label="Учнів" tone="terracotta" />
+        <StatCard icon={Activity} value={rel ? counts.active : '–'} label="Активні за 7 днів" sub="уроки, домашні, слова або вхід" tone="sage" />
+        <StatCard icon={MapIcon} value={rel ? counts.all - counts.nocourse : '–'} label="Мають курс" tone="sky" />
+        <StatCard icon={Inbox} value={pendingCount} label="Домашок на перевірці" sub={counts.review ? `від ${counts.review} ${pluralUk(counts.review, 'учня', 'учнів', 'учнів')}` : null} tone="mustard" />
+      </div>
 
-      {pendingCount > 0 && (
-        <button
-          className="hw-pending-banner"
-          onClick={() => setRoute({ page: 'homework-review' })}
-        >
-          <div className="hw-pending-icon">📬</div>
-          <div className="hw-pending-body">
-            <div className="hw-pending-title">
-              {pendingCount === 1 ? 'Одна нова домашка на перевірці' : pendingCount < 5 ? pendingCount + ' нові домашки на перевірці' : pendingCount + ' нових домашок на перевірці'}
-            </div>
-            <div className="hw-pending-sub">Клікни, щоб переглянути та оцінити</div>
+      <div className="iw-students-banners">
+        <a className="iw-journal" href="https://odissey1505.github.io/Tutor-s-journal/" target="_blank" rel="noopener noreferrer">
+          <div className="iw-journal-art"><Illustration name="notebook" /></div>
+          <div className="iw-journal-body">
+            <div className="iw-journal-eyebrow">Інструмент викладача</div>
+            <div className="iw-journal-title">Журнал викладача</div>
+            <div className="iw-journal-sub">Розклад занять, облік учнів і відвідуваності, нотатки — усе в одному місці.</div>
           </div>
-          <ChevronRight size={20} />
-        </button>
-      )}
+          <span className="iw-btn iw-btn-primary iw-btn-sm iw-journal-cta">Відкрити <ExternalLink size={14} aria-hidden="true" /><span className="sr-only"> (у новій вкладці)</span></span>
+        </a>
+        {pendingCount > 0 && (
+          <button className="hw-pending-banner" onClick={() => setRoute({ page: 'homework-review' })}>
+            <div className="hw-pending-icon">📬</div>
+            <div className="hw-pending-body">
+              <div className="hw-pending-title">
+                {pendingCount === 1 ? 'Одна нова домашка на перевірці' : pendingCount < 5 ? pendingCount + ' нові домашки на перевірці' : pendingCount + ' нових домашок на перевірці'}
+              </div>
+              <div className="hw-pending-sub">Клікни, щоб переглянути та оцінити</div>
+            </div>
+            <ChevronRight size={20} />
+          </button>
+        )}
+      </div>
 
-      <div className="students-toolbar">
-        <input
-          className="students-search"
-          type="text"
-          placeholder="Пошук за ім'ям або username..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        <button className="students-add-btn" onClick={() => setShowCreate(true)}>
-          <UserPlus size={16} /> Додати учня
-        </button>
+      <div className="iw-students-toolbar">
+        <div className="iw-input-wrap iw-students-search">
+          <Search size={18} aria-hidden="true" />
+          <input type="search" placeholder="Ім'я, username або курс…" value={search} onChange={e => setSearch(e.target.value)} aria-label="Пошук учнів" />
+          {search && <button type="button" className="search-clear" onClick={() => setSearch('')} aria-label="Очистити пошук"><X size={14} /></button>}
+        </div>
+        <label className="iw-select">
+          <span className="sr-only">Сортування</span>
+          <select value={sort} onChange={e => setSort(e.target.value)}>
+            {STUDENT_SORTS.map(o => <option key={o.id} value={o.id}>{o.label}</option>)}
+          </select>
+          <ChevronDown size={15} aria-hidden="true" />
+        </label>
+      </div>
+      <div className="iw-chips" role="group" aria-label="Фільтр учнів">
+        {STUDENT_FILTERS.map(f => (
+          <button key={f.id} type="button" className="iw-chip" aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}>
+            {f.label}<span className="iw-chip-count">{rel || f.id === 'all' ? counts[f.id] : '…'}</span>
+          </button>
+        ))}
       </div>
 
       {error && <div className="modal-error" style={{ marginBottom: 20 }}>{error}</div>}
 
-      {loading && <div className="empty-inline">Завантажую список...</div>}
-
-      {!loading && filtered.length === 0 && search && (
-        <div className="empty-inline">
-          <div className="empty-inline-title">Нічого не знайдено</div>
-          <div>Спробуй інший запит</div>
+      {loading && (
+        <div className="iw-students-grid" aria-busy="true">
+          {[0, 1, 2, 3].map(i => <Skeleton key={i} h={170} r={16} />)}
         </div>
       )}
 
-      {!loading && filtered.length === 0 && !search && (
-        <div className="empty-inline">
-          <div className="empty-inline-title">Ще жодного учня</div>
-          <div>Натисни "Додати учня", щоб створити перший акаунт</div>
-        </div>
+      {!loading && students.length === 0 && !error && (
+        <EmptyState art="books" title="Ще жодного учня" text="Створи перший акаунт — і тут з'явиться картка з прогресом учня."
+          action={<IwButton variant="primary" icon={UserPlus} onClick={() => setShowCreate(true)}>Додати учня</IwButton>} />
       )}
 
-      {!loading && filtered.length > 0 && (
-        <div className="students-grid">
-          {filtered.map(s => (
-            <button key={s.id} className="student-card" onClick={() => setRoute({ page: 'student', studentId: s.id })}>
-              <div className="student-card-head">
-                <div className="student-avatar">{initialsFor(s.display_name || s.username)}</div>
-                <div>
-                  <div className="student-name">{s.display_name || s.username}</div>
-                  <div className="student-username">@{s.username}</div>
-                </div>
-              </div>
-              <div className="student-meta">
-                <span className="student-meta-item">
-                  Створено: {new Date(s.created_at).toLocaleDateString('uk-UA')}
-                </span>
-              </div>
-            </button>
-          ))}
-        </div>
+      {!loading && students.length > 0 && visibleRows.length === 0 && (
+        <EmptyState art="books" title="Нікого не знайдено" text="Спробуй інший запит або зніми фільтр."
+          action={<IwButton size="sm" onClick={() => { setSearch(''); setFilter('all'); }}>Скинути пошук і фільтри</IwButton>} />
+      )}
+
+      {!loading && visibleRows.length > 0 && (
+        <React.Fragment>
+          <p className="iw-students-count" aria-live="polite">
+            Показано {visibleRows.length} з {rows.length}
+          </p>
+          <ul className="iw-students-grid">
+            {visibleRows.map((r, i) => (
+              <StudentCard key={r.s.id} row={r} relReady={!!rel} delay={Math.min(i, 8) * 40}
+                onOpen={(tab) => openStudent(r.s.id, tab)} onDelete={() => setToDelete(r.s)} />
+            ))}
+          </ul>
+        </React.Fragment>
       )}
 
       {showCreate && (
@@ -3289,40 +4270,87 @@ function StudentsPage({ session, goHome, setRoute }) {
           onCreated={(newStudent) => {
             setStudents(prev => [newStudent, ...prev]);
             setShowCreate(false);
+            toast('Учня створено', 'success');
           }}
         />
       )}
+
+      <ConfirmDialog open={!!toDelete} danger busy={deleting}
+        title="Видалити учня?"
+        text={toDelete ? `Акаунт «${toDelete.display_name || toDelete.username}» буде видалено разом із доступами та прогресом. Цю дію не можна скасувати.` : ''}
+        confirmLabel="Так, видалити" onCancel={() => setToDelete(null)} onConfirm={confirmDelete} />
     </main>
   );
 }
 
-// ── Delete confirmation modal ──
-function DeleteStudentModal({ student, onClose, onConfirm, deleting }) {
+function StudentCard({ row, relReady, delay, onOpen, onDelete }) {
+  const { s, courses, visible, completed, percent, lastAt, pending, name } = row;
+  const lastLabel = lastAt ? formatRelativeTime(lastAt) : 'ще не було';
+  const idle = daysSince(lastAt) > 14;
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={e => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose} aria-label="Закрити"><X size={18} /></button>
-        <h2 className="modal-title">Видалити учня?</h2>
-        <p className="modal-sub">Ти збираєшся видалити акаунт <strong>{student.display_name || student.username}</strong>. Усі дані про доступ і прогрес також будуть видалені. Цю дію не можна скасувати.</p>
-        <div className="modal-actions">
-          <button className="modal-btn ghost" onClick={onClose} disabled={deleting}>Скасувати</button>
-          <button className="modal-btn danger" onClick={onConfirm} disabled={deleting}>
-            {deleting ? 'Видаляю...' : 'Так, видалити'}
-          </button>
+    <li className="iw-scard iw-reveal" style={{ animationDelay: `${delay}ms` }}>
+      <div className="iw-scard-head">
+        <Avatar name={name} seed={s.id} size={46} />
+        <div className="iw-scard-id">
+          <button type="button" className="iw-scard-name iw-stretch" onClick={() => onOpen()}>{name}</button>
+          <div className="iw-scard-user">@{s.username}</div>
         </div>
+        <DropdownMenu label={`Дії: ${name}`} trigger={({ ref, toggle, menuProps }) => (
+          <button ref={ref} type="button" className="iw-scard-more" onClick={toggle} aria-label={`Дії для ${name}`} {...menuProps}>
+            <MoreHorizontal size={18} />
+          </button>
+        )}>
+          {(close) => (
+            <React.Fragment>
+              <MenuItem icon={Users} onSelect={() => { close(); onOpen('overview'); }}>Відкрити профіль</MenuItem>
+              <MenuItem icon={Activity} onSelect={() => { close(); onOpen('progress'); }}>Прогрес по юнітах</MenuItem>
+              <MenuItem icon={Unlock} onSelect={() => { close(); onOpen('access'); }}>Доступ до уроків</MenuItem>
+              <MenuItem icon={Inbox} onSelect={() => { close(); onOpen('homework'); }}
+                meta={pending > 0 ? <span className="iw-menu-badge">{pending}</span> : null}>Домашні роботи</MenuItem>
+              <MenuItem icon={StickyNote} onSelect={() => { close(); onOpen('notes'); }}>Нотатки</MenuItem>
+              <div className="iw-menu-sep" role="separator" />
+              <MenuItem icon={Trash2} danger onSelect={() => { close(); onDelete(); }}>Видалити учня…</MenuItem>
+            </React.Fragment>
+          )}
+        </DropdownMenu>
       </div>
-    </div>
+
+      <div className="iw-scard-courses">
+        {!relReady && <Skeleton w="60%" h={22} r={999} />}
+        {relReady && courses.length === 0 && <span className="iw-scard-muted">Курс ще не відкрито</span>}
+        {relReady && courses.map(c => <Badge key={c.course.id} tone="brand" title={c.course.title}>{c.course.title}</Badge>)}
+      </div>
+
+      {relReady && courses.length > 0 && visible === 0 && <span className="iw-scard-muted">Уроки ще не відкрито</span>}
+      {relReady && courses.length > 0 && visible > 0 && (
+        <ProgressBar value={completed} max={Math.max(visible, 1)} size="sm" tone={percent >= 100 ? 'sage' : 'terracotta'}
+          label="Пройдено з відкритих" valueLabel={`${completed} / ${visible}`} />
+      )}
+
+      <div className="iw-scard-foot">
+        <span className={cx('iw-scard-last', idle && 'idle')}><Clock size={13} aria-hidden="true" /> {lastLabel}</span>
+        {pending > 0 && <Badge tone="warning">{pending} на перевірці</Badge>}
+      </div>
+    </li>
   );
 }
 
-// ── Individual student page ──
-function StudentPage({ studentId, session, goHome, setRoute }) {
+// ── Профіль учня ──
+const STUDENT_TABS = [
+  { id: 'overview', label: 'Огляд', icon: Home },
+  { id: 'progress', label: 'Прогрес', icon: Activity },
+  { id: 'access', label: 'Доступ до уроків', icon: Unlock },
+  { id: 'homework', label: 'Домашні', icon: Inbox },
+  { id: 'vocab', label: 'Словник', icon: Library },
+  { id: 'notes', label: 'Нотатки', icon: StickyNote },
+];
+
+function StudentPage({ studentId, initialTab, session, goHome, setRoute }) {
   const [student, setStudent] = useState(null);
   const [courseAccess, setCourseAccess] = useState(new Set()); // set of course_id
   const [lessonAccess, setLessonAccess] = useState(new Set()); // set of `${course_id}:${lesson_id}`
   const [completions, setCompletions] = useState(new Set()); // set of `${course_id}:${lesson_id}`
   const [vocabAccess, setVocabAccess] = useState(new Set()); // set of word_id
-  const [vocabModalWord, setVocabModalWord] = useState(null); // для показу керування словом
   const allVocabItems = useMemo(() => getAllVocabItems(), []);
   const [stats, setStats] = useState({
     completedLessons: [],   // масив {course_id, lesson_id, completed_at}
@@ -3333,6 +4361,8 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
   const [error, setError] = useState('');
   const [showDelete, setShowDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [tab, setTab] = useState(STUDENT_TABS.some(t => t.id === initialTab) ? initialTab : 'overview');
+  const [busyKey, setBusyKey] = useState(null);
 
   async function loadAll() {
     setLoading(true);
@@ -3349,71 +4379,43 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
     }
     setStudent(profile);
 
-    // course_access
-    const { data: ca } = await window.SB
-      .from('course_access')
-      .select('course_id')
-      .eq('student_id', studentId);
+    const [{ data: ca }, { data: la }, { data: lc }, { data: va }, { data: hw }, { data: vp }] = await Promise.all([
+      window.SB.from('course_access').select('course_id').eq('student_id', studentId),
+      window.SB.from('lesson_access').select('course_id, lesson_id').eq('student_id', studentId),
+      window.SB.from('lesson_completions').select('course_id, lesson_id, completed_at').eq('student_id', studentId).order('completed_at', { ascending: false }),
+      window.SB.from('vocab_access').select('word_id').eq('student_id', studentId),
+      window.SB.from('homework_submissions').select('*').eq('student_id', studentId).order('submitted_at', { ascending: false }),
+      window.SB.from('vocab_progress').select('word_id, last_reviewed_at, repetitions, last_grade').eq('student_id', studentId).order('last_reviewed_at', { ascending: false }),
+    ]);
     setCourseAccess(new Set((ca || []).map(r => r.course_id)));
-
-    // lesson_access
-    const { data: la } = await window.SB
-      .from('lesson_access')
-      .select('course_id, lesson_id')
-      .eq('student_id', studentId);
     setLessonAccess(new Set((la || []).map(r => `${r.course_id}:${r.lesson_id}`)));
-
-    // lesson_completions (повні дані для статистики)
-    const { data: lc } = await window.SB
-      .from('lesson_completions')
-      .select('course_id, lesson_id, completed_at')
-      .eq('student_id', studentId)
-      .order('completed_at', { ascending: false });
     setCompletions(new Set((lc || []).map(r => `${r.course_id}:${r.lesson_id}`)));
-
-    // vocab_access
-    const { data: va } = await window.SB
-      .from('vocab_access')
-      .select('word_id')
-      .eq('student_id', studentId);
     setVocabAccess(new Set((va || []).map(r => r.word_id)));
-
-    // ── Статистика ──
-    // Homework submissions
-    const { data: hw } = await window.SB
-      .from('homework_submissions')
-      .select('*')
-      .eq('student_id', studentId)
-      .order('submitted_at', { ascending: false });
-
-    // Vocab progress (для флешкарток)
-    const { data: vp } = await window.SB
-      .from('vocab_progress')
-      .select('word_id, last_reviewed_at, repetitions, last_grade')
-      .eq('student_id', studentId)
-      .order('last_reviewed_at', { ascending: false });
-
     setStats({
       completedLessons: lc || [],
       hwSubmissions: hw || [],
       vocabProgress: vp || [],
     });
-
     setLoading(false);
   }
 
   useEffect(() => { loadAll(); }, [studentId]);
 
+  const fail = (error) => toast('Помилка: ' + error.message, 'error');
+
   async function toggleCourse(courseId) {
     const has = courseAccess.has(courseId);
+    setBusyKey(courseId);
     if (has) {
       // Знімаємо доступ
       const { error } = await window.SB.from('course_access')
         .delete()
         .eq('student_id', studentId)
         .eq('course_id', courseId);
-      if (error) { alert('Помилка: ' + error.message); return; }
+      setBusyKey(null);
+      if (error) { fail(error); return; }
       const next = new Set(courseAccess); next.delete(courseId); setCourseAccess(next);
+      toast('Доступ до курсу закрито');
     } else {
       // Даємо доступ
       const { error } = await window.SB.from('course_access').insert({
@@ -3421,13 +4423,17 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
         course_id: courseId,
         granted_by: session.user.id
       });
-      if (error) { alert('Помилка: ' + error.message); return; }
+      setBusyKey(null);
+      if (error) { fail(error); return; }
       const next = new Set(courseAccess); next.add(courseId); setCourseAccess(next);
+      toast('Курс відкрито', 'success');
     }
   }
 
+  // Та сама послідовність, що й раніше: закрито → відкрито → завершено → (зняти «завершено»)
   async function toggleLesson(courseId, lessonId, currentState) {
     const key = `${courseId}:${lessonId}`;
+    setBusyKey(key);
     if (currentState === 'completed') {
       // Знімаємо позначку "завершено"
       const { error } = await window.SB.from('lesson_completions')
@@ -3435,8 +4441,10 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
         .eq('student_id', studentId)
         .eq('course_id', courseId)
         .eq('lesson_id', lessonId);
-      if (error) { alert('Помилка: ' + error.message); return; }
+      setBusyKey(null);
+      if (error) { fail(error); return; }
       const next = new Set(completions); next.delete(key); setCompletions(next);
+      setStats(st => ({ ...st, completedLessons: st.completedLessons.filter(c => `${c.course_id}:${c.lesson_id}` !== key) }));
     } else if (currentState === 'granted') {
       // Позначаємо як завершено
       const { error } = await window.SB.from('lesson_completions').insert({
@@ -3445,8 +4453,10 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
         lesson_id: lessonId,
         completed_by: session.user.id
       });
-      if (error) { alert('Помилка: ' + error.message); return; }
+      setBusyKey(null);
+      if (error) { fail(error); return; }
       const next = new Set(completions); next.add(key); setCompletions(next);
+      setStats(st => ({ ...st, completedLessons: [{ course_id: courseId, lesson_id: lessonId, completed_at: new Date().toISOString() }, ...st.completedLessons] }));
     } else {
       // locked → надаємо доступ
       const { error } = await window.SB.from('lesson_access').insert({
@@ -3455,9 +4465,24 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
         lesson_id: lessonId,
         granted_by: session.user.id
       });
-      if (error) { alert('Помилка: ' + error.message); return; }
+      setBusyKey(null);
+      if (error) { fail(error); return; }
       const next = new Set(lessonAccess); next.add(key); setLessonAccess(next);
     }
+  }
+
+  // Відкрити одразу всі закриті уроки юніту (та сама вставка в lesson_access)
+  async function grantLessons(courseId, lessonIds) {
+    const todo = lessonIds.filter(id => !lessonAccess.has(`${courseId}:${id}`) && !completions.has(`${courseId}:${id}`));
+    if (!todo.length) return;
+    setBusyKey(`unit:${courseId}:${todo[0]}`);
+    const { error } = await window.SB.from('lesson_access').insert(todo.map(id => ({
+      student_id: studentId, course_id: courseId, lesson_id: id, granted_by: session.user.id,
+    })));
+    setBusyKey(null);
+    if (error) { fail(error); return; }
+    const next = new Set(lessonAccess); todo.forEach(id => next.add(`${courseId}:${id}`)); setLessonAccess(next);
+    toast(`Відкрито ${todo.length} ${pluralUk(todo.length, 'урок', 'уроки', 'уроків')}`, 'success');
   }
 
   async function toggleVocabWord(word) {
@@ -3467,7 +4492,7 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
         .delete()
         .eq('student_id', studentId)
         .eq('word_id', word.wordId);
-      if (error) { alert('Помилка: ' + error.message); return; }
+      if (error) { fail(error); return; }
       const next = new Set(vocabAccess); next.delete(word.wordId); setVocabAccess(next);
     } else {
       const { error } = await window.SB.from('vocab_access').insert({
@@ -3475,14 +4500,13 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
         word_id: word.wordId,
         granted_by: session.user.id
       });
-      if (error) { alert('Помилка: ' + error.message); return; }
+      if (error) { fail(error); return; }
       const next = new Set(vocabAccess); next.add(word.wordId); setVocabAccess(next);
     }
   }
 
   // Bulk: відкрити всі слова уроку одним кліком
   async function grantAllVocabInLesson(words) {
-    // Беремо тільки ті, які ще не відкриті
     const toGrant = words.filter(w => !vocabAccess.has(w.wordId));
     if (toGrant.length === 0) return;
     const payload = toGrant.map(w => ({
@@ -3491,7 +4515,7 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
       granted_by: session.user.id
     }));
     const { error } = await window.SB.from('vocab_access').insert(payload);
-    if (error) { alert('Помилка: ' + error.message); return; }
+    if (error) { fail(error); return; }
     const next = new Set(vocabAccess);
     toGrant.forEach(w => next.add(w.wordId));
     setVocabAccess(next);
@@ -3506,13 +4530,12 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
       .delete()
       .eq('student_id', studentId)
       .in('word_id', wordIds);
-    if (error) { alert('Помилка: ' + error.message); return; }
+    if (error) { fail(error); return; }
     const next = new Set(vocabAccess);
     wordIds.forEach(id => next.delete(id));
     setVocabAccess(next);
   }
 
-  // Bulk на рівні курсу: всі слова всіх уроків курсу
   async function grantAllVocabInCourse(courseStructure) {
     const allWords = courseStructure.lessons.flatMap(l => l.words);
     await grantAllVocabInLesson(allWords);
@@ -3529,123 +4552,675 @@ function StudentPage({ studentId, session, goHome, setRoute }) {
     // Auth user залишається в auth.users — але без профілю не зможе увійти
     const { error } = await window.SB.from('profiles').delete().eq('id', studentId);
     if (error) {
-      alert('Помилка видалення: ' + error.message);
+      toast('Помилка видалення: ' + error.message, 'error');
       setDeleting(false);
       return;
     }
-    // Спробуємо видалити з auth.users теж (може не спрацювати без service_role, але це ОК)
-    // При успіху повертаємось на список
     setDeleting(false);
+    toast('Учня видалено', 'success');
     setRoute({ page: 'students' });
   }
 
-  if (loading) return <main className="page"><div className="empty-inline">Завантажую...</div></main>;
+  const completionDates = useMemo(() => {
+    const m = new Map();
+    stats.completedLessons.forEach(c => m.set(`${c.course_id}:${c.lesson_id}`, c.completed_at));
+    return m;
+  }, [stats]);
+
+  const progress = useMemo(() =>
+    COURSES.filter(c => courseAccess.has(c.id)).map(c => buildCourseProgress(c, lessonAccess, completions, completionDates)),
+  [courseAccess, lessonAccess, completions, completionDates]);
+
+  const summary = useMemo(() => {
+    const hw = stats.hwSubmissions;
+    const lastAt = maxDate(
+      student && student.last_visit_date,
+      stats.completedLessons[0] && stats.completedLessons[0].completed_at,
+      hw[0] && hw[0].submitted_at,
+      stats.vocabProgress[0] && stats.vocabProgress[0].last_reviewed_at,
+    );
+    return {
+      visible: progress.reduce((a, c) => a + c.visible, 0),
+      completed: progress.reduce((a, c) => a + c.completed, 0),
+      hwTotal: hw.length,
+      hwPending: hw.filter(h => h.status === 'submitted').length,
+      hwAccepted: hw.filter(h => h.status === 'accepted').length,
+      hwReturned: hw.filter(h => h.status === 'returned').length,
+      words: stats.vocabProgress.length,
+      lastAt,
+    };
+  }, [progress, stats, student]);
+
+  if (loading) return <PageLoader label="Відкриваю профіль учня…" />;
   if (error) return <main className="page"><div className="modal-error">{error}</div></main>;
   if (!student) return null;
 
+  const name = student.display_name || student.username;
+  const tabs = STUDENT_TABS.map(t => t.id === 'homework' && summary.hwPending > 0 ? { ...t, count: summary.hwPending } : t);
+
   return (
-    <main className="page">
+    <main className="page iw-profile">
       <Crumbs items={[
         { label: 'Library', onClick: goHome },
         { label: 'Учні', onClick: () => setRoute({ page: 'students' }) },
-        { label: student.display_name || student.username, current: true }
+        { label: name, current: true }
       ]} />
 
-      <div className="student-header-card">
-        <div className="student-header-avatar">{initialsFor(student.display_name || student.username)}</div>
-        <div className="student-header-info">
-          <h1 className="student-header-name">{student.display_name || student.username}</h1>
-          <div className="student-header-username">@{student.username} · створено {new Date(student.created_at).toLocaleDateString('uk-UA')}</div>
+      <header className="iw-profile-head">
+        <Avatar name={name} seed={student.id} size={76} className="iw-profile-avatar" />
+        <div className="iw-profile-id">
+          <h1 className="iw-profile-name">{name}</h1>
+          <div className="iw-profile-meta">
+            <span>@{student.username}</span>
+            {student.created_at && <span>з нами з {new Date(student.created_at).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })}</span>}
+            <span><Clock size={13} aria-hidden="true" /> {summary.lastAt ? `активність ${formatRelativeTime(summary.lastAt)}` : 'ще не був(-ла) активним'}</span>
+          </div>
+          <div className="iw-profile-courses">
+            {progress.length === 0 && <Badge>Курс не відкрито</Badge>}
+            {progress.map(p => <Badge key={p.course.id} tone="brand">{p.course.title}</Badge>)}
+          </div>
         </div>
-        <div className="student-header-actions">
-          <button className="student-danger-btn" onClick={() => setShowDelete(true)}>
-            <Trash2 size={14} /> Видалити учня
-          </button>
+        <div className="iw-profile-actions">
+          {summary.hwPending > 0 && (
+            <IwButton variant="accent" size="sm" icon={Inbox} onClick={() => setRoute({ page: 'homework-review' })}>Перевірити ({summary.hwPending})</IwButton>
+          )}
+          <DropdownMenu label="Дії з учнем" trigger={({ ref, toggle, menuProps }) => (
+            <button ref={ref} type="button" className="iw-btn iw-btn-secondary iw-btn-sm iw-btn-icon" onClick={toggle} aria-label="Інші дії" {...menuProps}>
+              <MoreHorizontal size={18} />
+            </button>
+          )}>
+            {(close) => (
+              <React.Fragment>
+                <MenuItem icon={RefreshCw} onSelect={() => { close(); loadAll(); }}>Оновити дані</MenuItem>
+                <MenuItem icon={StickyNote} onSelect={() => { close(); setTab('notes'); }}>Нотатки вчителя</MenuItem>
+                <div className="iw-menu-sep" role="separator" />
+                <MenuItem icon={Trash2} danger onSelect={() => { close(); setShowDelete(true); }}>Видалити учня…</MenuItem>
+              </React.Fragment>
+            )}
+          </DropdownMenu>
+        </div>
+      </header>
+
+      <div className="iw-stat-grid iw-profile-stats">
+        <StatCard icon={CheckCircle} tone="sage" value={summary.completed} label="Уроків завершено" sub={`з ${summary.visible} відкритих`} />
+        <StatCard icon={Flame} tone="terracotta" value={student.current_streak || 0}
+          label={`${pluralUk(student.current_streak || 0, 'день', 'дні', 'днів')} поспіль`} sub={student.longest_streak ? `рекорд: ${student.longest_streak}` : null} />
+        <StatCard icon={Library} tone="plum" value={summary.words} label="Слів у флешкартках" sub={`${vocabAccess.size} відкрито вручну`} />
+        <StatCard icon={Inbox} tone="mustard" value={summary.hwTotal} label="Домашок здано"
+          sub={summary.hwTotal ? `✓ ${summary.hwAccepted} · ⏳ ${summary.hwPending} · ↻ ${summary.hwReturned}` : 'поки жодної'} />
+      </div>
+
+      <Tabs label="Розділи профілю" value={tab} onChange={setTab} tabs={tabs} className="iw-profile-tabs">
+        {tab === 'overview' && <StudentOverviewTab progress={progress} stats={stats} setTab={setTab} />}
+        {tab === 'progress' && <StudentProgressTab progress={progress} setTab={setTab} />}
+        {tab === 'access' && <StudentAccessTab courseAccess={courseAccess} lessonAccess={lessonAccess} completions={completions}
+          toggleCourse={toggleCourse} toggleLesson={toggleLesson} grantLessons={grantLessons} busyKey={busyKey} progress={progress} />}
+        {tab === 'homework' && <StudentHomeworkTab stats={stats} lessonAccess={lessonAccess} completions={completions} courseAccess={courseAccess} setRoute={setRoute} />}
+        {tab === 'vocab' && (
+          <VocabAccessSection
+            student={student}
+            allVocabItems={allVocabItems}
+            completions={completions}
+            vocabAccess={vocabAccess}
+            toggleVocabWord={toggleVocabWord}
+            grantAllVocabInLesson={grantAllVocabInLesson}
+            revokeAllVocabInLesson={revokeAllVocabInLesson}
+            grantAllVocabInCourse={grantAllVocabInCourse}
+            revokeAllVocabInCourse={revokeAllVocabInCourse}
+          />
+        )}
+        {tab === 'notes' && <TeacherNotesTab studentId={studentId} studentName={name} session={session} />}
+      </Tabs>
+
+      <ConfirmDialog open={showDelete} danger busy={deleting}
+        title="Видалити учня?"
+        text={`Акаунт «${name}» буде видалено разом із доступами та прогресом. Цю дію не можна скасувати.`}
+        confirmLabel="Так, видалити" onCancel={() => setShowDelete(false)} onConfirm={handleDelete} />
+    </main>
+  );
+}
+
+// ── Вкладка «Огляд» ──
+function StudentOverviewTab({ progress, stats, setTab }) {
+  const feed = useMemo(() => {
+    const items = [];
+    stats.completedLessons.forEach(c => {
+      const f = findLesson(c.course_id, c.lesson_id);
+      items.push({ at: c.completed_at, kind: 'lesson', title: f ? `L${f.lesson.number} · ${f.lesson.title}` : c.lesson_id, sub: f ? f.course.title : c.course_id });
+    });
+    stats.hwSubmissions.forEach(h => {
+      const f = findLesson(h.course_id, h.lesson_id);
+      items.push({ at: h.submitted_at, kind: 'hw', status: h.status, hwKind: h.kind, title: f ? `L${f.lesson.number} · ${f.lesson.title}` : h.lesson_id, sub: (HW_KIND[h.kind] || {}).label || 'Домашнє' });
+    });
+    return items.filter(i => i.at).sort((a, b) => new Date(b.at) - new Date(a.at)).slice(0, 8);
+  }, [stats]);
+
+  if (progress.length === 0) {
+    return (
+      <EmptyState art="books" title="Курс ще не відкрито" text="Відкрий учню курс — тоді тут з'явиться прогрес по юнітах і остання активність."
+        action={<IwButton variant="primary" icon={Unlock} onClick={() => setTab('access')}>Відкрити доступ</IwButton>} />
+    );
+  }
+  return (
+    <div className="iw-overview">
+      <div className="iw-overview-courses">
+        {progress.map(p => (
+          <section key={p.course.id} className="iw-card iw-course-sum">
+            <ProgressRing value={p.completed} max={Math.max(p.visible, 1)} size={92} stroke={8} tone={p.percent >= 100 ? 'sage' : 'terracotta'} label={`Прогрес: ${p.course.title}`} />
+            <div className="iw-course-sum-body">
+              <div className="iw-kicker">Курс</div>
+              <h3 className="iw-course-sum-title">{p.course.title}</h3>
+              <dl className="iw-mini-stats">
+                <div><dt>Уроків</dt><dd>{p.completed} / {p.visible}<small> відкр. · {p.total} всього</small></dd></div>
+                <div><dt>Юнітів</dt><dd>{p.unitsDone} / {p.unitsTotal}</dd></div>
+              </dl>
+              {p.currentUnit && (
+                <div className="iw-course-sum-current">
+                  <span className="iw-dot-live" aria-hidden="true" />
+                  Зараз: <strong>Unit {p.currentUnit.number}</strong> · {p.currentUnit.title}
+                </div>
+              )}
+              <IwButton size="sm" variant="ghost" iconRight={ArrowRight} onClick={() => setTab('progress')}>Прогрес по юнітах</IwButton>
+            </div>
+          </section>
+        ))}
+      </div>
+      <section className="iw-card iw-feed">
+        <h3 className="iw-card-title">Остання активність</h3>
+        {feed.length === 0 && <p className="iw-scard-muted" style={{ margin: 0 }}>Учень ще не завершив жодного уроку й не здав домашніх.</p>}
+        <ol className="iw-feed-list">
+          {feed.map((it, i) => (
+            <li key={i} className={cx('iw-feed-item', it.kind === 'hw' && `hw-${it.status}`)}>
+              <span className="iw-feed-dot" aria-hidden="true">{it.kind === 'lesson' ? <Check size={13} /> : it.hwKind === 'speaking' ? <Mic size={13} /> : <Pencil size={13} />}</span>
+              <div className="iw-feed-body">
+                <div className="iw-feed-title">{it.kind === 'lesson' ? 'Завершив урок' : 'Здав домашнє'} — {it.title}</div>
+                <div className="iw-feed-sub">
+                  {formatRelativeTime(it.at)} · {it.sub}
+                  {it.kind === 'hw' && HW_STATUS[it.status] && <Badge tone={HW_STATUS[it.status].tone}>{HW_STATUS[it.status].label}</Badge>}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </div>
+  );
+}
+
+const UNIT_STATE = {
+  completed: { label: 'Завершено', status: 'completed' },
+  current:   { label: 'Поточний',  status: 'progress' },
+  available: { label: 'Відкрито',  status: 'available' },
+  locked:    { label: 'Закрито',   status: 'locked' },
+};
+
+// ── Вкладка «Прогрес»: курс → юніт → урок ──
+function StudentProgressTab({ progress, setTab }) {
+  const [open, setOpen] = useState(() => {
+    const s = new Set();
+    progress.forEach(p => { if (p.currentUnit) s.add(`${p.course.id}:${p.currentUnit.id}`); });
+    return s;
+  });
+  const toggle = (k) => setOpen(prev => { const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n; });
+
+  if (progress.length === 0) {
+    return <EmptyState art="books" title="Курс ще не відкрито" text="Прогрес з'явиться, щойно учень отримає доступ до курсу."
+      action={<IwButton variant="primary" icon={Unlock} onClick={() => setTab('access')}>Відкрити доступ</IwButton>} />;
+  }
+  return (
+    <div className="iw-progress-tab">
+      {progress.map(p => (
+        <section key={p.course.id} className="iw-course-block">
+          <div className="iw-course-block-head">
+            <div>
+              <div className="iw-kicker">Курс</div>
+              <h3 className="iw-course-sum-title">{p.course.title}</h3>
+            </div>
+            <div className="iw-course-block-legend">
+              <span><b>{p.completed}</b> завершено</span>
+              <span><b>{p.visible - p.completed}</b> відкрито</span>
+              <span><b>{p.total - p.visible}</b> закрито</span>
+              <span><b>{p.unitsDone}/{p.unitsTotal}</b> юнітів</span>
+            </div>
+          </div>
+          <ul className="iw-units">
+            {p.units.map(u => {
+              const k = `${p.course.id}:${u.unit.id}`;
+              const isOpen = open.has(k);
+              const st = UNIT_STATE[u.state];
+              return (
+                <li key={u.unit.id} className={cx('iw-unit', `is-${u.state}`, isOpen && 'open')}>
+                  <button type="button" className="iw-unit-head" aria-expanded={isOpen} onClick={() => toggle(k)}>
+                    <span className="iw-unit-num">{u.unit.number}</span>
+                    <span className="iw-unit-titles">
+                      <span className="iw-unit-title">{u.unit.title}</span>
+                      {u.unit.subtitle && <span className="iw-unit-sub">{u.unit.subtitle}</span>}
+                    </span>
+                    <span className="iw-unit-bar"><ProgressBar value={u.completed} max={u.total} size="sm" tone={u.isComplete ? 'sage' : 'terracotta'} valueLabel={`${u.completed}/${u.total}`} label={`Прогрес юніту ${u.unit.number}`} /></span>
+                    <StatusBadge status={st.status} label={st.label} />
+                    <ChevronDown size={18} className="iw-unit-chev" aria-hidden="true" />
+                  </button>
+                  {isOpen && (
+                    <ol className="iw-lesson-rows">
+                      {u.lessons.map(l => (
+                        <li key={l.lesson.id} className={cx('iw-lrow', `is-${l.status}`)}>
+                          <span className="iw-lrow-num">L{l.lesson.number}</span>
+                          <span className="iw-lrow-titles">
+                            <span className="iw-lrow-title">{l.lesson.title}</span>
+                            {l.lesson.titleUk && <span className="iw-lrow-sub">{l.lesson.titleUk}</span>}
+                          </span>
+                          <span className="iw-lrow-type">{l.lesson.type}</span>
+                          <span className="iw-lrow-date">{l.completedAt ? new Date(l.completedAt).toLocaleDateString('uk-UA') : ''}</span>
+                          <StatusBadge status={l.status} />
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+// ── Вкладка «Доступ до уроків» ──
+const ACCESS_FILTERS = [
+  { id: 'all', label: 'Усі' },
+  { id: 'locked', label: 'Закриті' },
+  { id: 'granted', label: 'Відкриті' },
+  { id: 'completed', label: 'Завершені' },
+];
+const ACCESS_CLS = { locked: 'st-locked', granted: 'st-available', completed: 'st-completed' };
+const ACCESS_NEXT = {
+  locked: 'Натисни, щоб відкрити урок',
+  granted: 'Натисни, щоб позначити як завершений',
+  completed: 'Натисни, щоб зняти позначку «завершено»',
+};
+
+function StudentAccessTab({ courseAccess, lessonAccess, completions, toggleCourse, toggleLesson, grantLessons, busyKey, progress }) {
+  const [q, setQ] = useState('');
+  const [filter, setFilter] = useState('all');
+  const [open, setOpen] = useState(() => new Set(progress.filter(p => p.currentUnit).map(p => `${p.course.id}:${p.currentUnit.id}`)));
+  const toggleOpen = (k) => setOpen(prev => { const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n; });
+  const query = q.trim().toLowerCase();
+  const forceOpen = Boolean(query) || filter !== 'all';
+
+  return (
+    <div className="iw-access-tab">
+      <p className="iw-help">
+        Перемикач відкриває курс. Усередині курсу кнопка біля уроку змінює його стан:
+        <StatusBadge status="locked" /> → <StatusBadge status="available" label="Відкрито" /> → <StatusBadge status="completed" />.
+        Завершення уроку не відкриває наступний автоматично.
+      </p>
+      {COURSES.map(course => {
+        const hasCourse = courseAccess.has(course.id);
+        const lessonsTotal = course.units.reduce((a, u) => a + u.lessons.length, 0);
+        return (
+          <section key={course.id} className={cx('iw-course-block', !hasCourse && 'is-off')}>
+            <div className="iw-course-block-head">
+              <div>
+                <div className="iw-kicker">Курс · {course.units.length} юнітів · {lessonsTotal} уроків</div>
+                <h3 className="iw-course-sum-title">{course.title}</h3>
+              </div>
+              <label className="iw-switch">
+                <span>{hasCourse ? 'Курс відкрито' : 'Курс закрито'}</span>
+                <span className="toggle-switch">
+                  <input type="checkbox" checked={hasCourse} disabled={busyKey === course.id} onChange={() => toggleCourse(course.id)} aria-label={`Доступ до курсу ${course.title}`} />
+                  <span className="toggle-slider" />
+                </span>
+              </label>
+            </div>
+
+            {hasCourse && (
+              <React.Fragment>
+                <div className="iw-access-tools">
+                  <div className="iw-input-wrap"><Search size={17} aria-hidden="true" />
+                    <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Номер або назва уроку…" aria-label="Пошук уроку" />
+                  </div>
+                  <div className="iw-chips" role="group" aria-label="Фільтр уроків">
+                    {ACCESS_FILTERS.map(f => <button key={f.id} type="button" className="iw-chip" aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}>{f.label}</button>)}
+                  </div>
+                </div>
+                <ul className="iw-units">
+                  {course.units.map(unit => {
+                    const rows = unit.lessons.map(lesson => {
+                      const key = `${course.id}:${lesson.id}`;
+                      const state = completions.has(key) ? 'completed' : lessonAccess.has(key) ? 'granted' : 'locked';
+                      return { lesson, key, state };
+                    });
+                    const shown = rows.filter(r => (filter === 'all' || r.state === filter) && (!query
+                      || r.lesson.title.toLowerCase().includes(query)
+                      || (r.lesson.titleUk || '').toLowerCase().includes(query)
+                      || String(r.lesson.number) === query.replace(/^l/, '')
+                      || unit.title.toLowerCase().includes(query)));
+                    if (forceOpen && shown.length === 0) return null;
+                    const k = `${course.id}:${unit.id}`;
+                    const isOpen = forceOpen || open.has(k);
+                    const lockedIds = rows.filter(r => r.state === 'locked').map(r => r.lesson.id);
+                    const done = rows.filter(r => r.state === 'completed').length;
+                    const openCount = rows.filter(r => r.state !== 'locked').length;
+                    return (
+                      <li key={unit.id} className={cx('iw-unit', isOpen && 'open')}>
+                        <div className="iw-unit-head as-row">
+                          <button type="button" className="iw-unit-toggle" aria-expanded={isOpen} onClick={() => toggleOpen(k)}>
+                            <span className="iw-unit-num">{unit.number}</span>
+                            <span className="iw-unit-titles">
+                              <span className="iw-unit-title">{unit.title}</span>
+                              <span className="iw-unit-sub">{openCount}/{rows.length} відкрито · {done} завершено</span>
+                            </span>
+                            <ChevronDown size={18} className="iw-unit-chev" aria-hidden="true" />
+                          </button>
+                          {lockedIds.length > 0 && (
+                            <IwButton size="sm" variant="secondary" icon={Unlock} disabled={!!busyKey}
+                              onClick={() => grantLessons(course.id, lockedIds)}>
+                              Відкрити юніт <span className="iw-muted-num">({lockedIds.length})</span>
+                            </IwButton>
+                          )}
+                        </div>
+                        {isOpen && (
+                          <ol className="iw-lesson-rows">
+                            {shown.map(r => (
+                              <li key={r.lesson.id} className={cx('iw-lrow', `is-${r.state}`)}>
+                                <span className="iw-lrow-num">L{r.lesson.number}</span>
+                                <span className="iw-lrow-titles">
+                                  <span className="iw-lrow-title">{r.lesson.title}</span>
+                                  {r.lesson.titleUk && <span className="iw-lrow-sub">{r.lesson.titleUk}</span>}
+                                </span>
+                                <span className="iw-lrow-type">{r.lesson.type}</span>
+                                <button type="button" className={cx('iw-status', 'iw-status-btn', ACCESS_CLS[r.state])} disabled={busyKey === r.key}
+                                  onClick={() => toggleLesson(course.id, r.lesson.id, r.state)}
+                                  title={ACCESS_NEXT[r.state]} aria-label={`L${r.lesson.number} ${r.lesson.title}: ${r.state === 'locked' ? 'закрито' : r.state === 'granted' ? 'відкрито' : 'завершено'}. ${ACCESS_NEXT[r.state]}`}>
+                                  {r.state === 'locked' && <React.Fragment><Lock size={13} /> Закрито</React.Fragment>}
+                                  {r.state === 'granted' && <React.Fragment><Unlock size={13} /> Відкрито</React.Fragment>}
+                                  {r.state === 'completed' && <React.Fragment><CheckCircle size={13} /> Завершено</React.Fragment>}
+                                </button>
+                              </li>
+                            ))}
+                          </ol>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </React.Fragment>
+            )}
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Вкладка «Домашні» ──
+function StudentHomeworkTab({ stats, lessonAccess, completions, courseAccess, setRoute }) {
+  const [filter, setFilter] = useState('all');
+  const subs = stats.hwSubmissions;
+  // «Задано» = відкриті уроки курсів учня, у яких є домашнє завдання
+  const assigned = useMemo(() => {
+    const out = [];
+    COURSES.forEach(c => {
+      if (!courseAccess.has(c.id)) return;
+      c.units.forEach(u => u.lessons.forEach(l => {
+        const key = `${c.id}:${l.id}`;
+        if (!l.homework || !(lessonAccess.has(key) || completions.has(key))) return;
+        const kinds = ['writing', 'speaking'].filter(k => l.homework[k]);
+        const done = kinds.filter(k => subs.some(s => s.course_id === c.id && s.lesson_id === l.id && s.kind === k));
+        out.push({ course: c, lesson: l, kinds, done });
+      }));
+    });
+    return out;
+  }, [subs, lessonAccess, completions, courseAccess]);
+  const notSubmitted = assigned.filter(a => a.done.length < a.kinds.length);
+  const shown = subs.filter(s => filter === 'all' || s.status === filter);
+  const count = (st) => subs.filter(s => s.status === st).length;
+
+  return (
+    <div className="iw-hw-tab">
+      <div className="iw-stat-grid">
+        <StatCard icon={FileText} tone="sky" value={assigned.length} label="Уроків з домашнім" sub="серед відкритих" />
+        <StatCard icon={Inbox} tone="mustard" value={count('submitted')} label="На перевірці" />
+        <StatCard icon={CheckCircle} tone="sage" value={count('accepted')} label="Прийнято" />
+        <StatCard icon={RefreshCw} tone="terracotta" value={count('returned')} label="Повернуто" />
+      </div>
+
+      <section className="iw-card">
+        <div className="iw-card-head">
+          <h3 className="iw-card-title">Здані роботи</h3>
+          <div className="iw-chips" role="group" aria-label="Фільтр домашніх">
+            {[['all', 'Усі', subs.length], ['submitted', 'На перевірці', count('submitted')], ['accepted', 'Прийнято', count('accepted')], ['returned', 'Повернуто', count('returned')]].map(([id, label, n]) => (
+              <button key={id} type="button" className="iw-chip" aria-pressed={filter === id} onClick={() => setFilter(id)}>{label}<span className="iw-chip-count">{n}</span></button>
+            ))}
+          </div>
+        </div>
+        {shown.length === 0 && <p className="iw-scard-muted">{subs.length === 0 ? 'Учень ще не здав жодної домашньої роботи.' : 'Немає робіт із таким статусом.'}</p>}
+        <ul className="iw-hw-list">
+          {shown.map(s => {
+            const f = findLesson(s.course_id, s.lesson_id);
+            const kind = HW_KIND[s.kind] || { label: s.kind, icon: FileText };
+            const KI = kind.icon;
+            const st = HW_STATUS[s.status] || { label: s.status, tone: null };
+            return (
+              <li key={s.id || `${s.lesson_id}:${s.kind}:${s.submitted_at}`} className="iw-hw-row">
+                <span className="iw-hw-kind" title={kind.label}><KI size={16} aria-hidden="true" /></span>
+                <div className="iw-hw-body">
+                  <div className="iw-hw-title">{f ? `L${f.lesson.number} · ${f.lesson.title}` : s.lesson_id}</div>
+                  <div className="iw-hw-sub">
+                    {kind.label} · здано {s.submitted_at ? new Date(s.submitted_at).toLocaleDateString('uk-UA', { day: 'numeric', month: 'short' }) : '—'}
+                    {s.reviewed_at && ` · перевірено ${new Date(s.reviewed_at).toLocaleDateString('uk-UA', { day: 'numeric', month: 'short' })}`}
+                  </div>
+                  {s.teacher_comment && <div className="iw-hw-comment">«{s.teacher_comment}»</div>}
+                </div>
+                <Badge tone={st.tone}>{st.label}</Badge>
+                {s.status === 'submitted' && <IwButton size="sm" variant="primary" onClick={() => setRoute({ page: 'homework-review' })}>Перевірити</IwButton>}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      {notSubmitted.length > 0 && (
+        <section className="iw-card iw-card-soft">
+          <h3 className="iw-card-title">Ще не здано <span className="iw-muted-num">({notSubmitted.length})</span></h3>
+          <ul className="iw-hw-pending-list">
+            {notSubmitted.map(a => (
+              <li key={`${a.course.id}:${a.lesson.id}`}>
+                <span className="iw-lrow-num">L{a.lesson.number}</span>
+                <span className="iw-lrow-title">{a.lesson.title}</span>
+                <span className="iw-hw-missing">
+                  {a.kinds.filter(k => !a.done.includes(k)).map(k => <Badge key={k}>{(HW_KIND[k] || {}).label || k}</Badge>)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+  );
+}
+
+// ── Вкладка «Нотатки» — приватні нотатки вчителя ──
+// Таблиця teacher_notes з RLS «тільки для вчителів». Учні не можуть
+// прочитати її навіть напряму через API. SQL — supabase/teacher_notes.sql
+const TEACHER_NOTES_SQL = `-- Inkwell 2.0 · приватні нотатки вчителя про учня
+create or replace function public.inkwell_is_teacher()
+returns boolean language sql stable security definer set search_path = public as $$
+  select exists (select 1 from public.profiles where id = auth.uid() and role = 'teacher');
+$$;
+
+create table if not exists public.teacher_notes (
+  id uuid primary key default gen_random_uuid(),
+  student_id uuid not null references public.profiles(id) on delete cascade,
+  author_id uuid default auth.uid() references public.profiles(id) on delete set null,
+  body text not null check (char_length(body) between 1 and 5000),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+create index if not exists teacher_notes_student_idx on public.teacher_notes (student_id, updated_at desc);
+
+alter table public.teacher_notes enable row level security;
+drop policy if exists "teacher_notes: teachers only" on public.teacher_notes;
+create policy "teacher_notes: teachers only" on public.teacher_notes
+  for all to authenticated
+  using (public.inkwell_is_teacher())
+  with check (public.inkwell_is_teacher());
+
+create or replace function public.teacher_notes_touch()
+returns trigger language plpgsql as $$
+begin new.updated_at := now(); return new; end; $$;
+drop trigger if exists teacher_notes_touch on public.teacher_notes;
+create trigger teacher_notes_touch before update on public.teacher_notes
+  for each row execute function public.teacher_notes_touch();`;
+
+function isMissingTable(error) {
+  return !!error && (error.code === '42P01' || error.code === 'PGRST205' || /does not exist|could not find the table/i.test(error.message || ''));
+}
+
+function TeacherNotesTab({ studentId, studentName, session }) {
+  const [notes, setNotes] = useState([]);
+  const [state, setState] = useState('loading'); // loading | ready | missing | error
+  const [errMsg, setErrMsg] = useState('');
+  const [draft, setDraft] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [editing, setEditing] = useState(null); // { id, body }
+  const [toDelete, setToDelete] = useState(null);
+
+  async function load() {
+    setState('loading');
+    const { data, error } = await window.SB.from('teacher_notes')
+      .select('id, body, created_at, updated_at, author_id')
+      .eq('student_id', studentId)
+      .order('updated_at', { ascending: false });
+    if (isMissingTable(error)) { setState('missing'); return; }
+    if (error) { setErrMsg(error.message); setState('error'); return; }
+    setNotes(data || []);
+    setState('ready');
+  }
+  useEffect(() => { load(); }, [studentId]);
+
+  async function add() {
+    const body = draft.trim();
+    if (!body) return;
+    setSaving(true);
+    const { data, error } = await window.SB.from('teacher_notes')
+      .insert({ student_id: studentId, author_id: session.user.id, body })
+      .select('id, body, created_at, updated_at, author_id')
+      .single();
+    setSaving(false);
+    if (error) { toast('Не вдалося зберегти: ' + error.message, 'error'); return; }
+    setNotes(prev => [data || { id: Date.now(), body, created_at: new Date().toISOString(), updated_at: new Date().toISOString() }, ...prev]);
+    setDraft('');
+    toast('Нотатку збережено', 'success');
+  }
+
+  async function saveEdit() {
+    const body = editing.body.trim();
+    if (!body) return;
+    setSaving(true);
+    const { error } = await window.SB.from('teacher_notes').update({ body }).eq('id', editing.id);
+    setSaving(false);
+    if (error) { toast('Не вдалося зберегти: ' + error.message, 'error'); return; }
+    const now = new Date().toISOString();
+    setNotes(prev => prev.map(n => n.id === editing.id ? { ...n, body, updated_at: now } : n).sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)));
+    setEditing(null);
+    toast('Зміни збережено', 'success');
+  }
+
+  async function remove() {
+    const id = toDelete.id;
+    setSaving(true);
+    const { error } = await window.SB.from('teacher_notes').delete().eq('id', id);
+    setSaving(false);
+    if (error) { toast('Не вдалося видалити: ' + error.message, 'error'); return; }
+    setNotes(prev => prev.filter(n => n.id !== id));
+    setToDelete(null);
+    toast('Нотатку видалено');
+  }
+
+  const onKey = (fn) => (e) => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); fn(); } };
+
+  if (state === 'loading') return <div className="iw-notes"><Skeleton h={120} r={16} /><Skeleton h={80} r={16} /></div>;
+
+  if (state === 'missing') {
+    return (
+      <div className="iw-card iw-setup">
+        <div className="iw-setup-art"><Illustration name="notebook" /></div>
+        <div>
+          <h3 className="iw-card-title">Нотатки ще не підключено</h3>
+          <p className="iw-modal-text">
+            Для приватних нотаток потрібна одна нова таблиця в Supabase. Вона доступна лише вчителям — учні не побачать її навіть через API.
+            Відкрий <strong>Supabase → SQL Editor</strong>, встав код і натисни <strong>Run</strong>. Наявні дані це не змінює.
+          </p>
+          <div className="iw-setup-actions">
+            <IwButton variant="primary" icon={FileText} onClick={() => {
+              const done = () => toast('SQL скопійовано', 'success');
+              try { navigator.clipboard.writeText(TEACHER_NOTES_SQL).then(done, () => toast('Не вдалося скопіювати — виділи код вручну', 'error')); } catch (e) { toast('Не вдалося скопіювати — виділи код вручну', 'error'); }
+            }}>Скопіювати SQL</IwButton>
+            <IwButton variant="secondary" icon={RefreshCw} onClick={load}>Перевірити ще раз</IwButton>
+          </div>
+          <details className="iw-setup-sql"><summary>Показати SQL</summary><pre>{TEACHER_NOTES_SQL}</pre></details>
+        </div>
+      </div>
+    );
+  }
+
+  if (state === 'error') {
+    return <div className="modal-error">Не вдалося завантажити нотатки: {errMsg} <IwButton size="sm" variant="ghost" onClick={load}>Спробувати ще раз</IwButton></div>;
+  }
+
+  return (
+    <div className="iw-notes">
+      <div className="iw-card iw-note-new">
+        <label className="iw-note-label" htmlFor="iw-note-draft">
+          <Lock size={14} aria-hidden="true" /> Приватна нотатка про {studentName} — бачать лише вчителі
+        </label>
+        <textarea id="iw-note-draft" className="iw-textarea" rows={3} maxLength={5000} value={draft}
+          onChange={e => setDraft(e.target.value)} onKeyDown={onKey(add)}
+          placeholder="Наприклад: плутає Present Perfect і Past Simple; любить футбол — давати приклади про спорт." />
+        <div className="iw-note-actions">
+          <span className="iw-note-hint">Ctrl + Enter — зберегти</span>
+          <IwButton variant="primary" size="sm" onClick={add} disabled={saving || !draft.trim()}>{saving ? 'Зберігаю…' : 'Додати нотатку'}</IwButton>
         </div>
       </div>
 
-      <StudentStatsSection
-        student={student}
-        stats={stats}
-        courseAccess={courseAccess}
-        lessonAccess={lessonAccess}
-        completions={completions}
-        vocabAccess={vocabAccess}
-        allVocabItems={allVocabItems}
-      />
+      {notes.length === 0 && <EmptyState art="notebook" title="Нотаток поки немає" text="Записуй спостереження, цілі та домовленості — вони залишаться тут між заняттями." />}
 
-      <section className="access-section">
-        <h2 className="access-section-title">Доступ до курсів та уроків</h2>
-        <p className="access-section-sub">Перемикачем відкриваєш весь курс. Всередині курсу можна вручну відкривати доступ до окремих уроків (учень може почати з нього) та позначати уроки як завершені.</p>
-
-        {COURSES.map(course => {
-          const hasCourseAccess = courseAccess.has(course.id);
-          const allLessons = course.units.flatMap(u => u.lessons.map(l => ({ ...l, unitTitle: u.title, unitNumber: u.number })));
-          return (
-            <div key={course.id} className="access-course-block">
-              <div className="access-course-head">
-                <div className="access-course-name">{course.title}</div>
-                <div className="access-course-meta">{course.units.length} юніт(и) · {allLessons.length} уроків</div>
-                <label className="toggle-switch">
-                  <input type="checkbox" checked={hasCourseAccess} onChange={() => toggleCourse(course.id)} />
-                  <span className="toggle-slider" />
-                </label>
-              </div>
-              {hasCourseAccess && (
-                <div className="access-lessons">
-                  {allLessons.map(lesson => {
-                    const key = `${course.id}:${lesson.id}`;
-                    const isCompleted = completions.has(key);
-                    const isGranted = lessonAccess.has(key);
-                    const state = isCompleted ? 'completed' : (isGranted ? 'granted' : 'locked');
-                    return (
-                      <div key={lesson.id} className="access-lesson-row">
-                        <div className="access-lesson-num">L{lesson.number}</div>
-                        <div className="access-lesson-name">{lesson.title}</div>
-                        <button
-                          className={`access-lesson-btn ${state}`}
-                          onClick={() => toggleLesson(course.id, lesson.id, state)}
-                          title={
-                            state === 'locked' ? 'Клікни, щоб відкрити доступ' :
-                            state === 'granted' ? 'Клікни, щоб позначити як завершений' :
-                            'Клікни, щоб зняти "завершено"'
-                          }
-                        >
-                          {state === 'locked' && <React.Fragment><Lock size={11} /> Закрито</React.Fragment>}
-                          {state === 'granted' && <React.Fragment><Unlock size={11} /> Відкрито</React.Fragment>}
-                          {state === 'completed' && <React.Fragment><Check size={11} /> Завершено</React.Fragment>}
-                        </button>
-                      </div>
-                    );
-                  })}
+      <ul className="iw-note-list">
+        {notes.map(n => (
+          <li key={n.id} className="iw-card iw-note">
+            {editing && editing.id === n.id ? (
+              <React.Fragment>
+                <textarea className="iw-textarea" rows={4} maxLength={5000} autoFocus value={editing.body}
+                  onChange={e => setEditing({ ...editing, body: e.target.value })} onKeyDown={onKey(saveEdit)} aria-label="Редагування нотатки" />
+                <div className="iw-note-actions">
+                  <IwButton size="sm" variant="ghost" onClick={() => setEditing(null)} disabled={saving}>Скасувати</IwButton>
+                  <IwButton size="sm" variant="primary" onClick={saveEdit} disabled={saving || !editing.body.trim()}>Зберегти</IwButton>
                 </div>
-              )}
-            </div>
-          );
-        })}
-      </section>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <p className="iw-note-body">{n.body}</p>
+                <div className="iw-note-foot">
+                  <span>
+                    {new Date(n.created_at).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    {n.updated_at && Math.abs(new Date(n.updated_at) - new Date(n.created_at)) > 60000 && ` · змінено ${formatRelativeTime(n.updated_at)}`}
+                  </span>
+                  <span className="iw-note-tools">
+                    <IwButton size="sm" variant="ghost" icon={Pencil} onClick={() => setEditing({ id: n.id, body: n.body })}>Змінити</IwButton>
+                    <IwButton size="sm" variant="ghost" icon={Trash2} onClick={() => setToDelete(n)} aria-label="Видалити нотатку" />
+                  </span>
+                </div>
+              </React.Fragment>
+            )}
+          </li>
+        ))}
+      </ul>
 
-      <VocabAccessSection
-        student={student}
-        allVocabItems={allVocabItems}
-        completions={completions}
-        vocabAccess={vocabAccess}
-        toggleVocabWord={toggleVocabWord}
-        grantAllVocabInLesson={grantAllVocabInLesson}
-        revokeAllVocabInLesson={revokeAllVocabInLesson}
-        grantAllVocabInCourse={grantAllVocabInCourse}
-        revokeAllVocabInCourse={revokeAllVocabInCourse}
-      />
-
-      {showDelete && (
-        <DeleteStudentModal
-          student={student}
-          onClose={() => setShowDelete(false)}
-          onConfirm={handleDelete}
-          deleting={deleting}
-        />
-      )}
-    </main>
+      <ConfirmDialog open={!!toDelete} danger busy={saving} title="Видалити нотатку?" text="Нотатку буде видалено назавжди."
+        confirmLabel="Видалити" onCancel={() => setToDelete(null)} onConfirm={remove} />
+    </div>
   );
 }
 
@@ -5449,7 +7024,24 @@ function AuthGate() {
 }
 
 function App({ session, onLogout }) {
-  const [theme, setTheme] = useState('light');
+  // Тема запам'ятовується на цьому пристрої для кожного акаунта.
+  // За замовчуванням: вчитель — темна, учень — світла.
+  const themeKey = `inkwell-theme:${session.user.id}`;
+  const [theme, setThemeRaw] = useState(() => {
+    try { const saved = localStorage.getItem(themeKey); if (saved === 'light' || saved === 'dark') return saved; } catch (e) {}
+    return session.profile.role === 'teacher' ? 'dark' : 'light';
+  });
+  const setTheme = (t) => {
+    setThemeRaw(t);
+    try { localStorage.setItem(themeKey, t); } catch (e) {}
+  };
+  useEffect(() => {
+    const rootEl = document.documentElement;
+    rootEl.classList.toggle('dark', theme === 'dark');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#161412' : '#faf6ee');
+    return () => rootEl.classList.remove('dark');
+  }, [theme]);
   const [route, setRouteRaw] = useState({ page: 'home' });
   const [routeHistory, setRouteHistory] = useState([]); // стек попередніх routes
   const [query, setQuery] = useState('');
@@ -5527,7 +7119,10 @@ function App({ session, onLogout }) {
         vocabAccess: new Set((va.data || []).map(r => r.word_id)),
       });
     }
-    load();
+    load().catch((err) => {
+      console.warn('[Inkwell] Не вдалося завантажити доступи учня:', err);
+      setPermissions(prev => ({ ...prev, loading: false }));
+    });
   }, [session.user.id, isTeacher]);
 
   // Функції доступу
@@ -5589,15 +7184,25 @@ function App({ session, onLogout }) {
   // Режим показу на головній: уроки якщо є query або обраний Type-фільтр; інакше - курси
   const lessonMode = Boolean(query.trim()) || activeFilters.type.length > 0;
 
+  // Поки доступи учня вантажаться, показуємо спільний екран завантаження —
+  // інакше головна встигає порахувати «немає уроків» з порожніх даних.
+  const permsReady = isTeacher || !permissions.loading;
+  const showTabBar = !['lesson', 'flashcards'].includes(route.page);
+  const focusMain = () => { const m = document.getElementById('iw-main'); if (m) m.focus(); };
+
   return (
     <div className={theme === 'dark' ? 'dark' : ''}>
-      <div className="app-root">
+      <div className={cx('app-root', showTabBar && 'has-tabbar')}>
+        <button type="button" className="iw-skip" onClick={focusMain}>Перейти до змісту</button>
         <div className="bg-deco" aria-hidden="true">
           <div className="bg-grain" />
           <div className="bg-blob bg-blob-1" />
           <div className="bg-blob bg-blob-2" />
         </div>
-        <Nav theme={theme} setTheme={setTheme} route={route} setRoute={setRoute} mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} session={session} onLogout={onLogout} pendingHomeworkCount={pendingHomeworkCount} />
+        <Nav theme={theme} setTheme={setTheme} route={route} setRoute={setRoute} session={session} onLogout={onLogout} pendingHomeworkCount={pendingHomeworkCount} />
+        <div id="iw-main" className="iw-page" key={route.page} tabIndex={-1}>
+        {!permsReady && <PageLoader label="Відкриваю твою бібліотеку…" />}
+        {permsReady && <React.Fragment>
         {route.page === 'home' && isTeacher && (
           <React.Fragment>
             <Hero query={query} setQuery={setQuery} setRoute={setRoute} totalLessons={visibleLessons.length} />
@@ -5649,72 +7254,152 @@ function App({ session, onLogout }) {
         {route.page === 'my-homework' && <MyHomeworkPage session={session} goHome={goHome} setRoute={setRoute} />}
         {route.page === 'students' && <StudentsPage session={session} goHome={goHome} setRoute={setRoute} />}
         {route.page === 'homework-review' && <HomeworkReviewPage session={session} goHome={goHome} setRoute={setRoute} />}
-        {route.page === 'student' && <StudentPage studentId={route.studentId} session={session} goHome={goHome} setRoute={setRoute} />}
-        <Footer />
+        {route.page === 'student' && <StudentPage key={route.studentId + ':' + (route.tab || '')} studentId={route.studentId} initialTab={route.tab} session={session} goHome={goHome} setRoute={setRoute} />}
+        </React.Fragment>}
+        </div>
+        <Footer setRoute={setRoute} isTeacher={isTeacher} />
+        {showTabBar && <MobileTabBar route={route} setRoute={setRoute} isTeacher={isTeacher} pendingHomeworkCount={pendingHomeworkCount} />}
+        <ToastHost />
         <ScrollToTop />
       </div>
     </div>
   );
 }
 
-function Nav({ theme, setTheme, route, setRoute, mobileMenu, setMobileMenu, session, onLogout, pendingHomeworkCount = 0 }) {
+// ── Навігація 2.0 ─────────────────────────────────────────────
+// Спільний опис розділів: верхнє меню (desktop) і нижня панель (mobile).
+// pages — які сторінки підсвічують цей розділ як активний.
+function getNavLinks(isTeacher, pendingHomeworkCount = 0) {
   const firstCourseId = COURSES[0] ? COURSES[0].id : null;
+  const links = [
+    { key: 'home', label: isTeacher ? 'Library' : 'Home', short: isTeacher ? 'Library' : 'Home', icon: isTeacher ? BookOpen : Home, pages: ['home'] },
+    { key: 'grammar', label: 'Grammar Bank', short: 'Grammar', icon: Brain, pages: ['grammar'] },
+    { key: 'vocabulary', label: 'Vocabulary Bank', short: 'Vocab', icon: Library, pages: ['vocabulary', 'vocab-course', 'vocab-lesson', 'flashcards'] },
+  ];
+  if (firstCourseId) links.push({ key: 'course', label: isTeacher ? 'Courses' : 'Мої курси', short: isTeacher ? 'Courses' : 'Курси', icon: MapIcon, pages: ['course', 'lesson'], route: { page: 'course', courseId: firstCourseId } });
+  if (isTeacher) links.push({ key: 'students', label: 'Учні', short: 'Учні', icon: Users, pages: ['students', 'student', 'homework-review'], badge: pendingHomeworkCount > 0 ? pendingHomeworkCount : null });
+  return links;
+}
+
+function BrandMark() {
+  return (
+    <div className="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" width="28" height="28">
+        <path d="M4 6 Q16 2 28 6 L28 24 Q16 20 4 24 Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+        <path d="M16 4 L16 22" stroke="currentColor" strokeWidth="1.6" />
+        <circle cx="16" cy="13" r="1.4" fill="currentColor" />
+      </svg>
+    </div>
+  );
+}
+
+function AccountMenu({ profile, theme, setTheme, setRoute, onLogout, pendingHomeworkCount = 0 }) {
+  const isTeacher = profile.role === 'teacher';
+  const name = profile.display_name || profile.username;
+  const seed = profile.id || profile.username;
+  return (
+    <DropdownMenu label="Меню акаунта" trigger={({ ref, toggle, menuProps }) => (
+      <button ref={ref} type="button" className="iw-account-btn" data-test="account-btn" onClick={toggle} aria-label={`Акаунт: ${name}`} {...menuProps}>
+        <Avatar name={name} seed={seed} />
+        <span className="iw-account-name">{name}</span>
+        <span className={`user-chip-role ${profile.role}`}>{isTeacher ? 'Вчитель' : 'Учень'}</span>
+        <ChevronDown size={15} className="iw-account-chev" aria-hidden="true" />
+      </button>
+    )}>
+      {(close) => (
+        <React.Fragment>
+          <div className="iw-menu-head">
+            <Avatar name={name} seed={seed} size={42} />
+            <div style={{ minWidth: 0 }}>
+              <div className="iw-menu-head-name">{name}</div>
+              <div className="iw-menu-head-sub">@{profile.username} · {isTeacher ? 'вчитель' : 'учень'}</div>
+            </div>
+          </div>
+          {isTeacher ? (
+            <React.Fragment>
+              <MenuItem icon={Users} onSelect={() => { close(); setRoute({ page: 'students' }); }}>Мої учні</MenuItem>
+              <MenuItem icon={Inbox} onSelect={() => { close(); setRoute({ page: 'homework-review' }); }}
+                meta={pendingHomeworkCount > 0 ? <span className="iw-menu-badge">{pendingHomeworkCount}</span> : null}>
+                Перевірка домашніх
+              </MenuItem>
+            </React.Fragment>
+          ) : (
+            <MenuItem icon={Inbox} onSelect={() => { close(); setRoute({ page: 'my-homework' }); }}>Мої домашні роботи</MenuItem>
+          )}
+          <MenuItem icon={theme === 'dark' ? Moon : Sun} role="menuitemcheckbox" aria-checked={theme === 'dark'}
+            onSelect={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            meta={<span className={`iw-theme-switch ${theme === 'dark' ? 'on' : ''}`} aria-hidden="true" />}>
+            Темна тема
+          </MenuItem>
+          <div className="iw-menu-sep" role="separator" />
+          <MenuItem icon={LogOut} danger onSelect={() => { close(); onLogout(); }}>Вийти</MenuItem>
+        </React.Fragment>
+      )}
+    </DropdownMenu>
+  );
+}
+
+function Nav({ theme, setTheme, route, setRoute, session, onLogout, pendingHomeworkCount = 0 }) {
   const profile = session && session.profile;
   const isTeacher = profile && profile.role === 'teacher';
-  const links = [
-    { key: 'home', label: isTeacher ? 'Library' : 'Home', icon: isTeacher ? BookOpen : Home },
-    { key: 'grammar', label: 'Grammar Bank', icon: Brain },
-    { key: 'vocabulary', label: 'Vocabulary Bank', icon: Library },
-  ];
-  if (firstCourseId) links.push({ key: 'course', label: isTeacher ? 'Courses' : 'Мої курси', icon: MapIcon, action: () => setRoute({ page: 'course', courseId: firstCourseId }) });
-  if (isTeacher) links.push({ key: 'students', label: 'Учні', icon: Users, badge: pendingHomeworkCount > 0 ? pendingHomeworkCount : null });
+  const links = getNavLinks(isTeacher, pendingHomeworkCount);
+  const nextTheme = theme === 'light' ? 'dark' : 'light';
   return (
     <header className="nav">
       <div className="nav-inner">
-        <button className="brand" onClick={() => setRoute({ page: 'home' })}>
-          <div className="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 32 32" width="28" height="28">
-              <path d="M4 6 Q16 2 28 6 L28 24 Q16 20 4 24 Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-              <path d="M16 4 L16 22" stroke="currentColor" strokeWidth="1.6" />
-              <circle cx="16" cy="13" r="1.4" fill="currentColor" />
-            </svg>
-          </div>
+        <button className="brand" onClick={() => setRoute({ page: 'home' })} aria-label="Inkwell — на головну">
+          <BrandMark />
           <div className="brand-text">
             <span className="brand-name">Inkwell</span>
             <span className="brand-sub">English Library</span>
           </div>
         </button>
-        <nav className={`nav-links ${mobileMenu ? 'open' : ''}`}>
+        <nav className="nav-links" aria-label="Основна навігація">
           {links.map(l => {
             const I = l.icon;
-            const isActive = route.page === l.key || (l.key === 'course' && (route.page === 'course' || route.page === 'lesson'));
+            const isActive = l.pages.includes(route.page);
             return (
-              <button key={l.key} className={`nav-link ${isActive ? 'active' : ''}`} onClick={() => { if (l.action) l.action(); else setRoute({ page: l.key }); setMobileMenu(false); }}>
-                <I size={16} /><span>{l.label}</span>
-                {l.badge && <span className="nav-link-badge">{l.badge}</span>}
+              <button key={l.key} className={`nav-link ${isActive ? 'active' : ''}`} aria-current={isActive ? 'page' : undefined}
+                onClick={() => setRoute(l.route || { page: l.key })}>
+                <I size={16} aria-hidden="true" /><span>{l.label}</span>
+                {l.badge && <span className="nav-link-badge" aria-label={`, нових домашніх: ${l.badge}`}>{l.badge}</span>}
               </button>
             );
           })}
         </nav>
         <div className="nav-tools">
-          <button className="icon-btn" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+          <button className="icon-btn" data-test="theme-toggle" onClick={() => setTheme(nextTheme)}
+            aria-label={nextTheme === 'dark' ? 'Увімкнути темну тему' : 'Увімкнути світлу тему'}
+            data-tip={nextTheme === 'dark' ? 'Темна тема' : 'Світла тема'}>
             {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </button>
-          <button className="icon-btn mobile-only" onClick={() => setMobileMenu(!mobileMenu)}>
-            {mobileMenu ? <X size={18} /> : <Menu size={18} />}
-          </button>
           {profile && (
-            <div className="user-chip">
-              <span className="user-chip-name">{profile.display_name || profile.username}</span>
-              <span className={`user-chip-role ${profile.role}`}>{profile.role === 'teacher' ? 'Вчитель' : 'Учень'}</span>
-              <button className="user-chip-logout" onClick={onLogout} aria-label="Вийти" title="Вийти">
-                <LogOut size={14} />
-              </button>
-            </div>
+            <AccountMenu profile={profile} theme={theme} setTheme={setTheme} setRoute={setRoute} onLogout={onLogout} pendingHomeworkCount={pendingHomeworkCount} />
           )}
         </div>
       </div>
     </header>
+  );
+}
+
+// Нижня панель розділів на телефонах (≤720px). Ховається в уроці
+// та флешкартках, щоб не заважати навчанню.
+function MobileTabBar({ route, setRoute, isTeacher, pendingHomeworkCount }) {
+  const links = getNavLinks(isTeacher, pendingHomeworkCount);
+  return (
+    <nav className="iw-tabbar" style={{ '--n': links.length }} aria-label="Розділи">
+      {links.map(l => {
+        const I = l.icon;
+        const active = l.pages.includes(route.page);
+        return (
+          <button key={l.key} type="button" className={`iw-tabbar-btn ${active ? 'active' : ''}`} aria-current={active ? 'page' : undefined}
+            aria-label={l.label} onClick={() => setRoute(l.route || { page: l.key })}>
+            <I size={20} aria-hidden="true" /><span>{l.short}</span>
+            {l.badge && <span className="iw-tabbar-badge" aria-hidden="true">{l.badge}</span>}
+          </button>
+        );
+      })}
+    </nav>
   );
 }
 
@@ -5748,15 +7433,7 @@ function Hero({ query, setQuery, setRoute, totalLessons }) {
         </div>
       </div>
       <div className="hero-illust" aria-hidden="true">
-        <svg viewBox="0 0 400 320" width="100%" height="100%">
-          <rect x="60" y="40" width="200" height="240" rx="6" fill="var(--cream-2)" stroke="currentColor" strokeWidth="1.2" />
-          <line x1="80" y1="80" x2="240" y2="80" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-          <line x1="80" y1="100" x2="220" y2="100" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-          <rect x="80" y="170" width="60" height="40" rx="3" fill="var(--sage)" opacity="0.7" />
-          <rect x="150" y="170" width="60" height="40" rx="3" fill="var(--terracotta)" opacity="0.7" />
-          <circle cx="320" cy="100" r="50" fill="var(--mustard)" opacity="0.5" />
-          <path d="M300 95 L315 105 L340 85" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <Illustration name="library" />
       </div>
     </section>
   );
@@ -6075,13 +7752,15 @@ function CoursePage({ courseId, goHome, goLesson, canSeeLesson, isLessonComplete
 
 function Crumbs({ items }) {
   return (
-    <nav className="crumbs">
-      {items.map((it, i) => (
-        <React.Fragment key={i}>
-          {i > 0 && <span style={{ color: 'var(--ink-3)', opacity: 0.6 }}>/</span>}
-          {it.current ? <span className="current">{it.label}</span> : <button onClick={it.onClick}>{it.label}</button>}
-        </React.Fragment>
-      ))}
+    <nav className="crumbs" aria-label="Навігаційний шлях">
+      <ol>
+        {items.map((it, i) => (
+          <li key={i}>
+            {i > 0 && <span className="crumb-sep" aria-hidden="true"><ChevronRight size={13} /></span>}
+            {it.current ? <span className="current" aria-current="page">{it.label}</span> : <button type="button" onClick={it.onClick}>{it.label}</button>}
+          </li>
+        ))}
+      </ol>
     </nav>
   );
 }
@@ -7000,19 +8679,43 @@ function VocabLessonPage({ courseId, lessonId, goHome, setRoute, canSeeVocabWord
   );
 }
 
-function Footer() {
+function Footer({ setRoute, isTeacher }) {
+  const go = (r) => { if (setRoute) setRoute(r); };
+  const firstCourseId = COURSES[0] ? COURSES[0].id : null;
   return (
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <span className="brand-name">Inkwell</span>
+          <div className="footer-brand-row"><BrandMark /><span className="brand-name">Inkwell</span></div>
           <span className="footer-tag">A small library, lovingly kept.</span>
         </div>
-        <div className="footer-cols">
-          <div><div className="footer-h">Library</div><a>Recent</a><a>Favorites</a></div>
-          <div><div className="footer-h">Banks</div><a>Grammar</a><a>Vocabulary</a></div>
-          <div><div className="footer-h">For teachers</div><a>Notes</a><a>Map</a></div>
-        </div>
+        <nav className="footer-cols" aria-label="Посилання у футері">
+          <div>
+            <div className="footer-h">Library</div>
+            <button type="button" onClick={() => go({ page: 'home' })}>{isTeacher ? 'Усі матеріали' : 'Головна'}</button>
+            {firstCourseId && <button type="button" onClick={() => go({ page: 'course', courseId: firstCourseId })}>{isTeacher ? 'Курси' : 'Мої курси'}</button>}
+          </div>
+          <div>
+            <div className="footer-h">Banks</div>
+            <button type="button" onClick={() => go({ page: 'grammar' })}>Grammar</button>
+            <button type="button" onClick={() => go({ page: 'vocabulary' })}>Vocabulary</button>
+          </div>
+          {isTeacher ? (
+            <div>
+              <div className="footer-h">For teachers</div>
+              <button type="button" onClick={() => go({ page: 'students' })}>Учні</button>
+              <button type="button" onClick={() => go({ page: 'homework-review' })}>Домашні роботи</button>
+            </div>
+          ) : (
+            <div>
+              <div className="footer-h">For students</div>
+              <button type="button" onClick={() => go({ page: 'my-homework' })}>Мої домашні</button>
+              {EXTERNAL_COURSES.map(c => (
+                <button type="button" key={c.id} onClick={() => window.open(c.url, '_blank', 'noopener')}>{c.title} ↗</button>
+              ))}
+            </div>
+          )}
+        </nav>
       </div>
       <div className="footer-bottom"><span>© 2026 Inkwell · Made with ☕ for English teachers</span></div>
     </footer>
