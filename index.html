@@ -2531,6 +2531,123 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   .iw-unit-reward { padding-right: 44px; }
 }
 
+
+/* ═════════ INKWELL 2.0 · ФАЗА 8: КОМПАНЬЙОН ═════════ */
+.iw-buddy { overflow: visible; }
+.iw-buddy .buddy-all, .iw-buddy .buddy-body, .iw-buddy .buddy-arm, .iw-buddy .buddy-eyes, .iw-buddy .buddy-quill, .iw-buddy .buddy-sparkles > *, .iw-buddy .buddy-dots > *, .iw-buddy .buddy-zzz > *, .iw-buddy .buddy-arrow { transform-box: fill-box; }
+.iw-buddy .buddy-body { transform-origin: 50% 100%; animation: bdIdle 3.4s ease-in-out infinite; }
+.iw-buddy .buddy-eyes { transform-origin: center; animation: bdBlink 5s infinite; }
+.iw-buddy .arm-l { transform-origin: 80% 20%; } .iw-buddy .arm-r { transform-origin: 20% 20%; }
+.iw-buddy .buddy-quill { transform-origin: 0% 100%; animation: bdQuill 3.4s ease-in-out infinite; }
+.iw-buddy .buddy-bulb { animation: bdBulb 2s ease-in-out infinite; }
+.iw-buddy .buddy-shadow { transform-box: fill-box; transform-origin: center; animation: bdShadow 3.4s ease-in-out infinite; }
+@keyframes bdIdle { 0%, 100% { transform: translateY(0) scale(1, 1); } 50% { transform: translateY(-3px) scale(1.01, .99); } }
+@keyframes bdShadow { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(.9); opacity: .8; } }
+@keyframes bdBlink { 0%, 92%, 100% { transform: scaleY(1); } 94% { transform: scaleY(.1); } 96% { transform: scaleY(1); } }
+@keyframes bdQuill { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-6deg); } }
+@keyframes bdBulb { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+
+/* greet: махає правою рукою */
+.iw-buddy.st-greet .arm-r { animation: bdWave .9s ease-in-out infinite; }
+@keyframes bdWave { 0%, 100% { transform: rotate(-150deg); } 50% { transform: rotate(-110deg); } }
+/* happy: швидкі підстрибування */
+.iw-buddy.st-happy .buddy-body { animation: bdHop .55s ease-in-out infinite; }
+.iw-buddy.st-happy .arm-l { transform: rotate(40deg); } .iw-buddy.st-happy .arm-r { transform: rotate(-40deg); }
+@keyframes bdHop { 0%, 100% { transform: translateY(0) scale(1.02, .98); } 50% { transform: translateY(-9px) scale(.98, 1.02); } }
+/* celebrate: стрибок, руки вгору, іскри */
+.iw-buddy.st-celebrate .buddy-body { animation: bdJump .8s cubic-bezier(.3, .7, .4, 1) infinite; }
+.iw-buddy.st-celebrate .arm-l { transform: rotate(140deg); } .iw-buddy.st-celebrate .arm-r { transform: rotate(-140deg); }
+.iw-buddy .buddy-sparkles > * { transform-origin: center; animation: bdSpark 1.2s ease-in-out infinite; }
+.iw-buddy .buddy-sparkles > *:nth-child(2) { animation-delay: .3s; } .iw-buddy .buddy-sparkles > *:nth-child(3) { animation-delay: .6s; } .iw-buddy .buddy-sparkles > *:nth-child(4) { animation-delay: .15s; }
+@keyframes bdJump { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-16px) rotate(-3deg); } 60% { transform: translateY(-16px) rotate(3deg); } }
+@keyframes bdSpark { 0%, 100% { transform: scale(.6); opacity: .4; } 50% { transform: scale(1.15); opacity: 1; } }
+/* think: нахил голови, крапки думки */
+.iw-buddy.st-think .buddy-body { animation: bdTilt 3s ease-in-out infinite; }
+.iw-buddy.st-think .arm-r { transform: rotate(-120deg) translateY(-4px); }
+.iw-buddy .buddy-dots > * { animation: bdDot 1.5s ease-in-out infinite; }
+.iw-buddy .buddy-dots > *:nth-child(2) { animation-delay: .25s; } .iw-buddy .buddy-dots > *:nth-child(3) { animation-delay: .5s; }
+@keyframes bdTilt { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(-7deg) translateY(-1px); } }
+@keyframes bdDot { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+/* encourage: кивок, кулачок угору */
+.iw-buddy.st-encourage .buddy-body { animation: bdNod 1.4s ease-in-out infinite; }
+.iw-buddy.st-encourage .arm-r { animation: bdFist 1.4s ease-in-out infinite; }
+@keyframes bdNod { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(3deg) translateY(1px); } 60% { transform: rotate(-2deg); } }
+@keyframes bdFist { 0%, 100% { transform: rotate(-130deg); } 50% { transform: rotate(-160deg); } }
+/* point: нахил і рука-вказівник */
+.iw-buddy.st-point .buddy-body { animation: bdLean 2.4s ease-in-out infinite; }
+.iw-buddy.st-point .arm-r { transform: rotate(-80deg); }
+.iw-buddy .buddy-arrow { transform-origin: left center; animation: bdArrow 1.2s ease-in-out infinite; }
+@keyframes bdLean { 0%, 100% { transform: rotate(4deg); } 50% { transform: rotate(6deg) translateX(1px); } }
+@keyframes bdArrow { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+/* sleep: повільне дихання, zzz */
+.iw-buddy.st-sleep .buddy-body { animation: bdBreath 4.5s ease-in-out infinite; }
+.iw-buddy .buddy-zzz > * { fill: var(--ink-3); animation: bdZzz 3s ease-in-out infinite; }
+.iw-buddy .buddy-zzz > *:nth-child(2) { animation-delay: .6s; } .iw-buddy .buddy-zzz > *:nth-child(3) { animation-delay: 1.2s; }
+@keyframes bdBreath { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.03, .97); } }
+@keyframes bdZzz { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(-8px); } }
+/* walk: перевалюється з ноги на ногу */
+.iw-buddy.st-walk .buddy-all { animation: bdWalk 1.6s ease-in-out infinite; }
+.iw-buddy.st-walk .arm-l { animation: bdSwing .8s ease-in-out infinite; } .iw-buddy.st-walk .arm-r { animation: bdSwing .8s ease-in-out infinite reverse; }
+@keyframes bdWalk { 0%, 100% { transform: translateX(-4px) rotate(-3deg); } 50% { transform: translateX(4px) rotate(3deg); } }
+@keyframes bdSwing { 0%, 100% { transform: rotate(-14deg); } 50% { transform: rotate(14deg); } }
+
+.iw-buddy.still *, .iw-buddy-spot.paused .iw-buddy * { animation: none !important; }
+
+/* Місце компаньйона */
+.iw-buddy-spot { position: relative; display: inline-flex; flex-direction: column; align-items: flex-start; gap: 6px; pointer-events: none; }
+.iw-buddy-spot.al-right { align-items: flex-end; }
+.iw-buddy-spot.al-center { align-items: center; }
+.iw-buddy-btn { pointer-events: auto; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 24px; line-height: 0; transition: transform var(--dur) var(--ease-spring); }
+.iw-buddy-btn:hover { transform: translateY(-2px) rotate(-2deg); }
+.iw-buddy-bubble { pointer-events: auto; position: relative; max-width: 240px; padding: 9px 13px; border-radius: 14px 14px 14px 4px; background: var(--surface-raised); border: 1px solid var(--border); box-shadow: var(--shadow-md); font: 500 13.5px/1.4 var(--font-body); color: var(--text); animation: iwPop .3s var(--ease-spring) backwards; }
+.iw-buddy-spot.al-right .iw-buddy-bubble { border-radius: 14px 14px 4px 14px; }
+.iw-buddy-name { display: block; margin-bottom: 1px; font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--brand-deep); }
+.dark .iw-buddy-name { color: var(--terracotta); }
+
+/* Вибір */
+.iw-buddy-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 16px 0 18px; }
+.iw-buddy-option { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 10px 14px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); color: var(--text); font: inherit; text-align: center; cursor: pointer; transition: all var(--dur-fast) ease; }
+.iw-buddy-option:hover { border-color: color-mix(in srgb, var(--ink) 40%, var(--border)); transform: translateY(-2px); }
+.iw-buddy-option.on { border-color: var(--brand-deep); background: color-mix(in srgb, var(--terracotta) 9%, var(--surface)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--terracotta) 20%, transparent); }
+.iw-buddy-option strong { font: 600 16px var(--font-display); }
+.iw-buddy-option small { font-size: 12px; line-height: 1.4; color: var(--text-2); }
+.iw-buddy-settings { display: grid; gap: 12px; padding-top: 14px; border-top: 1px solid var(--border-soft); }
+.iw-buddy-settings .iw-switch { font-weight: 500; color: var(--text); white-space: normal; }
+.iw-buddy-freq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 14px; color: var(--text-2); }
+
+/* Запрошення на головній */
+.iw-buddy-invite { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding: 14px 20px; border-radius: var(--radius-lg); border: 1.5px dashed color-mix(in srgb, var(--lavender) 60%, var(--border)); background: linear-gradient(120deg, var(--lavender-soft), var(--surface)); }
+.iw-buddy-invite-row { display: flex; gap: 0; margin: -8px 0; }
+.iw-buddy-invite-row svg + svg { margin-left: -14px; }
+.iw-buddy-invite-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.iw-buddy-invite-text strong { font: 600 17px var(--font-display); color: var(--text); }
+.iw-buddy-invite-text span { font-size: 13.5px; color: var(--text-2); }
+.iw-buddy-invite-actions { display: flex; gap: 6px; }
+
+/* Розміщення на сторінках */
+.iw-welcome-art { position: relative; }
+.iw-welcome-art .iw-buddy-spot { position: absolute; left: -6%; bottom: 14%; }
+.iw-page-art { position: relative; }
+.iw-page-art .iw-buddy-spot { position: absolute; left: -38%; bottom: -4px; }
+.iw-chero-side { display: flex; align-items: flex-end; gap: 8px; }
+.iw-jcard .iw-buddy-spot { margin-top: 6px; }
+.iw-jstop.side-left .iw-jcard .iw-buddy-spot { align-items: flex-end; }
+.iw-unit-reward .iw-buddy-spot { margin: -18px 0 -18px -6px; }
+.iw-gresult-head .iw-buddy-spot { position: absolute; right: 14px; top: 8px; }
+
+@media (max-width: 720px) {
+  .iw-buddy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .iw-buddy-invite { flex-wrap: wrap; padding: 14px; }
+  .iw-buddy-invite-actions { width: 100%; }
+  .iw-buddy-invite-actions .iw-btn-primary { flex: 1; }
+  .iw-welcome-art { display: flex; align-items: flex-end; width: 100% !important; max-width: none !important; justify-self: stretch !important; margin: 4px -8px 0 0 !important; }
+  .iw-welcome-art > .iw-ill { flex: 0 0 62%; margin-left: auto; }
+  .iw-welcome-art .iw-buddy-spot { position: static; flex: 1; min-width: 0; margin-bottom: 4%; }
+  .iw-page-art .iw-buddy-spot { left: auto; right: -110%; }
+  .iw-buddy-bubble { max-width: 200px; font-size: 13px; }
+  .iw-gresult-head .iw-buddy-spot { position: static; }
+}
+
 /* Доступність: менше руху */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
@@ -3024,7 +3141,7 @@ function ToastHost() {
   );
 }
 
-function PageHeader({ eyebrow, title, subtitle, art, actions, children }) {
+function PageHeader({ eyebrow, title, subtitle, art, actions, children, buddy }) {
   return (
     <header className="iw-page-header">
       <div style={{ minWidth: 0 }}>
@@ -3034,7 +3151,7 @@ function PageHeader({ eyebrow, title, subtitle, art, actions, children }) {
         {actions && <div className="iw-page-actions">{actions}</div>}
         {children}
       </div>
-      {art && <div className="iw-page-art"><Illustration name={art} /></div>}
+      {art && <div className="iw-page-art"><Illustration name={art} />{buddy}</div>}
     </header>
   );
 }
@@ -3461,6 +3578,308 @@ function Illustration({ name = 'books', className, title }) {
   );
 }
 /* ═══ кінець UI KIT ═══ */
+// ═══════════════════════════════════════════════════════════
+// INKWELL 2.0 · ФАЗА 8 — Компаньйон для навчання
+// ═══════════════════════════════════════════════════════════
+// • Шість оригінальних персонажів в одному стилі (SVG + CSS-анімації,
+//   жодних 3D-рушіїв). Стани: idle, walk, greet, think, happy,
+//   celebrate, encourage, point, sleep.
+// • Компаньйон завжди стоїть у відведеному місці макета (не fixed),
+//   не перекриває кнопок і не перехоплює кліків поза собою.
+// • Налаштування — у профілі учня (profiles.companion, jsonb), тож
+//   однакові на всіх пристроях. Поки колонки немає — у браузері.
+// • Анімації зупиняються поза екраном, вимикаються в налаштуваннях і
+//   при «менше руху» в системі.
+
+const COMPANIONS = [
+  { id: 'inky', name: 'Чорнилко', en: 'Inky', desc: 'Крапля чорнила з пером. Любить красиві слова.', color: 'sky' },
+  { id: 'owl', name: 'Буквиця', en: 'Owl', desc: 'Сова-книголюбка. Знає всі часи англійської.', color: 'plum' },
+  { id: 'fox', name: 'Тім', en: 'Fox', desc: 'Цікавий лисик. Завжди питає «а чому?»', color: 'terracotta' },
+  { id: 'robot', name: 'Біп', en: 'Robot', desc: 'Маленький робот. Рахує повторені слова.', color: 'sage' },
+  { id: 'dragon', name: 'Іскра', en: 'Dragon', desc: 'Дракончик, який дихає ідеями, а не вогнем.', color: 'mustard' },
+  { id: 'book', name: 'Сторінка', en: 'Book', desc: 'Чарівна книжечка. Пам’ятає кожен урок.', color: 'lavender' },
+];
+const COMPANION_STATES = ['idle', 'walk', 'greet', 'think', 'happy', 'celebrate', 'encourage', 'point', 'sleep'];
+const DEFAULT_COMPANION = { kind: null, enabled: true, animations: true, frequency: 'sometimes' };
+
+// Тіла персонажів (viewBox 0 0 120 130). Обличчя й руки — спільні.
+function BuddyBody({ kind, id }) {
+  const lt = `url(#${id}lt)`;
+  if (kind === 'owl') return (
+    <g>
+      <path d="M30 40 L36 18 L48 34 Z M90 40 L84 18 L72 34 Z" className="f-plumd" />
+      <ellipse cx="60" cy="72" rx="38" ry="42" className="f-plum" /><ellipse cx="60" cy="72" rx="38" ry="42" fill={lt} />
+      <ellipse cx="60" cy="88" rx="22" ry="22" className="f-white" opacity="0.55" />
+      <path d="M50 84 q5 4 10 0 q5 4 10 0 M48 94 q6 4 12 0 q6 4 12 0" className="s-ink3" strokeWidth="1.6" fill="none" opacity="0.45" />
+      <circle cx="46" cy="60" r="13" className="f-white" /><circle cx="74" cy="60" r="13" className="f-white" />
+      <path d="M56 70 L64 70 L60 77 Z" className="f-must" />
+    </g>
+  );
+  if (kind === 'fox') return (
+    <g>
+      <path d="M92 96 C 116 92 118 66 104 58 C 108 78 98 88 86 90 Z" className="f-terra" />
+      <path d="M104 58 C 110 64 112 72 108 78 C 104 72 104 64 104 58 Z" className="f-white" />
+      <path d="M28 46 L34 14 L54 38 Z M92 46 L86 14 L66 38 Z" className="f-terrad" />
+      <path d="M34 40 L36 24 L46 37 Z M86 40 L84 24 L74 37 Z" className="f-white" opacity="0.7" />
+      <ellipse cx="60" cy="72" rx="37" ry="40" className="f-terra" /><ellipse cx="60" cy="72" rx="37" ry="40" fill={lt} />
+      <path d="M26 72 Q 40 92 60 92 Q 80 92 94 72 Q 92 106 60 112 Q 28 106 26 72 Z" className="f-white" opacity="0.85" />
+      <ellipse cx="60" cy="76" rx="5" ry="4" className="f-ink" />
+    </g>
+  );
+  if (kind === 'robot') return (
+    <g>
+      <line x1="60" y1="30" x2="60" y2="16" className="s-ink3" strokeWidth="3" strokeLinecap="round" />
+      <circle cx="60" cy="13" r="6" className="f-gold buddy-bulb" />
+      <rect x="24" y="30" width="72" height="62" rx="20" className="f-sage" /><rect x="24" y="30" width="72" height="62" rx="20" fill={lt} />
+      <rect x="32" y="40" width="56" height="40" rx="13" className="f-ink2" opacity="0.88" />
+      <rect x="36" y="90" width="48" height="26" rx="10" className="f-saged" /><rect x="36" y="90" width="48" height="26" rx="10" fill={lt} />
+      <circle cx="48" cy="103" r="3" className="f-gold" /><circle cx="60" cy="103" r="3" className="f-terra" /><circle cx="72" cy="103" r="3" className="f-sky" />
+      <rect x="18" y="52" width="8" height="18" rx="4" className="f-saged" /><rect x="94" y="52" width="8" height="18" rx="4" className="f-saged" />
+    </g>
+  );
+  if (kind === 'dragon') return (
+    <g>
+      <path d="M26 66 C 4 52 6 30 18 28 C 18 44 26 52 36 56 Z M94 66 C 116 52 114 30 102 28 C 102 44 94 52 84 56 Z" className="f-saged" opacity="0.9" />
+      <path d="M46 34 L50 22 L56 32 L60 18 L64 32 L70 22 L74 34 Z" className="f-must" />
+      <ellipse cx="60" cy="74" rx="36" ry="40" className="f-sage" /><ellipse cx="60" cy="74" rx="36" ry="40" fill={lt} />
+      <ellipse cx="60" cy="92" rx="20" ry="18" className="f-must" opacity="0.55" />
+      <path d="M48 86 h24 M46 94 h28 M48 102 h24" className="s-paper" strokeWidth="1.4" opacity="0.5" />
+      <circle cx="52" cy="76" r="1.6" className="f-ink" /><circle cx="68" cy="76" r="1.6" className="f-ink" />
+    </g>
+  );
+  if (kind === 'book') return (
+    <g>
+      <rect x="22" y="30" width="76" height="84" rx="12" className="f-must" /><rect x="22" y="30" width="76" height="84" rx="12" fill={lt} />
+      <rect x="30" y="36" width="64" height="74" rx="8" className="f-white" />
+      <path d="M36 84 h50 M36 92 h44 M36 100 h48" className="s-line" strokeWidth="2.4" strokeLinecap="round" />
+      <rect x="22" y="30" width="10" height="84" rx="5" className="f-mustd" />
+      <path d="M80 30 L80 50 L86 44 L92 50 L92 30 Z" className="f-terra" />
+    </g>
+  );
+  // inky — крапля чорнила з пером
+  return (
+    <g>
+      <g className="buddy-quill"><path d="M66 24 C 74 10 88 4 98 2 C 94 12 84 22 70 28 Z" className="f-white s-line" strokeWidth="1" /><path d="M68 26 C 78 16 88 8 96 4" className="s-ink3" strokeWidth="1.2" fill="none" /></g>
+      <path d="M60 18 C 74 40 98 58 98 82 C 98 102 82 116 60 116 C 38 116 22 102 22 82 C 22 58 46 40 60 18 Z" className="f-skyd" />
+      <path d="M60 18 C 74 40 98 58 98 82 C 98 102 82 116 60 116 C 38 116 22 102 22 82 C 22 58 46 40 60 18 Z" fill={lt} />
+      <ellipse cx="44" cy="62" rx="6" ry="10" className="shine" transform="rotate(20 44 62)" />
+    </g>
+  );
+}
+
+function BuddySprite({ kind = 'inky', state = 'idle', size = 96, still = false, className }) {
+  const id = useSafeId();
+  const eyeY = kind === 'robot' ? 58 : kind === 'owl' ? 60 : kind === 'book' ? 60 : 64;
+  const eyeDX = kind === 'owl' ? 14 : 12;
+  const closed = state === 'sleep';
+  const mouth = {
+    idle: 'M52 76 Q60 82 68 76', walk: 'M52 76 Q60 82 68 76', greet: 'M50 75 Q60 86 70 75', happy: 'M48 74 Q60 90 72 74 Z',
+    celebrate: 'M48 73 Q60 92 72 73 Z', encourage: 'M51 76 Q60 84 69 76', point: 'M53 77 Q60 81 67 77', think: 'M55 79 h10', sleep: 'M56 79 q4 3 8 0',
+  }[state] || 'M52 76 Q60 82 68 76';
+  const filledMouth = state === 'happy' || state === 'celebrate';
+  const my = kind === 'robot' ? -2 : kind === 'owl' ? 2 : kind === 'book' ? -2 : 4;
+  const armY = kind === 'robot' ? 66 : 82;
+  return (
+    <svg viewBox="-10 -6 140 140" width={size} height={size} className={cx('iw-ill iw-buddy', `kind-${kind}`, `st-${state}`, still && 'still', className)} aria-hidden="true">
+      <IllDefs id={id} />
+      <ellipse cx="60" cy="126" rx="34" ry="5" className="buddy-shadow" fill={`url(#${id}gs)`} />
+      <g className="buddy-all">
+        {state === 'celebrate' && <g className="buddy-sparkles">
+          <path d="M14 30 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 Z" className="f-gold" />
+          <path d="M104 20 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5 Z" className="f-terra" />
+          <circle cx="110" cy="56" r="3" className="f-sage" /><circle cx="8" cy="64" r="2.5" className="f-plum" />
+        </g>}
+        <g className="buddy-body">
+          <g className="buddy-arm arm-l"><ellipse cx={kind === 'book' ? 18 : 22} cy={armY} rx="7" ry="11" className={`f-${kind === 'robot' ? 'saged' : kind === 'book' ? 'mustd' : kind === 'inky' ? 'skyd' : kind === 'owl' ? 'plumd' : kind === 'fox' ? 'terrad' : 'saged'}`} /></g>
+          <g className="buddy-arm arm-r"><ellipse cx={kind === 'book' ? 102 : 98} cy={armY} rx="7" ry="11" className={`f-${kind === 'robot' ? 'saged' : kind === 'book' ? 'mustd' : kind === 'inky' ? 'skyd' : kind === 'owl' ? 'plumd' : kind === 'fox' ? 'terrad' : 'saged'}`} /></g>
+          <BuddyBody kind={kind} id={id} />
+          <g className="buddy-face">
+            {closed ? (
+              <g className="s-ink" strokeWidth="2.6" strokeLinecap="round" fill="none">
+                <path d={`M${60 - eyeDX - 5} ${eyeY} q5 4 10 0`} /><path d={`M${60 + eyeDX - 5} ${eyeY} q5 4 10 0`} />
+              </g>
+            ) : (
+              <g className="buddy-eyes">
+                <ellipse cx={60 - eyeDX} cy={eyeY} rx={kind === 'robot' ? 5 : 6} ry={kind === 'robot' ? 6 : 7} className={kind === 'robot' ? 'f-sky' : 'f-ink'} />
+                <ellipse cx={60 + eyeDX} cy={eyeY} rx={kind === 'robot' ? 5 : 6} ry={kind === 'robot' ? 6 : 7} className={kind === 'robot' ? 'f-sky' : 'f-ink'} />
+                <circle cx={60 - eyeDX + 2} cy={eyeY - 3} r="2" className="f-white" /><circle cx={60 + eyeDX + 2} cy={eyeY - 3} r="2" className="f-white" />
+              </g>
+            )}
+            {kind !== 'robot' && <g className="f-terra" opacity="0.35"><ellipse cx={60 - eyeDX - 6} cy={eyeY + 11} rx="6" ry="3.5" /><ellipse cx={60 + eyeDX + 6} cy={eyeY + 11} rx="6" ry="3.5" /></g>}
+            <path d={mouth} transform={`translate(0 ${my})`} className={cx(kind === 'robot' ? 's-paper' : 's-ink', filledMouth && (kind === 'robot' ? 'f-sky' : 'f-terrad'))} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" fill={filledMouth ? undefined : 'none'} />
+          </g>
+        </g>
+        {state === 'think' && <g className="buddy-dots"><circle cx="100" cy="30" r="3.5" className="f-line" /><circle cx="108" cy="20" r="4.5" className="f-line" /><circle cx="118" cy="8" r="6" className="f-line" /></g>}
+        {state === 'sleep' && <g className="buddy-zzz t-ink" style={{ fontWeight: 700 }}><text x="96" y="30" fontSize="14">z</text><text x="106" y="18" fontSize="18">z</text><text x="118" y="4" fontSize="22">Z</text></g>}
+        {state === 'point' && <path className="buddy-arrow f-terrad" d="M118 82 l-12 -7 v4 h-8 v6 h8 v4 Z" />}
+      </g>
+    </svg>
+  );
+}
+
+// ── Налаштування компаньйона (профіль або браузер) ──
+const CompanionCtx = React.createContext(null);
+function useCompanionStore(session) {
+  const isStudent = session.profile.role !== 'teacher';
+  const uid = session.user.id;
+  const localKey = `inkwell-companion:${uid}`;
+  const hasColumn = Object.prototype.hasOwnProperty.call(session.profile, 'companion');
+  const [prefs, setPrefsState] = useState(() => {
+    let local = null;
+    try { local = JSON.parse(localStorage.getItem(localKey) || 'null'); } catch (e) {}
+    const fromProfile = hasColumn && session.profile.companion ? session.profile.companion : null;
+    return { ...DEFAULT_COMPANION, ...(fromProfile || local || {}) };
+  });
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const reduceMotion = useMemo(() => { try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } }, []);
+
+  // Якщо колонка з’явилась, а вибір був лише в браузері — переносимо в акаунт
+  useEffect(() => {
+    if (!isStudent || !hasColumn || session.profile.companion) return;
+    let local = null;
+    try { local = JSON.parse(localStorage.getItem(localKey) || 'null'); } catch (e) {}
+    if (local && local.kind) window.SB.from('profiles').update({ companion: local }).eq('id', uid).then(({ error }) => { if (!error) { session.profile.companion = local; try { localStorage.removeItem(localKey); } catch (e) {} } });
+  }, []);
+
+  const setPrefs = (patch) => {
+    const next = { ...prefs, ...patch };
+    setPrefsState(next);
+    try { localStorage.setItem(localKey, JSON.stringify(next)); } catch (e) {}
+    if (hasColumn) {
+      window.SB.from('profiles').update({ companion: next }).eq('id', uid).then(({ error }) => {
+        if (!error) { session.profile.companion = next; try { localStorage.removeItem(localKey); } catch (e) {} }
+      });
+    }
+  };
+  const active = isStudent && prefs.enabled !== false && !!prefs.kind;
+  return {
+    isStudent, prefs, setPrefs, active, pickerOpen, openPicker: () => setPickerOpen(true), closePicker: () => setPickerOpen(false),
+    still: !prefs.animations || reduceMotion, synced: hasColumn,
+  };
+}
+const useCompanion = () => React.useContext(CompanionCtx);
+
+// Повідомлення (короткі, англійською — частина навчання)
+const COMPANION_LINES = {
+  home: ['Ready to learn something new?', 'Small steps every day!', 'Let’s review what you learned yesterday!', 'You’re making progress!'],
+  grammar: ['Pick a topic — I’ll keep you company!', 'Tip: signal words help you choose the tense.', 'Try the practice — only 8 questions!'],
+  vocab: ['Ready to learn five new words?', 'Say the words out loud — it helps!', 'Don’t forget your daily challenge!'],
+  course: ['Your next lesson is waiting!', 'One lesson at a time — you’ve got this!', 'Look how far you’ve come!'],
+};
+function greetingLine(name) {
+  const h = new Date().getHours();
+  const g = h >= 5 && h < 12 ? 'Good morning' : h >= 12 && h < 18 ? 'Good afternoon' : 'Good evening';
+  return `${g}, ${name}!`;
+}
+
+// Місце для компаньйона. Показується лише учням, які обрали персонажа.
+// lines — перелік реплік (перша показується відразу); event — важлива
+// подія (нагорода), її бульбашку видно навіть при «рідко».
+function CompanionSpot({ context = 'home', lines, state = 'idle', size = 92, event = false, className, align = 'left' }) {
+  const c = useCompanion();
+  const ref = useRef(null);
+  const [i, setI] = useState(0);
+  const [poke, setPoke] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [showBubble] = useState(() => {
+    if (!c) return false;
+    const f = c.prefs.frequency;
+    return event || f === 'often' || (f === 'sometimes' && Math.random() < 0.6);
+  });
+  useEffect(() => {
+    if (!ref.current || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0.05 });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, [c && c.active]);
+  if (!c || !c.active) return null;
+  const list = (lines && lines.length ? lines : COMPANION_LINES[context]) || COMPANION_LINES.home;
+  const meta = COMPANIONS.find(x => x.id === c.prefs.kind) || COMPANIONS[0];
+  const onPoke = () => { setI(n => (n + 1) % list.length); setPoke(true); setTimeout(() => setPoke(false), 1300); };
+  return (
+    <div ref={ref} className={cx('iw-buddy-spot', `al-${align}`, !visible && 'paused', className)}>
+      {(showBubble || poke) && (
+        <div className="iw-buddy-bubble" role="status" aria-live="polite">
+          <span className="iw-buddy-name">{meta.name}</span>
+          <span>{list[i % list.length]}</span>
+        </div>
+      )}
+      <button type="button" className="iw-buddy-btn" onClick={onPoke} aria-label={`${meta.name}: наступна підказка`}>
+        <BuddySprite kind={c.prefs.kind} state={poke ? 'happy' : state} size={size} still={c.still} />
+      </button>
+    </div>
+  );
+}
+
+// ── Вибір компаньйона та налаштування ──
+function CompanionPicker() {
+  const c = useCompanion();
+  const [kind, setKind] = useState(null);
+  useEffect(() => { if (c && c.pickerOpen) setKind(c.prefs.kind || 'inky'); }, [c && c.pickerOpen]);
+  if (!c || !c.isStudent) return null;
+  const { prefs, setPrefs } = c;
+  const save = () => { setPrefs({ kind, enabled: true }); c.closePicker(); toast(`${(COMPANIONS.find(x => x.id === kind) || {}).name} тепер з тобою!`, 'success'); };
+  return (
+    <Modal open={c.pickerOpen} onClose={c.closePicker} title="Мій компаньйон" width={760}
+      actions={<React.Fragment>
+        <IwButton variant="ghost" onClick={c.closePicker}>Закрити</IwButton>
+        <IwButton variant="primary" onClick={save} disabled={!kind}>{prefs.kind ? 'Зберегти' : 'Обрати'}</IwButton>
+      </React.Fragment>}>
+      <p className="iw-modal-text">Друг, який вітає тебе, підказує й радіє твоїм успіхам. Його можна змінити або сховати будь-коли.</p>
+      <div className="iw-buddy-grid" role="radiogroup" aria-label="Персонаж">
+        {COMPANIONS.map(m => (
+          <button key={m.id} type="button" role="radio" aria-checked={kind === m.id} className={cx('iw-buddy-option', kind === m.id && 'on')} onClick={() => setKind(m.id)}>
+            <BuddySprite kind={m.id} state={kind === m.id ? 'greet' : 'idle'} size={84} still={c.still} />
+            <strong>{m.name}</strong>
+            <small>{m.desc}</small>
+          </button>
+        ))}
+      </div>
+      <div className="iw-buddy-settings">
+        <label className="iw-switch">
+          <span className="toggle-switch"><input type="checkbox" checked={prefs.enabled !== false} onChange={e => setPrefs({ enabled: e.target.checked })} /><span className="toggle-slider" /></span>
+          <span>Показувати компаньйона</span>
+        </label>
+        <label className="iw-switch">
+          <span className="toggle-switch"><input type="checkbox" checked={!!prefs.animations} onChange={e => setPrefs({ animations: e.target.checked })} /><span className="toggle-slider" /></span>
+          <span>Анімації</span>
+        </label>
+        <div className="iw-buddy-freq">
+          <span>Підказки:</span>
+          <div className="iw-chips" role="group" aria-label="Як часто говорить">
+            {[['often', 'Часто'], ['sometimes', 'Інколи'], ['rare', 'Лише на важливих подіях']].map(([v, l]) => (
+              <button key={v} type="button" className="iw-chip" aria-pressed={prefs.frequency === v} onClick={() => setPrefs({ frequency: v })}>{l}</button>
+            ))}
+          </div>
+        </div>
+        {!c.synced && <p className="iw-help" style={{ margin: 0 }}>Налаштування збережено на цьому пристрої.</p>}
+      </div>
+    </Modal>
+  );
+}
+
+// Запрошення обрати компаньйона (головна, поки не обрано)
+function CompanionInvite() {
+  const c = useCompanion();
+  if (!c || !c.isStudent || c.prefs.kind || c.prefs.enabled === false) return null;
+  return (
+    <section className="iw-buddy-invite">
+      <div className="iw-buddy-invite-row" aria-hidden="true">
+        {['inky', 'owl', 'fox', 'robot'].map((k, i) => <BuddySprite key={k} kind={k} state={i === 1 ? 'greet' : 'idle'} size={64} still={c.still} />)}
+      </div>
+      <div className="iw-buddy-invite-text">
+        <strong>Обери друга для навчання</strong>
+        <span>Він вітатиме тебе, підказуватиме й радітиме твоїм успіхам.</span>
+      </div>
+      <div className="iw-buddy-invite-actions">
+        <IwButton variant="primary" onClick={c.openPicker}>Обрати</IwButton>
+        <IwButton variant="ghost" onClick={() => c.setPrefs({ enabled: false })}>Не треба</IwButton>
+      </div>
+    </section>
+  );
+}
+
+
 
 const LEVELS = ['Beginner', 'Elementary', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Advanced'];
 const AGE_GROUPS = ['Kids 7–9', 'Kids 10–12', 'Teens 13–17', 'Adults'];
@@ -7407,7 +7826,14 @@ function StudentDashboard({ session, setRoute, permissions, canSeeCourse, canSee
               {totalDone > 0 && <span className="iw-welcome-meta"><CheckCircle size={15} aria-hidden="true" /> {totalDone} {pluralUk(totalDone, 'урок пройдено', 'уроки пройдено', 'уроків пройдено')}</span>}
             </div>
           </div>
-          <div className="iw-welcome-art" aria-hidden="true"><Illustration name="desk" /></div>
+          <div className="iw-welcome-art">
+            <Illustration name="desk" />
+            <CompanionSpot context="home" state={new Date().getHours() >= 23 || new Date().getHours() < 6 ? 'sleep' : 'greet'} size={96}
+              lines={[greetingLine(firstName),
+                ...(continueLesson ? [`Lesson ${continueLesson.lesson.number} is waiting for you!`] : []),
+                ...(vocab.due > 0 ? [`You have ${vocab.due} ${vocab.due === 1 ? 'word' : 'words'} to review today!`] : []),
+                ...COMPANION_LINES.home]} />
+          </div>
         </div>
 
         <aside className={cx('iw-streak', celebrate && 'is-celebrating')} aria-label="Серія днів">
@@ -7447,6 +7873,7 @@ function StudentDashboard({ session, setRoute, permissions, canSeeCourse, canSee
           <p className="iw-streak-rule">Серія зростає, коли ти заходиш сюди щодня.</p>
         </aside>
       </section>
+      <CompanionInvite />
 
       {/* 2. Продовжити + Сьогодні */}
       <section className="iw-home-row">
@@ -7940,6 +8367,7 @@ function App({ session, onLogout }) {
 
   // ── Permissions state (для учня) ──
   const isTeacher = session.profile.role === 'teacher';
+  const companion = useCompanionStore(session);
 
   // ── Pending homework counter (для teacher) ──
   const [pendingHomeworkCount, setPendingHomeworkCount] = useState(0);
@@ -8056,6 +8484,7 @@ function App({ session, onLogout }) {
   const focusMain = () => { const m = document.getElementById('iw-main'); if (m) m.focus(); };
 
   return (
+    <CompanionCtx.Provider value={companion}>
     <div className={theme === 'dark' ? 'dark' : ''}>
       <div className={cx('app-root', showTabBar && 'has-tabbar')}>
         <button type="button" className="iw-skip" onClick={focusMain}>Перейти до змісту</button>
@@ -8126,8 +8555,10 @@ function App({ session, onLogout }) {
         {showTabBar && <MobileTabBar route={route} setRoute={setRoute} isTeacher={isTeacher} pendingHomeworkCount={pendingHomeworkCount} />}
         <ToastHost />
         <ScrollToTop />
+        <CompanionPicker />
       </div>
     </div>
+    </CompanionCtx.Provider>
   );
 }
 
@@ -8160,6 +8591,7 @@ function BrandMark() {
 
 function AccountMenu({ profile, theme, setTheme, setRoute, onLogout, pendingHomeworkCount = 0 }) {
   const isTeacher = profile.role === 'teacher';
+  const companion = useCompanion();
   const name = profile.display_name || profile.username;
   const seed = profile.id || profile.username;
   return (
@@ -8189,7 +8621,11 @@ function AccountMenu({ profile, theme, setTheme, setRoute, onLogout, pendingHome
               </MenuItem>
             </React.Fragment>
           ) : (
-            <MenuItem icon={Inbox} onSelect={() => { close(); setRoute({ page: 'my-homework' }); }}>Мої домашні роботи</MenuItem>
+            <React.Fragment>
+              <MenuItem icon={Inbox} onSelect={() => { close(); setRoute({ page: 'my-homework' }); }}>Мої домашні роботи</MenuItem>
+              {companion && <MenuItem icon={Sparkles} onSelect={() => { close(); companion.openPicker(); }}
+                meta={companion.prefs.kind ? <span className="iw-menu-meta">{(COMPANIONS.find(x => x.id === companion.prefs.kind) || {}).name}</span> : null}>Мій компаньйон</MenuItem>}
+            </React.Fragment>
           )}
           <MenuItem icon={theme === 'dark' ? Moon : Sun} role="menuitemcheckbox" aria-checked={theme === 'dark'}
             onSelect={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -8611,6 +9047,8 @@ function CoursePage({ courseId, goHome, goLesson, canSeeLesson, isLessonComplete
           </div>
         </div>
         <div className="iw-chero-side">
+          {!isTeacher && view === 'list' && <CompanionSpot context="course" state={next ? 'point' : courseDone ? 'celebrate' : 'idle'} size={84} align="right"
+            lines={courseDone ? ['You finished the whole course! Amazing!'] : next ? [`Lesson ${next.lesson.number} is next — let’s go!`, ...COMPANION_LINES.course] : ['Your teacher will open new lessons soon.', ...COMPANION_LINES.course]} event={courseDone} />}
           {!isTeacher ? (
             <ProgressRing value={prog.completed} max={Math.max(prog.total, 1)} size={150} stroke={11} tone={courseDone ? 'sage' : 'terracotta'} label="Прогрес курсу">
               <span className="iw-chero-ring"><strong>{Math.round(prog.total ? (prog.completed / prog.total) * 100 : 0)}%</strong><small>курсу</small></span>
@@ -8631,6 +9069,7 @@ function CoursePage({ courseId, goHome, goLesson, canSeeLesson, isLessonComplete
       {celebrate && (
         <div className="iw-unit-reward" role="status">
           <span className="iw-confetti" aria-hidden="true">{Array.from({ length: 10 }).map((_, i) => <i key={i} />)}</span>
+          <CompanionSpot state="celebrate" size={70} event lines={[`Unit ${celebrate.number} complete! I’m so proud of you!`]} />
           <div className="iw-unit-reward-badge" aria-hidden="true"><Award size={26} /></div>
           <div className="iw-unit-reward-text">
             <strong>Unit {celebrate.number} завершено!</strong>
@@ -8762,6 +9201,7 @@ function CourseJourney({ prog, isTeacher, openUnit }) {
             </button>
             <div className="iw-jcard">
               {isCurrent && <span className="iw-jflag">Ти тут</span>}
+              {isCurrent && <CompanionSpot context="course" state="walk" size={80} align={side === 'left' ? 'right' : 'left'} lines={[`${u.completed} of ${u.total} lessons done — keep going!`, ...COMPANION_LINES.course]} />}
               <span className="iw-kicker">Unit {u.unit.number}</span>
               <span className="iw-jtitle">{u.unit.title}</span>
               {u.unit.subtitle && <span className="iw-jsub">{u.unit.subtitle}</span>}
@@ -9756,7 +10196,7 @@ function GrammarBank({ goHome, setRoute, session, canSeeLesson, isTeacher, initi
       <PageHeader eyebrow="Grammar Bank"
         title={<React.Fragment>Граматика <em>під рукою.</em></React.Fragment>}
         subtitle="Пояснення, формули й приклади — а ще порівняння схожих тем і тренування. Зручно повторити перед тестом або під час уроку."
-        art="grammar" />
+        art="grammar" buddy={<CompanionSpot context="grammar" state="think" size={78} align="right" />} />
 
       <div className="iw-gb-search" role="search">
         <div className="search-bar">
@@ -10051,6 +10491,7 @@ function GrammarCompare({ pair, setPair, openTopic, onPractice }) {
 }
 
 function GrammarPractice({ topics, state, setState, start, progress, openTopic }) {
+  const comp = useCompanion();
   const { scope, type, run } = state;
   const [idx, setIdx] = useState(0);
   const [picked, setPicked] = useState(null);
@@ -10111,7 +10552,10 @@ function GrammarPractice({ topics, state, setState, start, progress, openTopic }
     return (
       <div className="iw-gresult">
         <div className="iw-card iw-gresult-head">
-          {pct >= 80 && <div className="iw-gresult-art"><Illustration name="trophy" /></div>}
+          {comp && comp.active
+            ? <CompanionSpot event size={96} align="right" state={pct >= 80 ? 'celebrate' : pct >= 50 ? 'happy' : 'encourage'}
+                lines={[pct >= 80 ? 'Amazing work! You nailed it!' : pct >= 50 ? 'Nice job! A bit more practice and you’ll nail it.' : 'Mistakes help us learn. Let’s try again!']} />
+            : pct >= 80 && <div className="iw-gresult-art"><Illustration name="trophy" /></div>}
           <ProgressRing value={ok} max={run.length} size={110} stroke={9} tone={pct >= 80 ? 'sage' : pct >= 50 ? 'mustard' : 'terracotta'} label="Результат">{ok}/{run.length}</ProgressRing>
           <div>
             <h3 className="iw-gresult-title">{pct >= 80 ? 'Чудова робота!' : pct >= 50 ? 'Непогано — ще трохи практики!' : 'Варто повторити тему'}</h3>
@@ -10636,7 +11080,7 @@ function VocabularyBank({ goHome, setRoute, canSeeVocabWord, isTeacher, session,
       <PageHeader eyebrow="Vocabulary Bank"
         title={<React.Fragment>Твої слова <em>під рукою.</em></React.Fragment>}
         subtitle={isTeacher ? 'Уся лексика курсів: пошук, перегляд за юнітами й уроками, практика.' : 'Тут з’являються слова з уроків, які ти завершив. Повторюй флешкартками, тренуйся та збирай власні колекції.'}
-        art="vocab" />
+        art="vocab" buddy={<CompanionSpot context="vocab" state="greet" size={78} align="right" />} />
 
       <div className="iw-gb-search" role="search">
         <div className="search-bar">
@@ -10955,6 +11399,7 @@ function scopeOptions(words, store) {
 }
 
 function VocabPracticeTab({ words, store, cfg, setCfg, start }) {
+  const comp = useCompanion();
   const { scope, type, run, daily } = cfg;
   const [idx, setIdx] = useState(0);
   const [picked, setPicked] = useState(null);
@@ -11012,7 +11457,10 @@ function VocabPracticeTab({ words, store, cfg, setCfg, start }) {
     return (
       <div className="iw-gresult">
         <div className={cx('iw-card iw-gresult-head', daily && 'iw-daily-result')}>
-          {pct >= 80 && <div className="iw-gresult-art"><Illustration name="trophy" /></div>}
+          {comp && comp.active
+            ? <CompanionSpot event size={96} align="right" state={pct >= 80 ? 'celebrate' : pct >= 50 ? 'happy' : 'encourage'}
+                lines={[pct >= 80 ? 'Amazing work! You nailed it!' : pct >= 50 ? 'Nice job! A bit more practice and you’ll nail it.' : 'Mistakes help us learn. Let’s try again!']} />
+            : pct >= 80 && <div className="iw-gresult-art"><Illustration name="trophy" /></div>}
           <ProgressRing value={ok} max={answers.length} size={110} stroke={9} tone={pct >= 80 ? 'sage' : pct >= 50 ? 'mustard' : 'terracotta'} label="Результат">{ok}/{answers.length}</ProgressRing>
           <div>
             <h3 className="iw-gresult-title">{daily ? (pct >= 80 ? 'Челендж виконано на відмінно!' : 'Челендж виконано!') : pct >= 80 ? 'Чудова робота!' : pct >= 50 ? 'Непогано — ще трохи практики!' : 'Варто повторити ці слова'}</h3>
