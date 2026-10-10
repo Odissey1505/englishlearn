@@ -2358,6 +2358,179 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   .iw-vcol-uk { grid-column: 2; grid-row: 2; }
 }
 
+
+/* ═════════ INKWELL 2.0 · ФАЗА 7: СТОРІНКА КУРСУ ═════════ */
+.iw-chero { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 28px; padding: 32px 34px; margin-bottom: 18px; border: 1px solid var(--border); border-radius: var(--radius-xl); background: radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--terracotta) 22%, transparent), transparent 45%), linear-gradient(140deg, var(--surface-2), var(--surface)); overflow: hidden; }
+.iw-chero-badges { display: flex; gap: 6px; margin-bottom: 12px; }
+.iw-chero-title { margin: 0; font: 500 clamp(32px, 4.6vw, 52px)/1.05 var(--font-display); letter-spacing: -0.03em; color: var(--text); }
+.iw-chero-desc { margin: 12px 0 0; max-width: 640px; font-size: 16px; line-height: 1.6; color: var(--text-2); }
+.iw-chero-meta { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 20px 0 0; }
+.iw-chero-meta div { display: flex; flex-direction: column-reverse; }
+.iw-chero-meta dt { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.iw-chero-meta dd { margin: 0; font: 600 24px/1.2 var(--font-display); color: var(--text); }
+.iw-chero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
+.iw-chero-wait { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; background: var(--surface-2); border: 1px dashed var(--border); font-size: 14px; color: var(--text-2); }
+.iw-chero-ring { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+.iw-chero-ring strong { font: 600 34px var(--font-display); letter-spacing: -0.03em; }
+.iw-chero-ring small { margin-top: 4px; font: 600 11px var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+.iw-chero-art { width: 260px; }
+.iw-course-stats { margin-bottom: 22px; }
+
+.iw-unit-reward { position: relative; display: flex; align-items: center; gap: 16px; margin-bottom: 22px; padding: 16px 52px 16px 18px; border-radius: var(--radius-lg); border: 1px solid color-mix(in srgb, var(--gold) 50%, var(--border)); background: linear-gradient(120deg, var(--gold-soft), var(--surface)); overflow: hidden; animation: iwPop .45s var(--ease-spring) backwards; }
+.iw-unit-reward .iw-streak-celebrate-x { right: 12px; }
+.iw-unit-reward-badge { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; background: radial-gradient(circle at 35% 30%, #f6dc9c, var(--gold) 55%, var(--gold-deep)); color: #fffaf0; box-shadow: 0 6px 18px color-mix(in srgb, var(--gold) 45%, transparent); animation: iwBadgeIn .7s var(--ease-spring) backwards; }
+@keyframes iwBadgeIn { from { transform: scale(.4) rotate(-30deg); opacity: 0; } to { transform: none; opacity: 1; } }
+.iw-unit-reward-text { display: flex; flex-direction: column; gap: 2px; }
+.iw-unit-reward-text strong { font: 600 18px var(--font-display); color: var(--text); }
+.iw-unit-reward-text span { font-size: 13.5px; color: var(--text-2); }
+
+.iw-course-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 12px; }
+.iw-course-search { flex: 1 1 260px; height: 44px; }
+.iw-course-search input::-webkit-search-cancel-button { display: none; }
+.iw-course-filters { margin-bottom: 18px; }
+
+/* Список юнітів */
+.iw-clist { display: grid; gap: 12px; }
+.iw-cunit { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-sm); overflow: hidden; transition: box-shadow var(--dur) ease, border-color var(--dur) ease; }
+.iw-cunit.is-current { border-color: color-mix(in srgb, var(--terracotta) 50%, var(--border)); }
+.iw-cunit.locked { background: color-mix(in srgb, var(--surface-2) 55%, transparent); box-shadow: none; border-style: dashed; }
+.iw-cunit.locked .iw-cunit-head { padding-top: 11px; padding-bottom: 11px; }
+.iw-cunit.locked .iw-cunit-num { width: 38px; height: 38px; }
+.iw-cunit.locked .iw-cunit-title { font-size: 16px; color: var(--text-2); }
+.iw-clist { --lockgap: 8px; }
+.iw-cunit-head { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(120px, 180px) auto auto; align-items: center; gap: 16px; padding: 16px 18px; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.iw-cunit-head:disabled { cursor: default; }
+.iw-cunit-head:hover:not(:disabled) { background: color-mix(in srgb, var(--surface-2) 50%, transparent); }
+.iw-cunit-num { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--border); font: 600 20px var(--font-display); color: var(--text); }
+.iw-cunit.is-completed .iw-cunit-num { background: var(--success-soft); border-color: transparent; color: var(--success); }
+.iw-cunit.is-current .iw-cunit-num { background: var(--brand-deep); border-color: transparent; color: #fff8ef; }
+.iw-cunit.locked .iw-cunit-num { color: var(--text-muted); }
+.iw-cunit-titles { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.iw-cunit-titles .iw-kicker { margin: 0; }
+.iw-cunit-title { font: 600 18px/1.25 var(--font-display); letter-spacing: -0.01em; color: var(--text); }
+.iw-cunit-sub { font-size: 13px; color: var(--text-muted); }
+.iw-cunit-bar .iw-progress-head span { display: none; }
+.iw-cunit-bar .iw-progress-head { justify-content: flex-end; }
+.iw-cunit.open .iw-unit-chev { transform: rotate(180deg); }
+.iw-cunit-lockednote { margin: -6px 0 0; padding: 0 18px 14px 80px; font-size: 13px; color: var(--text-muted); font-style: italic; }
+.iw-clessons { list-style: none; margin: 0; padding: 6px 12px 12px; border-top: 1px dashed var(--border-soft); display: grid; gap: 2px; animation: iwFade var(--dur) ease backwards; }
+.iw-clesson { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto auto; align-items: center; gap: 14px; padding: 10px 8px; border-radius: 12px; transition: background var(--dur-fast) ease; }
+.iw-clesson:hover { background: color-mix(in srgb, var(--surface-2) 55%, transparent); }
+.iw-clesson-num { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: var(--surface-2); font: 600 13px var(--font-body); color: var(--text-2); }
+.iw-clesson.is-completed .iw-clesson-num { background: var(--success-soft); color: var(--success); }
+.iw-clesson.is-available .iw-clesson-num { background: color-mix(in srgb, var(--terracotta) 16%, var(--paper)); color: var(--brand-deep); }
+.iw-clesson-titles { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.iw-clesson-title { font-size: 15px; font-weight: 600; color: var(--text); }
+.iw-clesson-meta { display: flex; flex-wrap: wrap; gap: 4px; font-size: 12.5px; color: var(--text-muted); }
+.iw-clesson-tags { display: inline-flex; align-items: center; gap: 6px; }
+.iw-clesson-hw { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; background: var(--info-soft); color: var(--info); }
+.iw-clesson-hidden { display: flex; align-items: center; gap: 8px; padding: 10px 8px 4px; font-size: 13px; color: var(--text-muted); font-style: italic; }
+
+/* Мандрівка */
+.iw-journey { position: relative; max-width: 760px; margin: 6px auto 0; padding: 10px 0 0; }
+.iw-jstop { position: relative; display: grid; grid-template-columns: 1fr 96px 1fr; align-items: center; min-height: 128px; animation: fadeUp .5s var(--ease-out) backwards; }
+.iw-jstop.side-left .iw-jcard { grid-column: 1; grid-row: 1; text-align: right; align-items: flex-end; }
+.iw-jstop.side-right .iw-jcard { grid-column: 3; grid-row: 1; }
+.iw-jnode { grid-column: 2; grid-row: 1; justify-self: center; position: relative; z-index: 2; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; }
+.iw-jnode:disabled { cursor: default; }
+.iw-jnode-ring { width: 78px; height: 78px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--sage-deep) calc(var(--p) * 1%), color-mix(in srgb, var(--line) 80%, transparent) 0); transition: transform var(--dur) var(--ease-spring); }
+.iw-jnode:hover:not(:disabled) .iw-jnode-ring { transform: scale(1.07); }
+.iw-jnode-num { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); border: 2px solid var(--paper); font: 600 24px var(--font-display); color: var(--text); box-shadow: var(--shadow-md); }
+.iw-jstop.is-completed .iw-jnode-num { background: var(--sage-deep); color: #f6faef; }
+.iw-jstop.is-current .iw-jnode-ring { background: conic-gradient(var(--terracotta) calc(var(--p) * 1%), color-mix(in srgb, var(--terracotta) 22%, var(--paper)) 0); box-shadow: 0 0 0 8px color-mix(in srgb, var(--terracotta) 14%, transparent); animation: iwPulseRing 2.4s ease-in-out infinite; }
+.iw-jstop.is-current .iw-jnode-num { background: var(--brand-deep); color: #fff8ef; }
+.iw-jstop.locked .iw-jnode-ring { background: repeating-conic-gradient(var(--line) 0 10deg, transparent 10deg 20deg); }
+.iw-jstop.locked .iw-jnode-num { background: var(--surface-2); color: var(--text-muted); box-shadow: none; }
+@keyframes iwPulseRing { 0%, 100% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--terracotta) 14%, transparent); } 50% { box-shadow: 0 0 0 12px color-mix(in srgb, var(--terracotta) 8%, transparent); } }
+.iw-jpath { position: absolute; left: 50%; top: 64px; height: 128px; width: 2px; transform: translateX(-1px); z-index: 1; background: repeating-linear-gradient(to bottom, var(--line) 0 7px, transparent 7px 13px); }
+.iw-jpath.open { background: repeating-linear-gradient(to bottom, color-mix(in srgb, var(--terracotta) 60%, var(--line)) 0 7px, transparent 7px 13px); }
+.iw-jcard { position: relative; display: flex; flex-direction: column; gap: 3px; padding: 12px 16px; margin: 0 6px; }
+.iw-jcard .iw-kicker { margin: 0; }
+.iw-jtitle { font: 600 18px/1.25 var(--font-display); color: var(--text); }
+.iw-jsub { font-size: 13px; color: var(--text-2); }
+.iw-jmeta { margin-top: 4px; font-size: 12.5px; font-weight: 600; color: var(--text-muted); }
+.iw-jstop.is-current .iw-jmeta { color: var(--brand-deep); }
+.iw-jflag { align-self: inherit; display: inline-block; padding: 3px 10px; margin-bottom: 4px; border-radius: 999px; background: var(--brand-deep); color: #fff8ef; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.iw-jstop.locked .iw-jtitle { color: var(--text-muted); }
+.iw-jfinish { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 4px; font: 600 14px var(--font-display); color: var(--text-muted); opacity: .6; filter: grayscale(.6); }
+.iw-jfinish.done { opacity: 1; filter: none; color: var(--gold-deep); }
+.iw-jfinish-art { width: 110px; }
+
+/* Що ти вивчиш */
+.iw-learn { margin-top: 44px; }
+.iw-learn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.iw-learn-card { display: flex; flex-direction: column; gap: 12px; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); }
+.iw-learn-card.locked { background: color-mix(in srgb, var(--surface-2) 55%, transparent); border-style: dashed; }
+.iw-learn-head { display: flex; align-items: center; gap: 10px; }
+.iw-learn-num { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; flex-shrink: 0; background: var(--surface-2); font: 600 14px var(--font-display); }
+.iw-learn-title { font: 600 15.5px/1.3 var(--font-display); color: var(--text); }
+.iw-learn-block { display: flex; flex-direction: column; gap: 6px; }
+.iw-learn-block .iw-kicker { display: inline-flex; align-items: center; gap: 5px; margin: 0; }
+.iw-learn-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.iw-learn-chip { padding: 5px 10px; border: 1px solid var(--border-soft); border-radius: 999px; background: var(--lavender-soft); color: var(--text); font: 500 12.5px var(--font-body); cursor: pointer; text-align: left; transition: all var(--dur-fast) ease; }
+.iw-learn-chip:hover { border-color: var(--lavender-deep); }
+.iw-learn-block .iw-link { font-size: 13.5px; }
+
+/* Сертифікат */
+.iw-cert-wrap { overflow-x: auto; padding: 4px; }
+.iw-cert { position: relative; width: 100%; min-width: 600px; aspect-ratio: 297 / 210; padding: 6% 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle at 50% 0%, #fbf3e2, #f5ecd9 60%, #efe2c8); color: #2a2620; border-radius: 6px; box-shadow: 0 10px 30px rgba(60, 45, 25, .18); overflow: hidden; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.iw-cert-border { position: absolute; inset: 14px; border: 2px solid #a87b3d; border-radius: 4px; pointer-events: none; }
+.iw-cert-border::after { content: ''; position: absolute; inset: 6px; border: 1px solid color-mix(in srgb, #a87b3d 55%, transparent); border-radius: 2px; }
+.iw-cert-brand { display: flex; align-items: center; gap: 10px; font: 600 22px 'Fraunces', 'Literata', Georgia, serif; color: #2a2620; }
+.iw-cert-brand .brand-mark { width: 38px; height: 38px; background: #ece4d3; border-color: #d8cdb6; color: #2a2620; }
+.iw-cert-brand small { display: block; font: 600 10px 'DM Sans', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #786f60; text-align: left; }
+.iw-cert-kicker { margin-top: 3.5%; font: 700 11px 'DM Sans', 'Manrope', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #a55a3e; }
+.iw-cert-pre { margin-top: 2.2%; font: italic 500 16px 'Fraunces', 'Literata', Georgia, serif; color: #4a443b; }
+.iw-cert-name { margin-top: 1%; padding: 0 24px 6px; border-bottom: 1.5px solid #c9a24d; font: 500 clamp(30px, 4.4vw, 46px)/1.1 'Fraunces', 'Literata', Georgia, serif; letter-spacing: -0.02em; color: #2a2620; }
+.iw-cert-course { margin-top: 1%; font: 600 clamp(22px, 3vw, 32px)/1.2 'Fraunces', 'Literata', Georgia, serif; color: #a55a3e; }
+.iw-cert-level { margin-top: 1%; font: 600 13px 'DM Sans', 'Manrope', sans-serif; color: #786f60; letter-spacing: .04em; }
+.iw-cert-foot { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 20px; margin-top: 5%; }
+.iw-cert-foot > div { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.iw-cert-line { min-width: 170px; padding-bottom: 6px; border-bottom: 1px solid #786f60; font: 500 15px 'Fraunces', 'Literata', Georgia, serif; }
+.iw-cert-sign { font-style: italic; font-size: 20px; }
+.iw-cert-foot small { font: 600 10.5px 'DM Sans', 'Manrope', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #786f60; }
+.iw-cert-seal { width: 74px; height: 74px; border-radius: 50%; display: grid !important; place-items: center; background: radial-gradient(circle at 35% 30%, #f6dc9c, #c9a24d 55%, #94722a); color: #fffaf0; box-shadow: 0 0 0 5px #f5ecd9, 0 0 0 6px #c9a24d; }
+.iw-cert-note { position: absolute; left: 0; right: 0; bottom: 34px; margin: 0; font: 500 10px 'DM Sans', 'Manrope', sans-serif; color: #786f60; }
+@media print {
+  @page { size: A4 landscape; margin: 0; }
+  body.iw-printing-cert * { visibility: hidden !important; }
+  body.iw-printing-cert #iw-certificate, body.iw-printing-cert #iw-certificate * { visibility: visible !important; }
+  body.iw-printing-cert #iw-certificate { position: fixed; left: 0; top: 0; width: 297mm; height: 210mm; min-width: 0; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+  body.iw-printing-cert #root, body.iw-printing-cert #root-loading { display: none !important; }
+  body.iw-printing-cert .iw-modal-overlay { position: static; padding: 0; background: none !important; backdrop-filter: none !important; }
+  body.iw-printing-cert .iw-modal { max-height: none; overflow: visible; padding: 0; border: 0; box-shadow: none; }
+  body.iw-printing-cert .iw-modal-title, body.iw-printing-cert .iw-modal > .iw-modal-text, body.iw-printing-cert .iw-modal-actions { display: none !important; }
+  body.iw-printing-cert .iw-cert-wrap { padding: 0; overflow: visible; }
+}
+
+@media (max-width: 860px) {
+  .iw-chero { grid-template-columns: 1fr; padding: 24px 20px; border-radius: var(--radius-lg); }
+  .iw-chero-side { justify-self: start; }
+  .iw-chero-art { width: 200px; }
+  .iw-cunit-head { grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; padding: 14px; }
+  .iw-cunit-bar, .iw-cunit-head > .iw-status { display: none; }
+  .iw-cunit-lockednote { padding-left: 74px; }
+  .iw-clesson { grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; }
+  .iw-clesson-tags { grid-column: 2; grid-row: 2; flex-wrap: wrap; }
+  .iw-clesson > .iw-btn { grid-column: 3; grid-row: 1 / span 2; }
+  /* Спрощена мандрівка: одна колонка */
+  .iw-jstop { grid-template-columns: 72px minmax(0, 1fr); min-height: 104px; }
+  .iw-jstop.side-left .iw-jcard, .iw-jstop.side-right .iw-jcard { grid-column: 2; text-align: left; align-items: flex-start; }
+  .iw-jnode { grid-column: 1; }
+  .iw-jnode-ring { width: 60px; height: 60px; }
+  .iw-jnode-num { width: 50px; height: 50px; font-size: 19px; }
+  .iw-jpath { left: 36px; top: 52px; height: 104px; }
+  .iw-jcard { padding: 8px 4px 8px 10px; margin: 0; }
+  .iw-jfinish { align-items: flex-start; padding-left: 4px; }
+}
+@media (max-width: 720px) {
+  .iw-course .iw-chips { flex-wrap: nowrap; overflow-x: auto; margin-left: -18px; margin-right: -18px; padding: 0 18px 2px; scrollbar-width: none; }
+  .iw-course-toolbar > .iw-tabs { width: 100%; }
+  .iw-course-toolbar > .iw-tabs .iw-tab-btn { flex: 1; justify-content: center; }
+  .iw-chero-actions .iw-btn-lg { width: 100%; justify-content: space-between; }
+  .iw-unit-reward { padding-right: 44px; }
+}
+
 /* Доступність: менше руху */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
@@ -4313,7 +4486,7 @@ function LessonPage({ courseId, lessonId, goHome, goCourse, goLesson, favorites,
           <div className="locked-lesson-icon"><Lock size={32} /></div>
           <h2 className="locked-lesson-title">Урок ще закритий</h2>
           <p className="locked-lesson-sub">
-            Твій вчитель ще не відкрив доступ до <strong>Lesson {lesson.number} · {lesson.title}</strong>. Він відкриється, коли ти завершиш попередній урок або коли вчитель відкриє його вручну.
+            Твій вчитель ще не відкрив доступ до <strong>Lesson {lesson.number} · {lesson.title}</strong>. Він стане доступним, щойно вчитель відкриє його для тебе.
           </p>
           <button className="locked-lesson-btn" onClick={() => goCourse(course.id)}>← Повернутися до курсу</button>
         </div>
@@ -5484,7 +5657,7 @@ function StudentOverviewTab({ progress, stats, setTab }) {
       <div className="iw-overview-courses">
         {progress.map(p => (
           <section key={p.course.id} className="iw-card iw-course-sum">
-            <ProgressRing value={p.completed} max={Math.max(p.visible, 1)} size={92} stroke={8} tone={p.percent >= 100 ? 'sage' : 'terracotta'} label={`Прогрес: ${p.course.title}`} />
+            <ProgressRing value={p.completed} max={Math.max(p.total, 1)} size={92} stroke={8} tone={p.completed === p.total ? 'sage' : 'terracotta'} label={`Пройдено курсу: ${p.course.title}`} />
             <div className="iw-course-sum-body">
               <div className="iw-kicker">Курс</div>
               <h3 className="iw-course-sum-title">{p.course.title}</h3>
@@ -7414,7 +7587,7 @@ function StudentDashboard({ session, setRoute, permissions, canSeeCourse, canSee
           <h2 className="iw-home-h">Мій прогрес</h2>
           {myCourses.map(p => (
             <div key={p.course.id} className="iw-card iw-myprog">
-              <ProgressRing value={p.completed} max={Math.max(p.visible, 1)} size={96} stroke={8} tone={p.percent >= 100 ? 'sage' : 'terracotta'} label={`Прогрес курсу ${p.course.title}`} />
+              <ProgressRing value={p.completed} max={Math.max(p.total, 1)} size={96} stroke={8} tone={p.completed === p.total ? 'sage' : 'terracotta'} label={`Пройдено курсу ${p.course.title}`} />
               <div className="iw-myprog-body">
                 <div className="iw-kicker">{p.course.level} · {p.course.age}</div>
                 <h3 className="iw-course-sum-title">{p.course.title}</h3>
@@ -7936,9 +8109,9 @@ function App({ session, onLogout }) {
             </button>
           </div>
         )}
-        {route.page === 'course' && <CoursePage courseId={route.courseId} goHome={goHome} goLesson={goLesson} canSeeLesson={canSeeLesson} isLessonCompleted={isLessonCompleted} isTeacher={isTeacher} />}
+        {route.page === 'course' && <CoursePage courseId={route.courseId} goHome={goHome} goLesson={goLesson} canSeeLesson={canSeeLesson} isLessonCompleted={isLessonCompleted} isTeacher={isTeacher} session={session} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} />}
         {route.page === 'lesson' && <LessonPage courseId={route.courseId} lessonId={route.lessonId} goHome={goHome} goCourse={goCourse} goLesson={goLesson} favorites={favorites} toggleFavorite={toggleFavorite} canSeeLesson={canSeeLesson} isTeacher={isTeacher} session={session} />}
-        {route.page === 'grammar' && <GrammarBank goHome={goHome} setRoute={setRoute} session={session} canSeeLesson={canSeeLesson} isTeacher={isTeacher} />}
+        {route.page === 'grammar' && <GrammarBank key={route.topic || 'gb'} initialTopic={route.topic} goHome={goHome} setRoute={setRoute} session={session} canSeeLesson={canSeeLesson} isTeacher={isTeacher} />}
         {route.page === 'vocabulary' && <VocabularyBank goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} />}
         {route.page === 'vocab-course' && <VocabCoursePage courseId={route.courseId} goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} />}
         {route.page === 'vocab-lesson' && <VocabLessonPage courseId={route.courseId} lessonId={route.lessonId} goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} />}
@@ -8315,132 +8488,383 @@ function CoursesStrip({ goCourse }) {
   );
 }
 
-function CoursePage({ courseId, goHome, goLesson, canSeeLesson, isLessonCompleted, isTeacher }) {
+// ═══════════════════════════════════════════════════════════
+// INKWELL 2.0 · ФАЗА 7 — Сторінка курсу («Мої курси»)
+// ═══════════════════════════════════════════════════════════
+// • Доступ — як і раніше: урок відкритий, якщо є lesson_access або він
+//   завершений. Учень бачить назви лише відкритих уроків; закриті юніти
+//   показуються як «закрито» без переліку уроків. Нічого не відкривається
+//   автоматично — ні після завершення уроку, ні після нагороди.
+// • Прогрес рахується тим самим buildCourseProgress, що й на головній
+//   та у вчителя.
+// • Сертифікат — коли завершено ВСІ уроки курсу. Це внутрішній сертифікат
+//   Inkwell, а не офіційна кваліфікація CEFR.
+
+const LESSON_FILTERS = [
+  { id: 'all', label: 'Усі уроки' },
+  { id: 'available', label: 'Доступні' },
+  { id: 'completed', label: 'Завершені' },
+  { id: 'Revision', label: 'Повторення' },
+  { id: 'Exam', label: 'Іспит' },
+];
+const Award = (p) => <Icon {...p}><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></Icon>;
+const Route = (p) => <Icon {...p}><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></Icon>;
+const ListIcon = (p) => <Icon {...p}><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></Icon>;
+const Printer = (p) => <Icon {...p}><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></Icon>;
+
+function grammarTopicName(lesson) {
+  const g = lesson.grammar;
+  if (!g || !g.blocks || !g.blocks.length) return null;
+  return /^grammar presentation$/i.test(g.title || '') ? g.blocks.map(b => stripHtml(b.title)).join(' · ') : g.title;
+}
+
+function CoursePage({ courseId, goHome, goLesson, canSeeLesson, isLessonCompleted, isTeacher, session, setRoute, canSeeVocabWord }) {
   const course = COURSES.find(c => c.id === courseId);
-  const [openUnits, setOpenUnits] = useState(new Set([course?.units[0]?.id]));
-  if (!course) return <div className="page"><p>Курс не знайдено.</p></div>;
+  const [completedRows, setCompletedRows] = useState([]);
+  const [view, setView] = useState(() => { try { return localStorage.getItem('inkwell-course-view') || 'list'; } catch (e) { return 'list'; } });
+  const [openUnits, setOpenUnits] = useState(null);
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState('all');
+  const [celebrate, setCelebrate] = useState(null);
+  const [showCert, setShowCert] = useState(false);
 
-  // Готуємо юніти та уроки з урахуванням доступу
-  const unitsWithVisibility = course.units.map(unit => {
-    const lessonsWithVisibility = unit.lessons.map(lesson => ({
-      ...lesson,
-      canSee: canSeeLesson ? canSeeLesson(course.id, lesson.id) : true,
-      completed: isLessonCompleted ? isLessonCompleted(course.id, lesson.id) : false
+  useEffect(() => {
+    if (isTeacher || !session) return;
+    let alive = true;
+    window.SB.from('lesson_completions').select('course_id, lesson_id, completed_at').eq('student_id', session.user.id).eq('course_id', courseId)
+      .then(({ data }) => { if (alive) setCompletedRows(data || []); }, () => {});
+    return () => { alive = false; };
+  }, [courseId, isTeacher]);
+
+  // Доступ і завершення — з наявних функцій App (вчитель бачить усе)
+  const access = useMemo(() => {
+    const la = new Set(), done = new Set();
+    if (!course) return { la, done };
+    course.units.forEach(u => u.lessons.forEach(l => {
+      const k = `${course.id}:${l.id}`;
+      if (isTeacher || (canSeeLesson && canSeeLesson(course.id, l.id))) la.add(k);
+      if (!isTeacher && isLessonCompleted && isLessonCompleted(course.id, l.id)) done.add(k);
     }));
-    // Для учня показуємо тільки видимі уроки
-    const visibleLessons = isTeacher ? lessonsWithVisibility : lessonsWithVisibility.filter(l => l.canSee);
-    return { ...unit, visibleLessons, hasAnyVisible: visibleLessons.length > 0 };
-  });
+    return { la, done };
+  }, [course, isTeacher, canSeeLesson, isLessonCompleted]);
+  const dates = useMemo(() => new Map(completedRows.map(r => [`${r.course_id}:${r.lesson_id}`, r.completed_at])), [completedRows]);
+  const prog = useMemo(() => course ? buildCourseProgress(course, access.la, access.done, dates) : null, [course, access, dates]);
 
-  // Всі юніти видимі для teacher, для учня — тільки ті, де є хоч один доступний урок
-  const visibleUnits = isTeacher ? unitsWithVisibility : unitsWithVisibility.filter(u => u.hasAnyVisible);
+  // Нагорода за завершений юніт — один раз для кожного юніту
+  useEffect(() => {
+    if (isTeacher || !prog || !session) return;
+    for (const u of prog.units) {
+      if (!u.isComplete) continue;
+      const key = `inkwell-unit-done:${session.user.id}:${course.id}:${u.unit.id}`;
+      let seen = false;
+      try { seen = !!localStorage.getItem(key); } catch (e) {}
+      if (!seen) { try { localStorage.setItem(key, '1'); } catch (e) {} setCelebrate(u.unit); break; }
+    }
+  }, [prog && prog.unitsDone]);
 
-  const totalLessons = course.units.reduce((sum, u) => sum + u.lessons.length, 0);
-  const totalVisibleLessons = visibleUnits.reduce((sum, u) => sum + u.visibleLessons.length, 0);
-  const totalCompleted = visibleUnits.reduce((sum, u) => sum + u.visibleLessons.filter(l => l.completed).length, 0);
-  const progressPercent = totalVisibleLessons > 0 ? Math.round((totalCompleted / totalVisibleLessons) * 100) : 0;
+  if (!course) return <main className="page"><EmptyState title="Курс не знайдено" text="Можливо, посилання застаріло." action={<IwButton onClick={goHome}>На головну</IwButton>} /></main>;
 
-  const toggleUnit = (id) => setOpenUnits(prev => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
+  const expanded = openUnits || new Set(prog.currentUnit ? [prog.currentUnit.id] : course.units[0] ? [course.units[0].id] : []);
+  const toggleUnit = (id) => setOpenUnits(() => { const n = new Set(expanded); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  const setViewSaved = (v) => { setView(v); try { localStorage.setItem('inkwell-course-view', v); } catch (e) {} };
 
-  const circumference = 2 * Math.PI * 60;
-  const dashOffset = circumference - (circumference * progressPercent / 100);
+  const next = (() => { for (const u of prog.units) for (const l of u.lessons) if (l.status === 'available') return { unit: u.unit, lesson: l.lesson }; return null; })();
+  const lastAt = completedRows.reduce((a, r) => maxDate(a, r.completed_at), null);
+  const courseDone = !isTeacher && prog.total > 0 && prog.completed === prog.total;
+  const visibleUnits = prog.units; // закриті юніти показуємо як «закрито», без переліку уроків
+  const q = query.trim().toLowerCase();
+  const filtering = Boolean(q) || filter !== 'all';
+  const matches = (l, unit) => {
+    if (!isTeacher && l.status === 'locked') return false;
+    if (filter === 'available' && l.status !== 'available') return false;
+    if (filter === 'completed' && l.status !== 'completed') return false;
+    if ((filter === 'Revision' || filter === 'Exam') && l.lesson.type !== filter) return false;
+    if (!q) return true;
+    return [l.lesson.title, l.lesson.titleUk, `l${l.lesson.number}`, `lesson ${l.lesson.number}`, String(l.lesson.number), unit.title, unit.subtitle].some(f => (f || '').toLowerCase() === q || (f || '').toLowerCase().includes(q));
+  };
+  const openUnit = (unitId) => { setViewSaved('list'); setOpenUnits(new Set([unitId])); requestAnimationFrame(() => { const el = document.getElementById(`unit-${unitId}`); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' }); }); };
+  const lessonTypes = course.units.reduce((m, u) => { u.lessons.forEach(l => { m[l.type] = (m[l.type] || 0) + 1; }); return m; }, {});
 
   return (
-    <main className="page">
-      <Crumbs items={[{ label: 'Library', onClick: goHome }, { label: course.title, current: true }]} />
-      <div className="course-hero">
-        <div className="course-hero-text">
-          <div className="course-hero-eyebrow">Course</div>
-          <h1 className="course-hero-title">{course.title}</h1>
-          <p className="course-hero-sub">{course.description}</p>
-          <div className="course-hero-meta">
-            <div><strong>{isTeacher ? course.units.length : visibleUnits.length}</strong><span>Unit{visibleUnits.length !== 1 ? 's' : ''}</span></div>
-            <div><strong>{isTeacher ? totalLessons : totalVisibleLessons}</strong><span>Lesson{totalVisibleLessons !== 1 ? 's' : ''}</span></div>
-            <div><strong>{course.level}</strong><span>Level</span></div>
-            <div><strong>{course.age}</strong><span>Age</span></div>
-          </div>
-        </div>
-        <div className="course-progress">
-          <div className="progress-ring">
-            <svg width="140" height="140">
-              <circle className="progress-ring-bg" cx="70" cy="70" r="60" fill="none" strokeWidth="8" />
-              <circle className="progress-ring-fg" cx="70" cy="70" r="60" fill="none" strokeWidth="8" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={dashOffset} />
-            </svg>
-            <div className="progress-ring-text">{progressPercent}%<small>completed</small></div>
-          </div>
-        </div>
-      </div>
+    <main className="page iw-course">
+      <Crumbs items={[{ label: isTeacher ? 'Library' : 'Home', onClick: goHome }, { label: course.title, current: true }]} />
 
-      {visibleUnits.length === 0 && (
-        <div className="empty-inline">
-          <div className="empty-inline-title">Ще немає доступних уроків</div>
-          <div>Твій вчитель відкриє їх незабаром 🌱</div>
+      <header className="iw-chero">
+        <div className="iw-chero-text">
+          <div className="iw-chero-badges">
+            <Badge tone="lavender">{course.level}</Badge>
+            <Badge tone="brand">{course.age}</Badge>
+          </div>
+          <h1 className="iw-chero-title">{course.title}</h1>
+          {course.description && <p className="iw-chero-desc">{course.description}</p>}
+          <dl className="iw-chero-meta">
+            <div><dt>Юнітів</dt><dd>{course.units.length}</dd></div>
+            <div><dt>Уроків</dt><dd>{prog.total}</dd></div>
+            {!isTeacher && <div><dt>Відкрито тобі</dt><dd>{prog.visible}</dd></div>}
+            {isTeacher && <div><dt>Повторень · іспитів</dt><dd>{lessonTypes.Revision || 0} · {lessonTypes.Exam || 0}</dd></div>}
+          </dl>
+          <div className="iw-chero-actions">
+            {!isTeacher && next && <IwButton variant="primary" size="lg" iconRight={ArrowRight} onClick={() => goLesson(course.id, next.lesson.id)}>Продовжити: Урок {next.lesson.number}</IwButton>}
+            {!isTeacher && !next && !courseDone && <span className="iw-chero-wait"><Clock size={16} aria-hidden="true" /> Нові уроки відкриє вчитель</span>}
+            {courseDone && <IwButton variant="accent" size="lg" icon={Award} onClick={() => setShowCert(true)}>Мій сертифікат</IwButton>}
+            {isTeacher && <IwButton variant="secondary" icon={Award} onClick={() => setShowCert(true)}>Зразок сертифіката</IwButton>}
+          </div>
+        </div>
+        <div className="iw-chero-side">
+          {!isTeacher ? (
+            <ProgressRing value={prog.completed} max={Math.max(prog.total, 1)} size={150} stroke={11} tone={courseDone ? 'sage' : 'terracotta'} label="Прогрес курсу">
+              <span className="iw-chero-ring"><strong>{Math.round(prog.total ? (prog.completed / prog.total) * 100 : 0)}%</strong><small>курсу</small></span>
+            </ProgressRing>
+          ) : <div className="iw-chero-art"><Illustration name="library" /></div>}
+        </div>
+      </header>
+
+      {!isTeacher && (
+        <div className="iw-stat-grid iw-course-stats">
+          <StatCard icon={CheckCircle} tone="sage" value={`${prog.completed} / ${prog.total}`} label="Уроків завершено" sub={`${prog.visible} відкрито вчителем`} />
+          <StatCard icon={Layers} tone="sky" value={`${prog.unitsDone} / ${prog.unitsTotal}`} label="Юнітів завершено" />
+          <StatCard icon={Activity} tone="terracotta" value={`${Math.round(prog.total ? (prog.completed / prog.total) * 100 : 0)}%`} label="Курсу пройдено" sub="від усіх уроків курсу" />
+          <StatCard icon={Clock} tone="mustard" value={lastAt ? formatRelativeTime(lastAt) : '—'} label="Останній урок" sub={lastAt ? new Date(lastAt).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' }) : 'ще не було'} />
         </div>
       )}
 
-      {visibleUnits.map(unit => {
-        const isOpen = openUnits.has(unit.id);
-        const lessonsForRender = isTeacher ? unit.lessons.map(l => ({ ...l, canSee: canSeeLesson ? canSeeLesson(course.id, l.id) : true, completed: isLessonCompleted ? isLessonCompleted(course.id, l.id) : false })) : unit.visibleLessons;
-        const unitCompleted = lessonsForRender.filter(l => l.completed).length;
-        const unitTotal = lessonsForRender.length;
+      {celebrate && (
+        <div className="iw-unit-reward" role="status">
+          <span className="iw-confetti" aria-hidden="true">{Array.from({ length: 10 }).map((_, i) => <i key={i} />)}</span>
+          <div className="iw-unit-reward-badge" aria-hidden="true"><Award size={26} /></div>
+          <div className="iw-unit-reward-text">
+            <strong>Unit {celebrate.number} завершено!</strong>
+            <span>«{celebrate.title}» — усі уроки пройдено. Так тримати!</span>
+          </div>
+          <button type="button" className="iw-streak-celebrate-x" onClick={() => setCelebrate(null)} aria-label="Закрити"><X size={16} /></button>
+        </div>
+      )}
+
+      <div className="iw-course-toolbar">
+        <div className="iw-tabs" role="group" aria-label="Вигляд курсу">
+          <button type="button" className="iw-tab-btn" aria-selected={view === 'list'} aria-pressed={view === 'list'} onClick={() => setViewSaved('list')}><ListIcon size={15} aria-hidden="true" /> Список</button>
+          <button type="button" className="iw-tab-btn" aria-selected={view === 'journey'} aria-pressed={view === 'journey'} onClick={() => setViewSaved('journey')}><Route size={15} aria-hidden="true" /> Мандрівка</button>
+        </div>
+        {view === 'list' && (
+          <div className="iw-input-wrap iw-course-search">
+            <Search size={17} aria-hidden="true" />
+            <input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Номер, назва уроку чи юніту…" aria-label="Пошук уроку" />
+            {query && <button type="button" className="search-clear" onClick={() => setQuery('')} aria-label="Очистити"><X size={14} /></button>}
+          </div>
+        )}
+      </div>
+      {view === 'list' && (
+        <div className="iw-chips iw-course-filters" role="group" aria-label="Фільтр уроків">
+          {LESSON_FILTERS.filter(f => f.id === 'all' || f.id === 'available' || f.id === 'completed' ? !(isTeacher && f.id !== 'all') : lessonTypes[f.id]).map(f => (
+            <button key={f.id} type="button" className="iw-chip" aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}>{f.label}</button>
+          ))}
+        </div>
+      )}
+
+      {view === 'journey' ? (
+        <CourseJourney prog={prog} isTeacher={isTeacher} openUnit={openUnit} />
+      ) : (
+        <div className="iw-clist">
+          {!isTeacher && prog.visible === 0 && (
+            <EmptyState art="books" title="Ще немає доступних уроків" text="Твій вчитель відкриє їх незабаром. Тим часом можна зазирнути в Grammar Bank." />
+          )}
+          {visibleUnits.map(u => {
+            const unit = u.unit;
+            const locked = !isTeacher && u.visible === 0;
+            const lessons = u.lessons.filter(l => isTeacher || l.status !== 'locked');
+            const shown = filtering ? lessons.filter(l => matches(l, unit)) : lessons;
+            if (filtering && shown.length === 0) return null;
+            if (!isTeacher && locked && filtering) return null;
+            const isOpen = !locked && (filtering || expanded.has(unit.id));
+            const st = UNIT_STATE[u.state];
+            const hiddenCount = isTeacher ? 0 : u.total - lessons.length;
+            return (
+              <section key={unit.id} id={`unit-${unit.id}`} className={cx('iw-cunit', `is-${u.state}`, isOpen && 'open', locked && 'locked')}>
+                <button type="button" className="iw-cunit-head" aria-expanded={locked ? undefined : isOpen} disabled={locked} onClick={() => toggleUnit(unit.id)}>
+                  <span className="iw-cunit-num" aria-hidden="true">{u.state === 'completed' ? <Check size={20} /> : locked ? <Lock size={16} /> : unit.number}</span>
+                  <span className="iw-cunit-titles">
+                    <span className="iw-kicker">Unit {unit.number} · {u.total} {pluralUk(u.total, 'урок', 'уроки', 'уроків')}{locked ? ' · відкриє вчитель' : ''}</span>
+                    <span className="iw-cunit-title">{unit.title}</span>
+                    {unit.subtitle && <span className="iw-cunit-sub">{unit.subtitle}</span>}
+                  </span>
+                  {!isTeacher && locked && <span className="iw-cunit-bar" aria-hidden="true" />}
+                  {!isTeacher && !locked && <span className="iw-cunit-bar"><ProgressBar value={u.completed} max={u.total} size="sm" tone={u.isComplete ? 'sage' : 'terracotta'} label={`Прогрес юніту ${unit.number}`} valueLabel={`${u.completed}/${u.total}`} /></span>}
+                  {!isTeacher && <StatusBadge status={st.status} label={locked ? 'Закрито' : st.label} />}
+                  {!locked && <ChevronDown size={18} className="iw-unit-chev" aria-hidden="true" />}
+                </button>
+                {isOpen && (
+                  <ol className="iw-clessons">
+                    {shown.map(l => {
+                      const lesson = l.lesson;
+                      const hasHw = !!(lesson.homework && (lesson.homework.writing || lesson.homework.speaking));
+                      const canOpen = isTeacher || l.status !== 'locked';
+                      return (
+                        <li key={lesson.id} className={cx('iw-clesson', `is-${l.status}`)}>
+                          <span className="iw-clesson-num" aria-hidden="true">{l.status === 'completed' && !isTeacher ? <Check size={15} /> : lesson.number}</span>
+                          <span className="iw-clesson-titles">
+                            <span className="iw-clesson-title">Lesson {lesson.number} · {lesson.title}</span>
+                            <span className="iw-clesson-meta">
+                              {lesson.titleUk && <span>{lesson.titleUk}</span>}
+                              {l.completedAt && <span>· завершено {new Date(l.completedAt).toLocaleDateString('uk-UA', { day: 'numeric', month: 'short' })}</span>}
+                            </span>
+                          </span>
+                          <span className="iw-clesson-tags">
+                            {lesson.type && lesson.type !== 'Vocabulary' && <Badge tone={lesson.type === 'Exam' ? 'gold' : 'lavender'}>{lesson.type}</Badge>}
+                            {hasHw && <span className="iw-clesson-hw" data-tip="Є домашнє завдання"><Pencil size={13} aria-hidden="true" /><span className="sr-only">Є домашнє</span></span>}
+                            {isTeacher ? null : <StatusBadge status={l.status} />}
+                          </span>
+                          {canOpen && (
+                            <IwButton size="sm" variant={l.status === 'available' && !isTeacher ? 'primary' : 'secondary'} onClick={() => goLesson(course.id, lesson.id)}
+                              aria-label={`${isTeacher ? 'Відкрити' : l.status === 'completed' ? 'Повторити' : 'Почати'} урок ${lesson.number}`}>
+                              {isTeacher ? 'Відкрити' : l.status === 'completed' ? 'Повторити' : 'Почати'}
+                            </IwButton>
+                          )}
+                        </li>
+                      );
+                    })}
+                    {!filtering && hiddenCount > 0 && <li className="iw-clesson-hidden"><Lock size={13} aria-hidden="true" /> Ще {hiddenCount} {pluralUk(hiddenCount, 'урок відкриється', 'уроки відкриються', 'уроків відкриються')}, коли їх відкриє вчитель</li>}
+                  </ol>
+                )}
+              </section>
+            );
+          })}
+          {filtering && !visibleUnits.some(u => u.lessons.some(l => (isTeacher || l.status !== 'locked') && matches(l, u.unit))) && (
+            <EmptyState art="books" title="Нічого не знайдено" text="Спробуй інший номер чи назву уроку або зніми фільтр." action={<IwButton size="sm" onClick={() => { setQuery(''); setFilter('all'); }}>Скинути</IwButton>} />
+          )}
+        </div>
+      )}
+
+      <CourseOverview course={course} prog={prog} isTeacher={isTeacher} canSeeVocabWord={canSeeVocabWord} setRoute={setRoute} />
+
+      {showCert && <CertificateModal course={course} session={session} isTeacher={isTeacher} completedAt={lastAt} onClose={() => setShowCert(false)} />}
+    </main>
+  );
+}
+
+// ── Мандрівка курсом ──
+function CourseJourney({ prog, isTeacher, openUnit }) {
+  const units = prog.units;
+  return (
+    <div className="iw-journey" role="list" aria-label="Мандрівка юнітами курсу">
+      {units.map((u, i) => {
+        const locked = !isTeacher && u.visible === 0;
+        const st = isTeacher ? 'available' : u.state;
+        const side = i % 2 === 0 ? 'left' : 'right';
+        const isCurrent = !isTeacher && u.state === 'current';
         return (
-          <div key={unit.id} className={`unit ${isOpen ? 'open' : ''}`}>
-            <button className="unit-head" onClick={() => toggleUnit(unit.id)}>
-              <div className="unit-head-left">
-                <div className="unit-num">{unit.number}</div>
-                <div className="unit-title-block">
-                  <div className="unit-eyebrow">Unit {unit.number}</div>
-                  <h3 className="unit-title">{unit.title}</h3>
-                  <div className="unit-meta-line">{unit.subtitle} · {unitTotal} lesson{unitTotal !== 1 ? 's' : ''}</div>
-                </div>
-              </div>
-              <div className="unit-head-right">
-                <div className="unit-progress">
-                  <div className="unit-progress-bar"><div className="unit-progress-bar-fg" style={{ width: unitTotal > 0 ? (unitCompleted/unitTotal*100) + '%' : '0%' }} /></div>
-                  <span>{unitCompleted}/{unitTotal}</span>
-                </div>
-                <ChevronRight size={18} className="unit-chevron" />
-              </div>
+          <div key={u.unit.id} role="listitem" className={cx('iw-jstop', `is-${st}`, `side-${side}`, locked && 'locked')} style={{ animationDelay: `${i * 60}ms` }}>
+            {i < units.length - 1 && <span className={cx('iw-jpath', units[i + 1] && (isTeacher || units[i + 1].visible > 0) ? 'open' : '')} aria-hidden="true" />}
+            <button type="button" className="iw-jnode" disabled={locked} onClick={() => openUnit(u.unit.id)}
+              aria-label={`Unit ${u.unit.number}: ${u.unit.title}. ${locked ? 'Закрито' : UNIT_STATE[u.state].label}${!isTeacher && !locked ? `, ${u.completed} з ${u.total}` : ''}`}>
+              <span className="iw-jnode-ring" style={{ '--p': isTeacher ? 0 : (u.completed / Math.max(u.total, 1)) * 100 }}>
+                <span className="iw-jnode-num">{u.state === 'completed' && !isTeacher ? <Check size={22} /> : locked ? <Lock size={18} /> : u.unit.number}</span>
+              </span>
             </button>
-            <div className="unit-body">
-              <ul className="unit-list">
-                {lessonsForRender.map(lesson => {
-                  const locked = !lesson.canSee;
-                  return (
-                    <li
-                      key={lesson.id}
-                      className={`unit-row ${lesson.completed ? 'row-completed' : ''} ${locked ? 'row-locked' : ''}`}
-                      onClick={() => { if (!locked || isTeacher) goLesson(course.id, lesson.id); }}
-                      style={{ cursor: (!locked || isTeacher) ? 'pointer' : 'not-allowed', opacity: locked && !isTeacher ? 0.5 : 1 }}
-                    >
-                      <div className="unit-row-num">
-                        {lesson.completed
-                          ? <span className="unit-row-check"><Check size={14} /></span>
-                          : locked
-                            ? <span className="unit-row-lock"><Lock size={12} /></span>
-                            : lesson.number}
-                      </div>
-                      <div className="unit-row-body">
-                        <div className="unit-row-title">Lesson {lesson.number} · {lesson.title}</div>
-                        <div className="unit-row-meta">{lesson.titleUk}{lesson.type && lesson.type.toLowerCase() !== 'vocabulary' ? ` · ${lesson.type}` : ''}</div>
-                      </div>
-                      <div className="unit-row-tags">
-                        {lesson.completed && <span className="badge badge-completed">Завершено</span>}
-                        {!lesson.completed && !locked && <span className="badge badge-open">Відкрито</span>}
-                        {locked && isTeacher && <span className="badge badge-locked">Закрито для учнів</span>}
-                        {lesson.type && lesson.type.toLowerCase() !== 'vocabulary' && <span className="badge type">{lesson.type}</span>}
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
+            <div className="iw-jcard">
+              {isCurrent && <span className="iw-jflag">Ти тут</span>}
+              <span className="iw-kicker">Unit {u.unit.number}</span>
+              <span className="iw-jtitle">{u.unit.title}</span>
+              {u.unit.subtitle && <span className="iw-jsub">{u.unit.subtitle}</span>}
+              {!isTeacher && <span className="iw-jmeta">{locked ? 'Відкриє вчитель' : `${u.completed} з ${u.total} уроків`}</span>}
             </div>
           </div>
         );
       })}
-    </main>
+      <div className={cx('iw-jfinish', !isTeacher && prog.completed === prog.total && prog.total > 0 && 'done')} aria-hidden="true">
+        <div className="iw-jfinish-art"><Illustration name="trophy" /></div>
+        <span>Фініш курсу</span>
+      </div>
+    </div>
   );
 }
+
+// ── Що ти вивчиш ──
+function CourseOverview({ course, prog, isTeacher, canSeeVocabWord, setRoute }) {
+  const words = useMemo(() => getAllVocabItems().filter(w => w.courseId === course.id), [course.id]);
+  return (
+    <section className="iw-learn">
+      <h2 className="iw-home-h">Що ти вивчиш</h2>
+      <p className="iw-help" style={{ marginTop: -6 }}>Граматика й лексика кожного юніту. Посилання ведуть лише до вже відкритих матеріалів.</p>
+      <div className="iw-learn-grid">
+        {prog.units.map(u => {
+          const locked = !isTeacher && u.visible === 0;
+          const open = u.lessons.filter(l => isTeacher || l.status !== 'locked');
+          const topics = open.map(l => ({ l, name: grammarTopicName(l.lesson) })).filter(x => x.name && x.l.lesson.type !== 'Exam' && x.l.lesson.type !== 'Revision');
+          const unitWords = words.filter(w => w.unitId === u.unit.id);
+          const myWords = isTeacher ? unitWords : unitWords.filter(w => canSeeVocabWord && canSeeVocabWord(w));
+          return (
+            <article key={u.unit.id} className={cx('iw-learn-card', locked && 'locked')}>
+              <div className="iw-learn-head">
+                <span className="iw-learn-num">{u.unit.number}</span>
+                <span className="iw-learn-title">{u.unit.title}</span>
+              </div>
+              {locked ? <p className="iw-scard-muted">Відкриється пізніше.</p> : (
+                <React.Fragment>
+                  {topics.length > 0 && (
+                    <div className="iw-learn-block">
+                      <span className="iw-kicker"><Brain size={12} aria-hidden="true" /> Граматика</span>
+                      <div className="iw-learn-chips">
+                        {topics.map(({ l, name }) => (
+                          <button key={l.lesson.id} type="button" className="iw-learn-chip" onClick={() => setRoute({ page: 'grammar', topic: `lesson:${course.id}:${l.lesson.id}` })}>{name}</button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  <div className="iw-learn-block">
+                    <span className="iw-kicker"><Library size={12} aria-hidden="true" /> Лексика</span>
+                    {myWords.length > 0
+                      ? <button type="button" className="iw-link" onClick={() => setRoute({ page: 'vocab-course', courseId: course.id })}>{myWords.length} {pluralUk(myWords.length, 'слово', 'слова', 'слів')} у Vocabulary Bank{!isTeacher && unitWords.length > myWords.length ? ` · ще ${unitWords.length - myWords.length} після завершення уроків` : ''}</button>
+                      : <span className="iw-scard-muted">{unitWords.length ? `${unitWords.length} ${pluralUk(unitWords.length, 'слово з’явиться', 'слова з’являться', 'слів з’являться')} після завершення уроків` : 'Окремої лексики немає'}</span>}
+                  </div>
+                </React.Fragment>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+// ── Сертифікат ──
+function CertificateModal({ course, session, isTeacher, completedAt, onClose }) {
+  const name = isTeacher ? 'Ім’я Прізвище учня' : (session.profile.display_name || session.profile.username);
+  const date = new Date(isTeacher ? Date.now() : (completedAt || Date.now()));
+  const dateStr = date.toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
+  const dateEn = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  useEffect(() => {
+    document.body.classList.add('iw-printing-cert');
+    return () => document.body.classList.remove('iw-printing-cert');
+  }, []);
+  return (
+    <Modal open onClose={onClose} title={isTeacher ? 'Зразок сертифіката' : 'Твій сертифікат'} width={880}
+      actions={<React.Fragment>
+        <IwButton variant="ghost" onClick={onClose}>Закрити</IwButton>
+        <IwButton variant="primary" icon={Printer} onClick={() => window.print()}>Зберегти як PDF</IwButton>
+      </React.Fragment>}>
+      <p className="iw-modal-text" style={{ marginBottom: 14 }}>У вікні друку обери «Зберегти як PDF». Орієнтація — альбомна.</p>
+      <div className="iw-cert-wrap">
+        <div className="iw-cert" id="iw-certificate">
+          <div className="iw-cert-border" aria-hidden="true" />
+          <div className="iw-cert-brand"><BrandMark /><span>Inkwell <small>English Library</small></span></div>
+          <div className="iw-cert-kicker">Certificate of Completion · Сертифікат про завершення курсу</div>
+          <div className="iw-cert-pre">This is to certify that</div>
+          <div className="iw-cert-name">{name}</div>
+          <div className="iw-cert-pre">has successfully completed the course</div>
+          <div className="iw-cert-course">{course.title}</div>
+          <div className="iw-cert-level">{course.level} · {course.age} · {course.units.length} units</div>
+          <div className="iw-cert-foot">
+            <div><span className="iw-cert-line">{dateEn}</span><small>Date · {dateStr}</small></div>
+            <div className="iw-cert-seal" aria-hidden="true"><Award size={34} /></div>
+            <div><span className="iw-cert-line iw-cert-sign">Inkwell</span><small>Teacher</small></div>
+          </div>
+          <p className="iw-cert-note">Внутрішній сертифікат Inkwell про завершення курсу. Не є офіційним сертифікатом CEFR чи іншою кваліфікацією.</p>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+
 
 function Crumbs({ items }) {
   return (
@@ -9291,12 +9715,19 @@ const COMPARE_PRESETS = [
 ];
 const GROUP_TONE = { present: 'sage', past: 'terracotta', future: 'sky' };
 
-function GrammarBank({ goHome, setRoute, session, canSeeLesson, isTeacher }) {
+function GrammarBank({ goHome, setRoute, session, canSeeLesson, isTeacher, initialTopic }) {
   const topics = useMemo(() => buildGrammarTopics(canSeeLesson || (() => true)), [canSeeLesson]);
   const progress = useGrammarProgress(session);
   const [tab, setTab] = useState('learn');
-  const [topicId, setTopicId] = useState(null);
+  const [topicId, setTopicId] = useState(initialTopic || null);
   const [query, setQuery] = useState('');
+  const markedInitial = useRef(false);
+  useEffect(() => {
+    // Тема відкрита за посиланням (напр. зі сторінки курсу) — позначаємо як вивчену
+    if (!initialTopic || markedInitial.current || progress.mode === 'loading') return;
+    markedInitial.current = true;
+    if (topics.some(t => t.id === initialTopic)) progress.markStudied(initialTopic);
+  }, [progress.mode]);
   const [compare, setCompare] = useState(COMPARE_PRESETS[0]);
   const [practice, setPractice] = useState({ scope: 'all', type: 'mixed', run: null });
   const topic = topics.find(t => t.id === topicId) || null;
