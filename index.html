@@ -2648,6 +2648,68 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   .iw-gresult-head .iw-buddy-spot { position: static; }
 }
 
+/* ═════════ INKWELL 2.0 · ФАЗА 9: ДОСЯГНЕННЯ ═════════ */
+.iw-ach-badge { --sz: 72px; --c1: #d9a066; --c2: #a8663a; --rb: var(--terracotta); position: relative; width: var(--sz); height: calc(var(--sz) * 1.12); flex-shrink: 0; display: inline-block; }
+.iw-ach-badge.t-silver { --c1: #dfe3e8; --c2: #8f99a6; --rb: var(--sky-deep); }
+.iw-ach-badge.t-gold { --c1: #f6dc9c; --c2: #b88a2e; --rb: var(--sage-deep); }
+.iw-ach-badge.t-locked { --c1: var(--cream-2); --c2: var(--cream-3); --rb: var(--line); }
+.iw-ach-ribbon { position: absolute; left: 50%; bottom: 0; width: 46%; height: 42%; transform: translateX(-50%); background: linear-gradient(90deg, var(--rb) 0 48%, color-mix(in srgb, var(--rb) 70%, #000) 52% 100%); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%); }
+.iw-ach-disc { position: absolute; left: 0; top: 0; width: var(--sz); height: var(--sz); border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 34% 28%, var(--c1), var(--c2) 72%); color: #fffaf0; box-shadow: inset 0 0 0 calc(var(--sz) * .06) rgba(255,255,255,.35), inset 0 -4px 0 rgba(0,0,0,.12), 0 6px 14px rgba(60,45,25,.18); }
+.iw-ach-badge.t-silver .iw-ach-disc { color: #3c4652; }
+.iw-ach-badge.t-locked .iw-ach-disc { color: var(--ink-3); box-shadow: inset 0 0 0 2px var(--line); border: 1.5px dashed var(--line); }
+.iw-ach-level { position: absolute; right: -2px; top: -2px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; display: grid; place-items: center; background: var(--ink); color: var(--paper); font: 700 11px var(--font-body); border: 2px solid var(--paper); }
+.iw-ach-lock { position: absolute; right: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); }
+.iw-ach.earned .iw-ach-badge { animation: iwBadgeIn .6s var(--ease-spring) backwards; }
+
+.iw-achp-stats { margin-bottom: 18px; }
+.iw-achp-filter { margin-bottom: 16px; }
+.iw-ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.iw-ach { display: flex; gap: 16px; align-items: flex-start; padding: 18px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-sm); }
+.iw-ach.earned { border-color: color-mix(in srgb, var(--gold) 45%, var(--border)); background: linear-gradient(140deg, color-mix(in srgb, var(--gold) 9%, var(--surface)), var(--surface) 60%); }
+.iw-ach.locked { box-shadow: none; }
+.iw-ach.locked .iw-ach-title { color: var(--text-2); }
+.iw-ach-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.iw-ach-top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.iw-ach-title { margin: 0; font: 600 17px/1.25 var(--font-display); color: var(--text); }
+.iw-ach-desc { margin: 0 0 4px; font-size: 13.5px; line-height: 1.45; color: var(--text-2); }
+.iw-ach-done { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--success); }
+
+/* Головна */
+.iw-ach-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.iw-ach-mini { display: flex; align-items: center; gap: 10px; text-align: left; padding: 8px 14px 8px 8px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); color: var(--text); font: 600 14px var(--font-display); cursor: pointer; transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+.iw-ach-mini:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.iw-ach-mini.static { cursor: default; }
+.iw-ach-mini.static:hover { transform: none; box-shadow: none; }
+.iw-ach-next { display: flex; align-items: center; gap: 12px; min-width: 260px; flex: 1; max-width: 380px; margin-left: auto; padding: 10px 14px 10px 10px; border: 1px dashed var(--border); border-radius: 16px; }
+.iw-ach-next > div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.iw-ach-next .iw-kicker { margin: 0; }
+.iw-ach-next strong { font: 600 14.5px var(--font-display); }
+.iw-ach-next .iw-progress-head span { display: none; }
+.iw-ach-next .iw-progress-head { justify-content: flex-end; }
+.iw-ach-toast { position: relative; display: flex; align-items: center; gap: 14px; margin-bottom: 16px; padding: 12px 48px 12px 14px; border-radius: var(--radius-lg); border: 1px solid color-mix(in srgb, var(--gold) 50%, var(--border)); background: linear-gradient(120deg, var(--gold-soft), var(--surface)); overflow: hidden; animation: iwPop .45s var(--ease-spring) backwards; }
+.iw-ach-toast .iw-streak-celebrate-x { right: 12px; }
+.iw-ach-toast .iw-buddy-spot { margin: -14px 0 -14px -4px; }
+.iw-ach-toast .iw-buddy-bubble { display: none; }
+.iw-ach-toast-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.iw-ach-toast-text strong { font: 600 16px var(--font-display); color: var(--text); }
+.iw-ach-toast-text span { font-size: 13px; color: var(--text-2); }
+.iw-ach-teacher { grid-column: 1 / -1; }
+.iw-achp .iw-gb-levelnote { margin-top: 18px; }
+
+@media (max-width: 720px) {
+  .iw-ach-grid { grid-template-columns: 1fr; }
+  .iw-ach { padding: 14px; gap: 12px; }
+  .iw-ach-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .iw-ach-mini { padding-right: 8px; font-size: 13px; }
+  .iw-ach-next { grid-column: 1 / -1; min-width: 0; margin-left: 0; max-width: none; width: 100%; }
+  .iw-ach-strip > .iw-scard-muted { grid-column: 1 / -1; }
+  .iw-achp-stats > .iw-stat:nth-child(3) { grid-column: 1 / -1; }
+  .iw-achp-stats > .iw-stat:nth-child(3) .iw-stat-value { font-size: 20px; }
+  .iw-ach-toast { flex-wrap: wrap; padding-right: 40px; }
+  .iw-ach-toast .iw-buddy-spot { display: none; }
+  .iw-achp .iw-chips { flex-wrap: nowrap; overflow-x: auto; margin-left: -18px; margin-right: -18px; padding: 0 18px 2px; scrollbar-width: none; }
+}
+
 /* Доступність: менше руху */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
@@ -6021,7 +6083,7 @@ function StudentPage({ studentId, initialTab, session, goHome, setRoute }) {
       </div>
 
       <Tabs label="Розділи профілю" value={tab} onChange={setTab} tabs={tabs} className="iw-profile-tabs">
-        {tab === 'overview' && <StudentOverviewTab progress={progress} stats={stats} setTab={setTab} />}
+        {tab === 'overview' && <StudentOverviewTab progress={progress} stats={stats} setTab={setTab} student={student} />}
         {tab === 'progress' && <StudentProgressTab progress={progress} setTab={setTab} />}
         {tab === 'access' && <StudentAccessTab courseAccess={courseAccess} lessonAccess={lessonAccess} completions={completions}
           toggleCourse={toggleCourse} toggleLesson={toggleLesson} grantLessons={grantLessons} busyKey={busyKey} progress={progress} />}
@@ -6051,7 +6113,7 @@ function StudentPage({ studentId, initialTab, session, goHome, setRoute }) {
 }
 
 // ── Вкладка «Огляд» ──
-function StudentOverviewTab({ progress, stats, setTab }) {
+function StudentOverviewTab({ progress, stats, setTab, student }) {
   const feed = useMemo(() => {
     const items = [];
     stats.completedLessons.forEach(c => {
@@ -6113,6 +6175,7 @@ function StudentOverviewTab({ progress, stats, setTab }) {
           ))}
         </ol>
       </section>
+      {student && <StudentAchievements student={student} />}
     </div>
   );
 }
@@ -8008,6 +8071,9 @@ function StudentDashboard({ session, setRoute, permissions, canSeeCourse, canSee
         </div>
       </section>
 
+      {/* 5б. Досягнення */}
+      <AchievementsStrip session={session} permissions={permissions} setRoute={setRoute} />
+
       {/* 6. Мій прогрес */}
       {myCourses.length > 0 && (
         <section className="iw-home-section">
@@ -8546,6 +8612,7 @@ function App({ session, onLogout }) {
         {route.page === 'vocab-lesson' && <VocabLessonPage courseId={route.courseId} lessonId={route.lessonId} goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} />}
         {route.page === 'flashcards' && <FlashcardsPage session={session} mode={route.mode} courseId={route.courseId} lessonId={route.lessonId} unitId={route.unitId} wordIds={route.wordIds} limit={route.limit} canSeeVocabWord={canSeeVocabWord} goHome={goHome} setRoute={setRoute} />}
         {route.page === 'my-homework' && <MyHomeworkPage session={session} goHome={goHome} setRoute={setRoute} />}
+        {route.page === 'achievements' && !isTeacher && <AchievementsPage session={session} permissions={permissions} goHome={goHome} />}
         {route.page === 'students' && <StudentsPage session={session} goHome={goHome} setRoute={setRoute} />}
         {route.page === 'homework-review' && <HomeworkReviewPage session={session} goHome={goHome} setRoute={setRoute} />}
         {route.page === 'student' && <StudentPage key={route.studentId + ':' + (route.tab || '')} studentId={route.studentId} initialTab={route.tab} session={session} goHome={goHome} setRoute={setRoute} />}
@@ -8623,6 +8690,7 @@ function AccountMenu({ profile, theme, setTheme, setRoute, onLogout, pendingHome
           ) : (
             <React.Fragment>
               <MenuItem icon={Inbox} onSelect={() => { close(); setRoute({ page: 'my-homework' }); }}>Мої домашні роботи</MenuItem>
+              <MenuItem icon={Award} onSelect={() => { close(); setRoute({ page: 'achievements' }); }}>Мої досягнення</MenuItem>
               {companion && <MenuItem icon={Sparkles} onSelect={() => { close(); companion.openPicker(); }}
                 meta={companion.prefs.kind ? <span className="iw-menu-meta">{(COMPANIONS.find(x => x.id === companion.prefs.kind) || {}).name}</span> : null}>Мій компаньйон</MenuItem>}
             </React.Fragment>
@@ -11727,6 +11795,247 @@ function Footer({ setRoute, isTeacher }) {
     </footer>
   );
 }
+
+// ═══════════════════════════════════════════════════════════
+// INKWELL 2.0 · ФАЗА 9 — Досягнення
+// ═══════════════════════════════════════════════════════════
+// Досягнення НЕ зберігаються окремо — вони щоразу обчислюються з
+// реальних записів (завершені уроки, флешкартки, домашні, серія днів,
+// Grammar Bank, щоденні челенджі). Тож їх неможливо отримати за те, чого
+// учень не робив, а старі учні одразу бачать заслужені нагороди.
+// Ніяких рейтингів між учнями, штрафів чи «втрачених» нагород.
+// Досягнення ніколи не впливають на доступ до уроків.
+
+const Medal = (p) => <Icon {...p}><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><circle cx="12" cy="17" r="5"/></Icon>;
+
+const ACH_TIERS = ['bronze', 'silver', 'gold'];
+const ACH_TIER_LABEL = { bronze: 'Бронза', silver: 'Срібло', gold: 'Золото' };
+const ACHIEVEMENTS = [
+  { id: 'first-lesson', icon: BookOpen, cat: 'lessons', title: 'Перша сторінка', desc: 'Заверши свій перший урок.', steps: [1], unit: ['урок', 'уроки', 'уроків'], metric: 'lessons' },
+  { id: 'reader', icon: Library, cat: 'lessons', title: 'Читач', desc: 'Завершуй уроки курсу.', steps: [5, 15, 30], unit: ['урок', 'уроки', 'уроків'], metric: 'lessons' },
+  { id: 'first-unit', icon: Layers, cat: 'lessons', title: 'Перший розділ', desc: 'Заверши всі уроки одного юніту.', steps: [1], unit: ['юніт', 'юніти', 'юнітів'], metric: 'units' },
+  { id: 'chapters', icon: Route, cat: 'lessons', title: 'Мандрівник курсом', desc: 'Завершуй юніти один за одним.', steps: [3, 6, 10], unit: ['юніт', 'юніти', 'юнітів'], metric: 'units' },
+  { id: 'course-finisher', icon: Award, cat: 'lessons', title: 'Курс завершено', desc: 'Пройди всі уроки курсу.', steps: [1], unit: ['курс', 'курси', 'курсів'], metric: 'courses' },
+  { id: 'vocab-explorer', icon: Layers2, cat: 'vocab', title: 'Vocabulary Explorer', desc: 'Повторюй слова у флешкартках.', steps: [20, 75, 200], unit: ['слово', 'слова', 'слів'], metric: 'wordsReviewed' },
+  { id: 'memory', icon: Brain, cat: 'vocab', title: 'Довга пам’ять', desc: 'Слова, які флешкартки відклали на 3+ тижні.', steps: [10, 40, 100], unit: ['слово', 'слова', 'слів'], metric: 'wordsStrong' },
+  { id: 'daily', icon: Zap, cat: 'vocab', title: 'Щоденний челендж', desc: 'Виконуй щоденний челендж у Vocabulary Bank.', steps: [1, 7, 30], unit: ['челендж', 'челенджі', 'челенджів'], metric: 'dailies' },
+  { id: 'grammar-explorer', icon: Search, cat: 'grammar', title: 'Grammar Explorer', desc: 'Відкривай теми в Grammar Bank.', steps: [3, 8, 15], unit: ['тема', 'теми', 'тем'], metric: 'grammarStudied' },
+  { id: 'grammar-practice', icon: Target, cat: 'grammar', title: 'Точний вибір', desc: 'Правильні відповіді в практиці граматики.', steps: [20, 80, 200], unit: ['відповідь', 'відповіді', 'відповідей'], metric: 'grammarCorrect' },
+  { id: 'consistent', icon: Flame, cat: 'habits', title: 'Стабільний учень', desc: 'Найдовша серія днів поспіль.', steps: [3, 7, 21], unit: ['день', 'дні', 'днів'], metric: 'bestStreak' },
+  { id: 'homework', icon: Pencil, cat: 'habits', title: 'Домашня робота', desc: 'Домашні, які прийняв учитель.', steps: [1, 5, 15], unit: ['робота', 'роботи', 'робіт'], metric: 'hwAccepted' },
+];
+const ACH_CATS = [
+  { id: 'lessons', label: 'Уроки й курс' }, { id: 'vocab', label: 'Слова' }, { id: 'grammar', label: 'Граматика' }, { id: 'habits', label: 'Звички' },
+];
+
+function evaluateAchievements(m) {
+  return ACHIEVEMENTS.map(a => {
+    const value = m[a.metric] || 0;
+    let level = 0;
+    a.steps.forEach((s, i) => { if (value >= s) level = i + 1; });
+    const single = a.steps.length === 1;
+    const tier = level === 0 ? null : single ? 'gold' : ACH_TIERS[level - 1];
+    const next = a.steps[level] || null;
+    const date = m.dates && m.dates[a.metric] ? m.dates[a.metric][a.steps[Math.max(level - 1, 0)] - 1] : null;
+    return { ...a, value, level, tier, next, earned: level > 0, max: level === a.steps.length, date: level > 0 ? date : null, key: `${a.id}:${level}` };
+  });
+}
+
+// Метрики з реальних записів. teacherView — коли вчитель дивиться учня
+function useAchievementMetrics({ studentId, profile, permissions, readLocal = true }) {
+  const [m, setM] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      const safe = (p) => p.then(r => (r.error ? null : r.data || []), () => null);
+      const [lc, hw, vp, gp, va] = await Promise.all([
+        safe(window.SB.from('lesson_completions').select('course_id, lesson_id, completed_at').eq('student_id', studentId)),
+        safe(window.SB.from('homework_submissions').select('status, reviewed_at').eq('student_id', studentId)),
+        safe(window.SB.from('vocab_progress').select('word_id, interval_days').eq('student_id', studentId)),
+        safe(window.SB.from('grammar_progress').select('topic_id, studied_count, practice_correct').eq('student_id', studentId)),
+        safe(window.SB.from('vocab_activity').select('kind, day').eq('student_id', studentId)),
+      ]);
+      let grammar = gp, activity = va;
+      if (readLocal) {
+        try { if (!grammar) grammar = Object.entries(JSON.parse(localStorage.getItem(`inkwell-grammar:${studentId}`) || '{}')).map(([topic_id, r]) => ({ topic_id, ...r })); } catch (e) {}
+        try { if (!activity) activity = (JSON.parse(localStorage.getItem(`inkwell-vocab:${studentId}`) || '{}').activity) || []; } catch (e) {}
+      }
+      const done = new Set((lc || []).map(r => `${r.course_id}:${r.lesson_id}`));
+      const sorted = (lc || []).filter(r => r.completed_at).map(r => r.completed_at).sort();
+      let units = 0, courses = 0; const unitDates = [], courseDates = [];
+      const dateOf = new Map((lc || []).map(r => [`${r.course_id}:${r.lesson_id}`, r.completed_at]));
+      COURSES.forEach(c => {
+        let all = true; let last = null;
+        c.units.forEach(u => {
+          const keys = u.lessons.map(l => `${c.id}:${l.id}`);
+          const ok = keys.length > 0 && keys.every(k => done.has(k));
+          if (ok) { units++; unitDates.push(keys.map(k => dateOf.get(k)).filter(Boolean).sort().pop() || null); }
+          if (!ok) all = false;
+          keys.forEach(k => { last = maxDate(last, dateOf.get(k)); });
+        });
+        if (all && c.units.length) { courses++; courseDates.push(last); }
+      });
+      const metrics = {
+        lessons: done.size, units, courses,
+        wordsReviewed: (vp || []).length,
+        wordsStrong: (vp || []).filter(r => (r.interval_days || 0) >= STRONG_INTERVAL_DAYS).length,
+        dailies: (activity || []).filter(a => a.kind === 'daily').length,
+        grammarStudied: (grammar || []).filter(r => (r.studied_count || 0) > 0).length,
+        grammarCorrect: (grammar || []).reduce((a, r) => a + (r.practice_correct || 0), 0),
+        bestStreak: Math.max(profile.longest_streak || 0, profile.current_streak || 0),
+        hwAccepted: (hw || []).filter(h => h.status === 'accepted').length,
+        dates: { lessons: sorted, units: unitDates.sort(), courses: courseDates.sort() },
+      };
+      if (alive) setM(metrics);
+    })();
+    return () => { alive = false; };
+  }, [studentId, permissions && permissions.completions && permissions.completions.size]);
+  return m ? evaluateAchievements(m) : null;
+}
+
+function AchBadge({ a, size = 72 }) {
+  const I = a.icon;
+  const tier = a.tier || 'locked';
+  return (
+    <span className={cx('iw-ach-badge', `t-${tier}`)} style={{ '--sz': `${size}px` }} aria-hidden="true">
+      <span className="iw-ach-ribbon" />
+      <span className="iw-ach-disc"><I size={Math.round(size * 0.38)} /></span>
+      {a.earned && !a.max && a.steps.length > 1 && <span className="iw-ach-level">{a.level}</span>}
+      {!a.earned && <span className="iw-ach-lock"><Lock size={Math.round(size * 0.2)} /></span>}
+    </span>
+  );
+}
+
+function AchCard({ a, compact }) {
+  const unitWord = (n) => pluralUk(n, ...a.unit);
+  const target = a.next || a.steps[a.steps.length - 1];
+  return (
+    <article className={cx('iw-ach', a.earned ? 'earned' : 'locked', compact && 'compact')}>
+      <AchBadge a={a} size={compact ? 56 : 76} />
+      <div className="iw-ach-body">
+        <div className="iw-ach-top">
+          <h3 className="iw-ach-title">{a.title}</h3>
+          {a.earned && <Badge tone="gold">{a.steps.length === 1 ? 'Отримано' : ACH_TIER_LABEL[a.tier]}</Badge>}
+        </div>
+        <p className="iw-ach-desc">{a.desc}</p>
+        {!a.max ? (
+          <ProgressBar value={Math.min(a.value, target)} max={target} size="sm" tone="gold-fill"
+            label={a.earned ? `До рівня «${ACH_TIER_LABEL[ACH_TIERS[a.level]] || ''}»` : 'Прогрес'} valueLabel={`${Math.min(a.value, target)} / ${target}`} />
+        ) : (
+          <div className="iw-ach-done"><CheckCircle size={14} aria-hidden="true" /> {a.steps.length === 1 ? 'Отримано' : `${a.value} ${unitWord(a.value)}`}{a.date ? ` · ${new Date(a.date).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' })}` : ''}</div>
+        )}
+      </div>
+    </article>
+  );
+}
+
+// ── Сторінка «Мої досягнення» ──
+function AchievementsPage({ session, permissions, goHome }) {
+  const list = useAchievementMetrics({ studentId: session.user.id, profile: session.profile, permissions });
+  const [cat, setCat] = useState('all');
+  if (!list) return <PageLoader label="Рахую твої досягнення…" />;
+  const earned = list.filter(a => a.earned);
+  const tiersEarned = list.reduce((n, a) => n + a.level, 0);
+  const tiersTotal = list.reduce((n, a) => n + a.steps.length, 0);
+  const nextUp = list.filter(a => !a.max).map(a => ({ a, left: (a.next || 0) - a.value, ratio: a.value / (a.next || 1) })).sort((x, y) => y.ratio - x.ratio).slice(0, 3);
+  const shown = list.filter(a => cat === 'all' || a.cat === cat);
+  return (
+    <main className="page iw-achp">
+      <Crumbs items={[{ label: 'Home', onClick: goHome }, { label: 'Мої досягнення', current: true }]} />
+      <PageHeader eyebrow="Досягнення" title={<React.Fragment>Твоя полиця <em>нагород</em></React.Fragment>}
+        subtitle="Нагороди за справжні кроки в навчанні: завершені уроки, повторені слова, вивчені теми й регулярність. Їх не можна втратити."
+        art="trophy" buddy={<CompanionSpot state="celebrate" size={76} align="right" lines={earned.length ? [`You have ${earned.length} ${earned.length === 1 ? 'award' : 'awards'}!`, 'Look at your collection!'] : ['Your first award is one lesson away!']} />} />
+      <div className="iw-stat-grid iw-achp-stats">
+        <StatCard icon={Award} tone="gold-fill" value={`${earned.length} / ${list.length}`} label="Досягнень отримано" />
+        <StatCard icon={Medal} tone="mustard" value={`${tiersEarned} / ${tiersTotal}`} label="Рівнів відкрито" sub="бронза · срібло · золото" />
+        {nextUp[0] && <StatCard icon={Target} tone="terracotta" value={nextUp[0].a.title} label="Найближча мета" sub={`ще ${nextUp[0].left} ${pluralUk(nextUp[0].left, ...nextUp[0].a.unit)}`} />}
+      </div>
+      <div className="iw-chips iw-achp-filter" role="group" aria-label="Категорія досягнень">
+        <button type="button" className="iw-chip" aria-pressed={cat === 'all'} onClick={() => setCat('all')}>Усі</button>
+        {ACH_CATS.map(c => <button key={c.id} type="button" className="iw-chip" aria-pressed={cat === c.id} onClick={() => setCat(c.id)}>{c.label}</button>)}
+      </div>
+      <div className="iw-ach-grid">{shown.map(a => <AchCard key={a.id} a={a} />)}</div>
+      <p className="iw-gb-levelnote">Досягнення рахуються автоматично з твоїх уроків, флешкарток, Grammar Bank і домашніх. Вони не відкривають уроки — це робить учитель.</p>
+    </main>
+  );
+}
+
+// ── Блок на головній + святкування нового досягнення ──
+function AchievementsStrip({ session, permissions, setRoute }) {
+  const list = useAchievementMetrics({ studentId: session.user.id, profile: session.profile, permissions });
+  const [fresh, setFresh] = useState(null); // { items, intro }
+  const seenKey = `inkwell-ach-seen:${session.user.id}`;
+  useEffect(() => {
+    if (!list) return;
+    let seen = null;
+    try { seen = JSON.parse(localStorage.getItem(seenKey) || 'null'); } catch (e) {}
+    const keys = list.filter(a => a.earned).map(a => a.key);
+    const save = () => { try { localStorage.setItem(seenKey, JSON.stringify(keys)); } catch (e) {} };
+    if (!seen) { save(); if (keys.length) setFresh({ intro: true, items: list.filter(a => a.earned) }); return; }
+    const added = list.filter(a => a.earned && !seen.includes(a.key));
+    if (added.length) { save(); setFresh({ intro: false, items: added }); }
+  }, [list]);
+  if (!list) return null;
+  const earned = list.filter(a => a.earned).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  const next = list.filter(a => !a.max).sort((x, y) => y.value / (y.next || 1) - x.value / (x.next || 1))[0];
+  return (
+    <section className="iw-home-section">
+      {fresh && (
+        <div className="iw-ach-toast" role="status">
+          <span className="iw-confetti" aria-hidden="true">{Array.from({ length: 10 }).map((_, i) => <i key={i} />)}</span>
+          <CompanionSpot state="celebrate" size={64} event lines={[fresh.intro ? 'Look — you already have awards!' : 'New award! Well done!']} />
+          <AchBadge a={fresh.items[0]} size={58} />
+          <div className="iw-ach-toast-text">
+            <strong>{fresh.intro ? `У тебе вже ${fresh.items.length} ${pluralUk(fresh.items.length, 'досягнення', 'досягнення', 'досягнень')}!` : `Нове досягнення: ${fresh.items[0].title}${fresh.items[0].steps.length > 1 ? ` · ${ACH_TIER_LABEL[fresh.items[0].tier]}` : ''}`}</strong>
+            <span>{fresh.intro ? 'Ми порахували нагороди за все, що ти вже пройшов.' : fresh.items.length > 1 ? `І ще ${fresh.items.length - 1} — подивись на полиці нагород.` : fresh.items[0].desc}</span>
+          </div>
+          <IwButton size="sm" variant="secondary" onClick={() => setRoute({ page: 'achievements' })}>Подивитись</IwButton>
+          <button type="button" className="iw-streak-celebrate-x" onClick={() => setFresh(null)} aria-label="Закрити"><X size={16} /></button>
+        </div>
+      )}
+      <div className="iw-home-section-head">
+        <h2 className="iw-home-h">Досягнення <span className="iw-muted-num">({earned.length}/{list.length})</span></h2>
+        <IwButton size="sm" variant="ghost" iconRight={ArrowRight} onClick={() => setRoute({ page: 'achievements' })}>Усі нагороди</IwButton>
+      </div>
+      <div className="iw-ach-strip">
+        {earned.slice(0, 4).map(a => (
+          <button key={a.id} type="button" className="iw-ach-mini" onClick={() => setRoute({ page: 'achievements' })} title={a.desc}>
+            <AchBadge a={a} size={54} /><span>{a.title}</span>
+          </button>
+        ))}
+        {earned.length === 0 && <p className="iw-scard-muted" style={{ margin: 0 }}>Перше досягнення — після першого завершеного уроку.</p>}
+        {next && (
+          <div className="iw-ach-next">
+            <AchBadge a={{ ...next, earned: false, tier: null }} size={54} />
+            <div>
+              <div className="iw-kicker">Наступна мета</div>
+              <strong>{next.title}</strong>
+              <ProgressBar value={next.value} max={next.next} size="sm" tone="gold-fill" label={next.title} valueLabel={`${next.value} / ${next.next}`} />
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+// ── Для вчителя: досягнення учня в профілі ──
+function StudentAchievements({ student }) {
+  const list = useAchievementMetrics({ studentId: student.id, profile: student, permissions: null, readLocal: false });
+  if (!list) return <Skeleton h={90} r={16} />;
+  const earned = list.filter(a => a.earned);
+  return (
+    <section className="iw-card iw-ach-teacher">
+      <h3 className="iw-card-title">Досягнення <span className="iw-muted-num">({earned.length}/{list.length})</span></h3>
+      {earned.length === 0 ? <p className="iw-scard-muted" style={{ margin: 0 }}>Поки немає. Перше — після першого завершеного уроку.</p> : (
+        <div className="iw-ach-strip">
+          {earned.map(a => <span key={a.id} className="iw-ach-mini static" title={`${a.title}${a.steps.length > 1 ? ` (${ACH_TIER_LABEL[a.tier]})` : ''}: ${a.desc}`}><AchBadge a={a} size={46} /><span>{a.title}</span></span>)}
+        </div>
+      )}
+    </section>
+  );
+}
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<AuthGate />);
