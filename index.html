@@ -2002,6 +2002,247 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   .iw-myprog { grid-template-columns: 1fr; padding: 18px; gap: 16px; justify-items: start; }
 }
 
+
+/* ═════════ INKWELL 2.0 · ФАЗА 5: GRAMMAR BANK ═════════ */
+.iw-gb .iw-page-header { margin-bottom: 18px; }
+.iw-link { padding: 0; border: 0; background: none; color: var(--brand-deep); font: inherit; font-weight: 600; cursor: pointer; text-align: left; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--brand-deep) 35%, transparent); text-underline-offset: 3px; }
+.iw-link:hover { text-decoration-color: currentColor; }
+.iw-chip:disabled { opacity: .45; cursor: not-allowed; }
+.iw-chip svg { flex-shrink: 0; }
+
+/* Пошук */
+.iw-gb-search { position: relative; max-width: 720px; margin-bottom: 26px; z-index: 6; }
+.iw-gb-search .search-input::-webkit-search-cancel-button { display: none; }
+.iw-gb-results { position: absolute; top: calc(100% + 8px); left: 0; right: 0; padding: 6px; background: var(--surface-raised); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-lg); animation: iwPop .18s var(--ease-out) backwards; max-height: 420px; overflow: auto; }
+.iw-gb-result { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 11px 12px; border: 0; border-radius: 10px; background: transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer; }
+.iw-gb-result:hover, .iw-gb-result:focus-visible { background: var(--hover); outline: none; }
+.iw-gb-result-name { font: 600 15px var(--font-display); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iw-gb-result-meta { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; font-size: 12px; color: var(--text-muted); }
+.iw-gb-noresult { padding: 14px; font-size: 14px; color: var(--text-muted); }
+.iw-gb-tabs > .iw-tabs { margin-bottom: 20px; }
+
+/* Каталог */
+.iw-gb-recent { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 16px; }
+.iw-gb-recent .iw-kicker { margin: 0; }
+.iw-gb-recent-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.iw-gb-filters { display: grid; gap: 8px; }
+.iw-chip-fav[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: #2a2620; }
+.iw-chip-fav[aria-pressed="true"] .iw-chip-count { background: rgba(0,0,0,.12); color: #2a2620; }
+.iw-gb-levelnote { margin: 10px 0 18px; font-size: 12.5px; color: var(--text-muted); font-style: italic; }
+.iw-gb-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.iw-gcard { --g: var(--plum); position: relative; display: flex; flex-direction: column; gap: 8px; padding: 16px 16px 14px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-sm); transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), border-color var(--dur) ease; overflow: hidden; }
+.iw-gcard::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--g); opacity: .85; }
+.iw-gcard.grp-present { --g: var(--sage-deep); } .iw-gcard.grp-past { --g: var(--terracotta); } .iw-gcard.grp-future { --g: var(--sky-deep); }
+.iw-gcard.is-lesson { --g: var(--mustard); }
+.iw-gcard:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: color-mix(in srgb, var(--g) 55%, var(--border)); }
+.iw-gcard-top { position: relative; z-index: 2; display: flex; align-items: center; gap: 8px; }
+.iw-gcard-cat { font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iw-gcard-top .iw-fav { margin-left: auto; }
+.iw-gcard-main { display: flex; flex-direction: column; gap: 2px; padding: 0; border: 0; background: none; color: var(--text); font: inherit; text-align: left; cursor: pointer; }
+.iw-gcard-main.iw-stretch::after { border-radius: var(--radius-lg); }
+.iw-gcard-title { font: 600 18px/1.25 var(--font-display); letter-spacing: -0.01em; }
+.iw-gcard-uk { font-size: 13px; color: var(--text-2); }
+.iw-gcard-formula { align-self: flex-start; padding: 4px 9px; border-radius: 8px; background: color-mix(in srgb, var(--g) 12%, var(--paper)); color: color-mix(in srgb, var(--g) 70%, var(--ink)); font: 600 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.iw-gcard-from { font-size: 12.5px; color: var(--text-muted); }
+.iw-gcard-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--border-soft); font-size: 12px; }
+.iw-gcard-flag { display: inline-flex; align-items: center; gap: 4px; color: var(--text-muted); }
+.iw-gcard-flag.ok { color: var(--success); font-weight: 600; }
+.iw-gcard-acc { font-weight: 600; color: var(--warning); }
+.iw-gcard-acc.good { color: var(--success); } .iw-gcard-acc.low { color: var(--error); }
+
+.iw-fav { position: relative; z-index: 2; width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid transparent; border-radius: 10px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all var(--dur-fast) ease; }
+.iw-fav:hover { background: var(--surface-2); color: var(--gold-deep); }
+.iw-fav.on { color: var(--gold); }
+.dark .iw-fav.on { color: var(--gold); }
+.iw-fav.on svg { animation: iwPop .3s var(--ease-spring); }
+.iw-fav.lg { width: 42px; height: 42px; border-color: var(--border); background: var(--surface); }
+
+/* Сторінка теми */
+.iw-gtopic { --g: var(--plum); }
+.iw-gtopic.grp-present { --g: var(--sage-deep); } .iw-gtopic.grp-past { --g: var(--terracotta); } .iw-gtopic.grp-future { --g: var(--sky-deep); }
+.iw-gtopic-head { margin-bottom: 18px; }
+.iw-gtopic-head > .iw-btn { margin-left: -10px; margin-bottom: 10px; }
+.iw-gtopic-titlerow { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.iw-gtopic-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.iw-gtopic-badges .iw-badge.tone-brand { text-transform: none; letter-spacing: 0; font-size: 12px; }
+.iw-gtopic-title { margin: 0; font: 500 clamp(28px, 4vw, 42px)/1.08 var(--font-display); letter-spacing: -0.025em; color: var(--text); }
+.iw-gtopic-uk { margin-top: 6px; font: italic 500 17px var(--font-display); color: var(--text-2); }
+.iw-gtopic-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+.iw-gtopic-lesson .lesson-section-head { display: none; }
+.iw-gtopic-lesson .lesson-section { margin: 0; }
+.iw-gtopic-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr); gap: 18px; align-items: start; }
+.iw-gtopic-main { display: grid; gap: 18px; }
+.iw-gtopic-side { display: grid; gap: 14px; position: sticky; top: 92px; }
+.iw-gformula { padding: 22px 24px; border-radius: var(--radius-lg); background: linear-gradient(135deg, color-mix(in srgb, var(--g) 16%, var(--paper)), var(--surface)); border: 1px solid color-mix(in srgb, var(--g) 35%, var(--border)); }
+.iw-gformula-text { margin: 6px 0 10px; font: 600 clamp(20px, 2.6vw, 26px)/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; color: color-mix(in srgb, var(--g) 60%, var(--ink)); letter-spacing: -0.01em; }
+.iw-gformula-text.long { font-size: clamp(16px, 1.8vw, 19px); line-height: 1.45; }
+.iw-gformula-when { margin: 0; font-size: 15px; line-height: 1.55; color: var(--text-2); }
+.iw-gforms { display: grid; gap: 8px; }
+.iw-gform { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 13px; background: var(--surface); border: 1px solid var(--border-soft); font: 500 16px/1.4 var(--font-display); color: var(--text); }
+.iw-gform-sign { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0; font: 700 18px var(--font-body); }
+.iw-gform.pos .iw-gform-sign { background: var(--success-soft); color: var(--success); }
+.iw-gform.neg .iw-gform-sign { background: var(--error-soft); color: var(--error); }
+.iw-gform.que .iw-gform-sign { background: var(--info-soft); color: var(--info); }
+.iw-guses { display: grid; gap: 8px; }
+.iw-guse { border: 1px solid var(--border-soft); border-radius: 14px; background: var(--surface); overflow: hidden; }
+.iw-guse[open] { border-color: var(--border); box-shadow: var(--shadow-sm); }
+.iw-guse summary { display: flex; align-items: center; gap: 12px; padding: 13px 16px; cursor: pointer; list-style: none; }
+.iw-guse summary::-webkit-details-marker { display: none; }
+.iw-guse summary:hover { background: color-mix(in srgb, var(--surface-2) 50%, transparent); }
+.iw-guse-num { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; flex-shrink: 0; background: color-mix(in srgb, var(--g) 16%, var(--paper)); color: color-mix(in srgb, var(--g) 70%, var(--ink)); font-size: 13px; font-weight: 700; }
+.iw-guse-case { flex: 1; font: 600 15.5px var(--font-display); color: var(--text); }
+.iw-guse-chev { color: var(--text-muted); transition: transform var(--dur) var(--ease-out); }
+.iw-guse[open] .iw-guse-chev { transform: rotate(180deg); }
+.iw-guse p { margin: 0; padding: 0 16px 8px 54px; font-size: 14.5px; line-height: 1.6; color: var(--text-2); }
+.iw-guse ul { margin: 0; padding: 4px 16px 14px 54px; list-style: none; display: grid; gap: 5px; }
+.iw-guse li { position: relative; font: italic 500 15px/1.45 var(--font-display); color: var(--text); }
+.iw-guse li::before { content: '→'; position: absolute; left: -20px; font-style: normal; color: color-mix(in srgb, var(--g) 70%, var(--ink)); }
+.iw-gmarkers { display: flex; flex-wrap: wrap; gap: 6px; }
+.iw-gmarker { padding: 5px 10px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border-soft); font-size: 13px; font-weight: 500; color: var(--text); }
+.iw-gpractice-cta p { margin: 0 0 14px; font-size: 14px; line-height: 1.5; color: var(--text-2); }
+.iw-gpractice-last { margin-top: 12px; font-size: 13px; color: var(--text-2); }
+.iw-grelated { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* Порівняння */
+.iw-gcompare-presets { margin-bottom: 16px; }
+.iw-gcompare-presets .iw-kicker { display: block; margin-bottom: 8px; }
+.iw-gcompare-pickers { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 10px; align-items: center; margin-bottom: 16px; }
+.iw-gcompare-select select { width: 100%; }
+.iw-gcompare-table { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; }
+.iw-gcompare-row { display: grid; grid-template-columns: 110px minmax(0, 1fr) minmax(0, 1fr); }
+.iw-gcompare-row + .iw-gcompare-row { border-top: 1px solid var(--border-soft); }
+.iw-gcompare-row > span { padding: 14px 16px; min-width: 0; }
+.iw-gcompare-row > span + span { border-left: 1px solid var(--border-soft); }
+.iw-gcompare-row.head { background: var(--surface-2); }
+.iw-gcompare-th { display: flex; flex-direction: column; gap: 2px; }
+.iw-gcompare-th button { padding: 0; border: 0; background: none; font: 600 19px/1.2 var(--font-display); text-align: left; cursor: pointer; color: var(--text); }
+.iw-gcompare-th.grp-present button { color: var(--sage-deep); } .iw-gcompare-th.grp-past button { color: var(--terracotta-deep); } .iw-gcompare-th.grp-future button { color: var(--sky-deep); }
+.dark .iw-gcompare-th.grp-present button { color: var(--sage); } .dark .iw-gcompare-th.grp-past button { color: var(--terracotta); } .dark .iw-gcompare-th.grp-future button { color: var(--sky); }
+.iw-gcompare-th button:hover { text-decoration: underline; }
+.iw-gcompare-th small { font-size: 12.5px; color: var(--text-muted); }
+.iw-gcompare-label { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--text-muted); }
+.iw-gcompare-label.sign { font: 700 18px var(--font-body); color: var(--text-2); }
+.iw-gcompare-cell { font-size: 14.5px; line-height: 1.55; color: var(--text); }
+.iw-gcompare-cell code { font: 600 13.5px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--text); }
+.iw-gcompare-uses { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 13.5px; }
+.iw-gcompare-uses strong { font-weight: 600; }
+.iw-gcompare-foot { margin-top: 16px; }
+
+/* Практика */
+.iw-gpractice-setup { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.iw-gpractice-tense { margin-top: 12px; width: 100%; max-width: 420px; }
+.iw-gpractice-tense select { width: 100%; }
+.iw-gpractice-go { margin-top: 24px; }
+.iw-gpractice-about { display: flex; gap: 16px; align-items: center; }
+.iw-gpractice-about p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-2); }
+.iw-gpractice-art { width: 90px; flex-shrink: 0; }
+.iw-gq { max-width: 760px; margin: 0 auto; display: grid; gap: 12px; }
+.iw-gq-top { display: flex; align-items: center; gap: 12px; }
+.iw-gq-top .iw-kicker { margin: 0; flex: 1; }
+.iw-gq-count { font: 600 14px var(--font-body); color: var(--text-2); font-variant-numeric: tabular-nums; }
+.iw-gq-card { padding: 26px; animation: iwPop .25s var(--ease-out) backwards; }
+.iw-gq-prompt { margin: 0 0 14px; font: 600 21px/1.3 var(--font-display); letter-spacing: -0.01em; color: var(--text); }
+.iw-gq-sentence { margin: 0 0 18px; padding: 16px 20px; border-left: 3px solid var(--lavender); border-radius: 0 12px 12px 0; background: var(--lavender-soft); font: italic 500 20px/1.45 var(--font-display); color: var(--text); }
+.iw-gq-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.iw-gq-opt { position: relative; display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 12px 40px 12px 12px; border: 1.5px solid var(--border); border-radius: 13px; background: var(--surface); color: var(--text); font: 600 15px var(--font-body); text-align: left; cursor: pointer; transition: all var(--dur-fast) ease; }
+.iw-gq-opt.mono { font: 600 14px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.iw-gq-opt:hover:not(:disabled) { border-color: var(--ink); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.iw-gq-opt:disabled { cursor: default; }
+.iw-gq-key { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; flex-shrink: 0; background: var(--surface-2); color: var(--text-muted); font: 700 12px var(--font-body); }
+.iw-gq-opt.right { border-color: var(--success); background: var(--success-soft); }
+.iw-gq-opt.wrong { border-color: var(--error); background: var(--error-soft); animation: iwShake .35s ease; }
+.iw-gq-opt.dim { opacity: .55; }
+.iw-gq-mark { position: absolute; right: 12px; }
+.iw-gq-opt.right .iw-gq-mark { color: var(--success); } .iw-gq-opt.wrong .iw-gq-mark { color: var(--error); }
+@keyframes iwShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+.iw-gq-feedback { margin-top: 18px; padding: 16px 18px; border-radius: 14px; display: grid; gap: 6px; justify-items: start; animation: iwPop .25s var(--ease-out) backwards; }
+.iw-gq-feedback.right { background: var(--success-soft); }
+.iw-gq-feedback.wrong { background: var(--error-soft); }
+.iw-gq-feedback strong { font: 600 17px var(--font-display); }
+.iw-gq-feedback.right strong { color: var(--success); } .iw-gq-feedback.wrong strong { color: var(--error); }
+.iw-gq-feedback p { margin: 0 0 6px; font-size: 14px; line-height: 1.55; color: var(--text-2); }
+.iw-gorder { display: grid; gap: 14px; }
+.iw-gorder-line { display: flex; flex-wrap: wrap; gap: 6px; min-height: 58px; padding: 10px; border: 1.5px dashed var(--border); border-radius: 14px; background: var(--surface-2); align-items: center; }
+.iw-gorder-line.right { border-style: solid; border-color: var(--success); background: var(--success-soft); }
+.iw-gorder-line.wrong { border-style: solid; border-color: var(--error); background: var(--error-soft); }
+.iw-gorder-ph { padding: 0 6px; font-size: 14px; color: var(--text-muted); font-style: italic; }
+.iw-gorder-bank { display: flex; flex-wrap: wrap; gap: 8px; }
+.iw-gorder-tok { padding: 9px 13px; border: 1.5px solid var(--border); border-radius: 11px; background: var(--surface); color: var(--text); font: 500 16px var(--font-display); cursor: pointer; box-shadow: 0 2px 0 var(--cream-3); transition: transform var(--dur-fast) ease, opacity var(--dur-fast) ease, border-color var(--dur-fast) ease; }
+.iw-gorder-tok:hover:not(:disabled) { border-color: var(--ink); transform: translateY(-1px); }
+.iw-gorder-tok:disabled { opacity: .3; cursor: default; box-shadow: none; }
+.iw-gorder-tok.in { background: var(--paper); }
+.iw-gorder-tok.in:disabled { opacity: 1; }
+.iw-gorder-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.iw-gresult { display: grid; gap: 16px; max-width: 820px; margin: 0 auto; }
+.iw-gresult-head { position: relative; display: flex; align-items: center; gap: 24px; padding: 26px; overflow: hidden; }
+.iw-gresult-art { position: absolute; right: 18px; top: 12px; width: 110px; opacity: .9; }
+.iw-gresult-title { margin: 0 0 4px; font: 600 24px/1.2 var(--font-display); color: var(--text); }
+.iw-gresult-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.iw-gresult-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.iw-gresult-list li { padding-bottom: 12px; border-bottom: 1px solid var(--border-soft); display: grid; gap: 4px; }
+.iw-gresult-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.iw-gresult-q { font: italic 500 16px var(--font-display); color: var(--text); }
+.iw-gresult-a { font-size: 14px; color: var(--text-2); }
+.iw-gresult-e { font-size: 13.5px; line-height: 1.5; color: var(--text-muted); }
+
+/* Прогрес */
+.iw-gprog { display: grid; gap: 14px; }
+.iw-gprog-note { display: flex; align-items: flex-start; gap: 8px; padding: 10px 14px; border-radius: 12px; background: var(--info-soft); color: var(--text-2); font-size: 13px; line-height: 1.5; }
+.iw-gprog-note svg { margin-top: 2px; flex-shrink: 0; color: var(--info); }
+.iw-gprog-note code { font-size: 12px; }
+.iw-gprog-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.iw-gprog-side { display: grid; gap: 16px; }
+.iw-gprog-bars { display: grid; gap: 4px; }
+.iw-gprog-bar { padding: 8px 10px; border: 0; border-radius: 10px; background: transparent; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.iw-gprog-bar:hover { background: var(--surface-2); }
+.iw-gprog-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.iw-gprog-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 13px; color: var(--text-muted); }
+.iw-gprog-list li .iw-link { font-size: 14px; }
+.iw-gprog-list li .iw-btn { margin-left: auto; }
+
+/* English Hub */
+.iw-hub { display: flex; align-items: center; gap: 18px; margin-top: 40px; padding: 18px 22px; border: 1px solid color-mix(in srgb, var(--sky) 45%, var(--border)); border-radius: var(--radius-lg); background: linear-gradient(120deg, color-mix(in srgb, var(--sky) 16%, var(--paper)), var(--surface)); color: var(--text); text-decoration: none; transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+.iw-hub:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.iw-hub-icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; background: var(--sky-deep); color: #f4f8fb; }
+.iw-hub-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.iw-hub-body .iw-kicker { margin: 0; }
+.iw-hub-title { font: 600 20px/1.2 var(--font-display); }
+.iw-hub-sub { font-size: 13.5px; color: var(--text-2); }
+
+/* Таблиця часів на телефоні: дві колонки замість стиснутої сітки */
+.iw-gb-matrix .tenses-section { margin: 0; }
+@media (max-width: 720px) {
+  .tense-matrix { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; }
+  .tense-matrix-header { display: none; }
+  .tense-matrix-rowlabel { grid-column: 1 / -1; padding: 12px 4px 2px !important; }
+  .tense-cell { min-height: 74px; }
+}
+
+@media (max-width: 960px) {
+  .iw-gtopic-grid, .iw-gpractice-setup, .iw-gprog-grid { grid-template-columns: 1fr; }
+  .iw-gtopic-side { position: static; }
+}
+@media (max-width: 720px) {
+  .iw-gb .iw-chips { flex-wrap: nowrap; overflow-x: auto; margin-left: -18px; margin-right: -18px; padding: 0 18px 2px; scrollbar-width: none; }
+  .iw-gb .iw-chips::-webkit-scrollbar { display: none; }
+  .iw-gb .iw-gb-recent-list { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .iw-gb-grid { grid-template-columns: 1fr; }
+  .iw-gq-options { grid-template-columns: 1fr; }
+  .iw-gq-card { padding: 18px; }
+  .iw-gq-sentence { font-size: 18px; }
+  .iw-gcompare-pickers { grid-template-columns: 1fr; }
+  .iw-gcompare-pickers > .iw-btn { justify-self: center; transform: rotate(90deg); }
+  .iw-gcompare-row { grid-template-columns: 1fr 1fr; }
+  .iw-gcompare-row > span:first-child { grid-column: 1 / -1; padding-bottom: 0; }
+  .iw-gcompare-row.head > span:first-child { display: none; }
+  .iw-gcompare-row > span + span { border-left: 0; }
+  .iw-gcompare-row > span:last-child { border-left: 1px solid var(--border-soft); }
+  .iw-gcompare-row > span { padding: 10px 12px; }
+  .iw-gresult-head { flex-direction: column; align-items: flex-start; }
+  .iw-gresult-art { width: 80px; }
+  .iw-hub { flex-wrap: wrap; }
+}
+
 /* Доступність: менше руху */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
@@ -2827,6 +3068,48 @@ function Illustration({ name = 'books', className, title }) {
           <g fill="#2c3446" opacity="0.5"><circle cx="64" cy="180" r="2" /><circle cx="71" cy="180" r="2" /><circle cx="78" cy="180" r="2" /><circle cx="64" cy="187" r="2" /><circle cx="71" cy="187" r="2" /><circle cx="78" cy="187" r="2" /></g>
         </g>
         <IllDefs id={id} />
+      </svg>
+    );
+  }
+
+  if (name === 'grammar') {
+    return (
+      <svg viewBox="0 0 240 190" className={cx('iw-ill', className)} {...label}>
+        <IllDefs id={id} />
+        <circle cx="130" cy="86" r="70" className="f-sky halo" />
+        <ellipse cx="120" cy="176" rx="96" ry="9" fill={`url(#${id}gs)`} />
+        {/* розгорнута книга */}
+        <path d="M24 128 L24 170 C 58 160 90 162 120 172 C 150 162 182 160 216 170 L216 128 C 182 120 150 122 120 134 C 90 122 58 120 24 128 Z" className="f-saged" />
+        <path d="M30 124 C 60 114 92 116 120 130 L120 166 C 92 156 60 154 30 162 Z" className="f-white" />
+        <path d="M210 124 C 180 114 148 116 120 130 L120 166 C 148 156 180 154 210 162 Z" className="f-white" />
+        <path d="M120 130 L120 166" className="s-line" strokeWidth="1.5" />
+        <g className="s-line" strokeWidth="2.2" strokeLinecap="round" fill="none">
+          <path d="M44 134 C 64 129 84 130 104 136" /><path d="M44 144 C 64 139 84 140 104 146" />
+          <path d="M136 136 C 156 130 176 129 196 134" /><path d="M136 146 C 156 140 176 139 196 144" />
+        </g>
+        {/* картки + − ? */}
+        <g className="iw-float">
+          <rect x="44" y="58" width="44" height="44" rx="12" className="f-sage" transform="rotate(-8 66 80)" />
+          <rect x="44" y="58" width="44" height="44" rx="12" fill={lt} transform="rotate(-8 66 80)" />
+          <text x="66" y="92" textAnchor="middle" fontSize="32" fontWeight="700" style={{ fill: '#fffaf0', fontFamily: 'var(--font-body)' }} transform="rotate(-8 66 80)">+</text>
+        </g>
+        <g className="iw-float-2">
+          <rect x="98" y="34" width="44" height="44" rx="12" className="f-terra" transform="rotate(4 120 56)" />
+          <rect x="98" y="34" width="44" height="44" rx="12" fill={lt} transform="rotate(4 120 56)" />
+          <text x="120" y="67" textAnchor="middle" fontSize="32" fontWeight="700" style={{ fill: '#fffaf0', fontFamily: 'var(--font-body)' }} transform="rotate(4 120 56)">−</text>
+        </g>
+        <g className="iw-float-3">
+          <rect x="152" y="60" width="44" height="44" rx="12" className="f-sky" transform="rotate(9 174 82)" />
+          <rect x="152" y="60" width="44" height="44" rx="12" fill={lt} transform="rotate(9 174 82)" />
+          <text x="174" y="94" textAnchor="middle" fontSize="30" fontWeight="700" style={{ fill: '#fffaf0', fontFamily: 'var(--font-body)' }} transform="rotate(9 174 82)">?</text>
+        </g>
+        {/* стрічка-формула */}
+        <g>
+          <rect x="62" y="106" width="116" height="20" rx="10" className="f-white s-line" strokeWidth="1" />
+          <text x="120" y="120" textAnchor="middle" fontSize="11" fontWeight="600" style={{ fill: 'var(--ink-2)', fontFamily: 'ui-monospace, Menlo, monospace' }}>S + V + O</text>
+        </g>
+        <path d="M212 40 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 Z" className="f-gold iw-float-2" />
+        <path d="M28 46 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" className="f-plum iw-float" opacity="0.8" />
       </svg>
     );
   }
@@ -7482,7 +7765,7 @@ function App({ session, onLogout }) {
         )}
         {route.page === 'course' && <CoursePage courseId={route.courseId} goHome={goHome} goLesson={goLesson} canSeeLesson={canSeeLesson} isLessonCompleted={isLessonCompleted} isTeacher={isTeacher} />}
         {route.page === 'lesson' && <LessonPage courseId={route.courseId} lessonId={route.lessonId} goHome={goHome} goCourse={goCourse} goLesson={goLesson} favorites={favorites} toggleFavorite={toggleFavorite} canSeeLesson={canSeeLesson} isTeacher={isTeacher} session={session} />}
-        {route.page === 'grammar' && <GrammarBank goHome={goHome} />}
+        {route.page === 'grammar' && <GrammarBank goHome={goHome} setRoute={setRoute} session={session} canSeeLesson={canSeeLesson} isTeacher={isTeacher} />}
         {route.page === 'vocabulary' && <VocabularyBank goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} />}
         {route.page === 'vocab-course' && <VocabCoursePage courseId={route.courseId} goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} />}
         {route.page === 'vocab-lesson' && <VocabLessonPage courseId={route.courseId} lessonId={route.lessonId} goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} />}
@@ -8540,37 +8823,871 @@ function TensesMatrix() {
   );
 }
 
-function GrammarBank({ goHome }) {
+// ═══════════════════════════════════════════════════════════
+// INKWELL 2.0 · ФАЗА 5 — Grammar Bank
+// ═══════════════════════════════════════════════════════════
+// Джерела тем: 12 часів (TENSES) + граматика з уроків курсу (лише з
+// відкритих учню уроків; уроки-іспити не показуються). Зміст уроків не
+// змінюється — розділ граматики уроку показується тим самим GrammarSection.
+
+// Орієнтовний рівень CEFR, на якому час зазвичай вивчають (за English
+// Grammar Profile). Можна змінити тут — більше ніде рівні не задаються.
+const TENSE_LEVELS = {
+  'present-simple': 'A1', 'present-continuous': 'A1',
+  'past-simple': 'A2', 'past-continuous': 'A2', 'present-perfect': 'A2', 'future-simple': 'A2',
+  'present-perfect-continuous': 'B1', 'past-perfect': 'B1', 'future-continuous': 'B1',
+  'future-perfect': 'B2', 'past-perfect-continuous': 'B2', 'future-perfect-continuous': 'B2',
+};
+const CEFR = ['A1', 'A2', 'B1', 'B2', 'C1'];
+// Інші назви, за якими часи шукають
+const TENSE_ALIASES = {
+  'present-simple': 'present indefinite теперішній неозначений',
+  'present-continuous': 'present progressive',
+  'present-perfect': 'теперішній доконаний',
+  'present-perfect-continuous': 'present perfect progressive',
+  'past-simple': 'past indefinite минулий неозначений v2 ed',
+  'past-continuous': 'past progressive',
+  'past-perfect': 'передминулий pluperfect had',
+  'past-perfect-continuous': 'past perfect progressive',
+  'future-simple': 'future indefinite will',
+  'future-continuous': 'future progressive will be',
+  'future-perfect': 'will have',
+  'future-perfect-continuous': 'future perfect progressive',
+};
+const GRAMMAR_CATEGORIES = [
+  { id: 'tenses', label: 'Часи' },
+  { id: 'modals', label: 'Модальні дієслова' },
+  { id: 'conditionals', label: 'Умовні речення' },
+  { id: 'passive', label: 'Пасивний стан' },
+  { id: 'reported', label: 'Непряма мова' },
+  { id: 'relative', label: 'Підрядні речення' },
+  { id: 'articles', label: 'Артиклі й прикметники' },
+  { id: 'other', label: 'Інші структури' },
+  { id: 'review', label: 'Повторення' },
+];
+// Тему зараховуємо до категорії лише за явними словами в назві
+function categorizeGrammar(title, lessonType, blocksText) {
+  const t = `${title} ${blocksText || ''}`.toLowerCase();
+  if (lessonType === 'Revision' || /revision|whole-course/.test(title.toLowerCase())) return 'review';
+  if (/conditional/.test(t)) return 'conditionals';
+  if (/passive/.test(t)) return 'passive';
+  if (/reported speech/.test(t)) return 'reported';
+  if (/relative clause/.test(t)) return 'relative';
+  if (/\bmust\b|have to|\bcan\b|could|able to|\blet\b|allowed|advice|should/.test(t)) return 'modals';
+  if (/present|past|future|continuous|perfect|tense|used to|going to/.test(t)) return 'tenses';
+  if (/article|a \/ an|adjective|adverb/.test(t)) return 'articles';
+  return 'other';
+}
+const stripHtml = (h) => String(h || '').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+
+function buildGrammarTopics(canSeeLesson) {
+  const out = TENSES.map(t => ({
+    id: t.id, kind: 'tense', name: t.name, nameUk: t.nameUk, level: TENSE_LEVELS[t.id] || null,
+    category: 'tenses', group: t.group, tense: t,
+    search: [t.name, t.nameUk, t.formula, t.markers, TENSE_ALIASES[t.id] || '', ...(t.uses || []).map(u => u.case)].join(' ').toLowerCase(),
+  }));
+  COURSES.forEach(course => course.units.forEach(unit => unit.lessons.forEach(lesson => {
+    const g = lesson.grammar;
+    if (!g || !g.blocks || !g.blocks.length || lesson.type === 'Exam') return;
+    if (!canSeeLesson(course.id, lesson.id)) return;
+    const blocksTitles = g.blocks.map(b => stripHtml(b.title)).join(' · ');
+    const generic = /^grammar presentation$/i.test(g.title || '');
+    const name = generic ? blocksTitles : g.title;
+    out.push({
+      id: `lesson:${course.id}:${lesson.id}`, kind: 'lesson', name,
+      nameUk: generic || (g.titleUk || '').trim().toLowerCase() === String(name).trim().toLowerCase() ? '' : (g.titleUk || ''),
+      level: null, category: categorizeGrammar(name, lesson.type, blocksTitles), course, unit, lesson, grammar: g,
+      search: [name, g.titleUk, blocksTitles, lesson.title, `l${lesson.number}`, `unit ${unit.number}`].join(' ').toLowerCase(),
+    });
+  })));
+  // Українська назва категорії теж шукається («артиклі», «пасив»…)
+  out.forEach(t => { t.search += ' ' + ((GRAMMAR_CATEGORIES.find(c => c.id === t.category) || {}).label || '').toLowerCase(); });
+  return out;
+}
+
+// ── Прогрес граматики: Supabase (таблиця grammar_progress), інакше — пристрій ──
+const GRAMMAR_PROGRESS_SQL = `-- Inkwell 2.0 · прогрес, обране та нещодавні теми Grammar Bank
+create table if not exists public.grammar_progress (
+  student_id uuid not null references public.profiles(id) on delete cascade,
+  topic_id text not null,
+  favorite boolean not null default false,
+  studied_count integer not null default 0,
+  last_studied_at timestamptz,
+  practice_attempts integer not null default 0,
+  practice_correct integer not null default 0,
+  last_practiced_at timestamptz,
+  updated_at timestamptz not null default now(),
+  primary key (student_id, topic_id)
+);
+
+alter table public.grammar_progress enable row level security;
+drop policy if exists "grammar_progress: own rows" on public.grammar_progress;
+create policy "grammar_progress: own rows" on public.grammar_progress
+  for all to authenticated
+  using (student_id = auth.uid())
+  with check (student_id = auth.uid());
+drop policy if exists "grammar_progress: teachers read" on public.grammar_progress;
+create policy "grammar_progress: teachers read" on public.grammar_progress
+  for select to authenticated
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'teacher'));`;
+
+function useGrammarProgress(session) {
+  const uid = session.user.id;
+  const localKey = `inkwell-grammar:${uid}`;
+  const [rows, setRows] = useState(() => new Map());
+  const [mode, setMode] = useState('loading'); // loading | db | local
+  const rowsRef = useRef(rows);
+  rowsRef.current = rows;
+
+  const readLocal = () => { try { return new Map(Object.entries(JSON.parse(localStorage.getItem(localKey) || '{}'))); } catch (e) { return new Map(); } };
+  const writeLocal = (m) => { try { localStorage.setItem(localKey, JSON.stringify(Object.fromEntries(m))); } catch (e) {} };
+
+  useEffect(() => {
+    let alive = true;
+    window.SB.from('grammar_progress').select('*').eq('student_id', uid).then(({ data, error }) => {
+      if (!alive) return;
+      if (error) { setRows(readLocal()); setMode('local'); return; }
+      const m = new Map((data || []).map(r => [r.topic_id, r]));
+      // Перенести в акаунт те, що було збережено на пристрої до появи таблиці
+      const local = readLocal();
+      const toMove = [];
+      local.forEach((r, id) => { if (!m.has(id)) { m.set(id, r); toMove.push({ ...r, student_id: uid, topic_id: id }); } });
+      if (toMove.length) window.SB.from('grammar_progress').upsert(toMove, { onConflict: 'student_id,topic_id' }).then(({ error: e2 }) => { if (!e2) { try { localStorage.removeItem(localKey); } catch (e) {} } });
+      setRows(m); setMode('db');
+    }, () => { if (alive) { setRows(readLocal()); setMode('local'); } });
+    return () => { alive = false; };
+  }, [uid]);
+
+  const patch = (changes) => {
+    // changes: [{ topic_id, fn(row) => newRow }]
+    const next = new Map(rowsRef.current);
+    const now = new Date().toISOString();
+    const payload = changes.map(({ topic_id, fn }) => {
+      const prev = next.get(topic_id) || { topic_id, favorite: false, studied_count: 0, practice_attempts: 0, practice_correct: 0 };
+      const row = { ...fn(prev), topic_id, updated_at: now };
+      next.set(topic_id, row);
+      return row;
+    });
+    setRows(next);
+    if (mode === 'db') {
+      window.SB.from('grammar_progress').upsert(payload.map(r => ({
+        student_id: uid, topic_id: r.topic_id, favorite: !!r.favorite, studied_count: r.studied_count || 0,
+        last_studied_at: r.last_studied_at || null, practice_attempts: r.practice_attempts || 0,
+        practice_correct: r.practice_correct || 0, last_practiced_at: r.last_practiced_at || null, updated_at: r.updated_at,
+      })), { onConflict: 'student_id,topic_id' }).then(({ error }) => { if (error) toast('Не вдалося зберегти прогрес: ' + error.message, 'error'); });
+    } else {
+      writeLocal(next);
+    }
+  };
+
+  return {
+    rows, mode,
+    get: (id) => rows.get(id),
+    toggleFavorite: (id) => patch([{ topic_id: id, fn: r => ({ ...r, favorite: !r.favorite }) }]),
+    markStudied: (id) => patch([{ topic_id: id, fn: r => ({ ...r, studied_count: (r.studied_count || 0) + 1, last_studied_at: new Date().toISOString() }) }]),
+    recordPractice: (results) => {
+      const agg = new Map();
+      results.forEach(({ topicId, correct }) => {
+        const a = agg.get(topicId) || { n: 0, ok: 0 };
+        a.n++; if (correct) a.ok++; agg.set(topicId, a);
+      });
+      patch(Array.from(agg.entries()).map(([id, a]) => ({ topic_id: id, fn: r => ({
+        ...r, practice_attempts: (r.practice_attempts || 0) + a.n, practice_correct: (r.practice_correct || 0) + a.ok, last_practiced_at: new Date().toISOString(),
+      }) })));
+    },
+  };
+}
+
+// ── Генерація вправ (лише з наявного контенту) ──
+// shuffle() — наявна спільна функція (див. вище)
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+// Маркери, що належать лише одному часу (неоднозначні — відкидаємо)
+const AMBIGUOUS_MARKERS = new Set(['today', 'this week', 'this week/month/year', 'soon', 'later']);
+function uniqueMarkers() {
+  const all = TENSES.map(t => ({ t, list: t.markers.split(/,\s*/).map(m => m.trim()).filter(Boolean) }));
+  const owners = new Map();
+  all.forEach(({ t, list }) => list.forEach(m => { const k = m.toLowerCase(); owners.set(k, (owners.get(k) || new Set()).add(t.id)); }));
+  const out = [];
+  all.forEach(({ t, list }) => list.forEach(m => {
+    const k = m.toLowerCase();
+    if (owners.get(k).size !== 1 || AMBIGUOUS_MARKERS.has(k) || /\[|\]/.test(m)) return;
+    const clash = all.some(o => o.t.id !== t.id && o.list.some(x => { const y = x.toLowerCase(); return y.startsWith(k) || k.startsWith(y); }));
+    if (!clash) out.push({ marker: m, tense: t });
+  }));
+  return out;
+}
+
+function distractorTenses(correct, n = 3) {
+  const near = TENSES.filter(t => t.id !== correct.id && (t.group === correct.group || t.col === correct.col));
+  const far = TENSES.filter(t => t.id !== correct.id && !near.includes(t));
+  return shuffle(near).concat(shuffle(far)).slice(0, n);
+}
+
+function tokenize(sentence) { return sentence.split(/\s+/).filter(Boolean); }
+function orderableSentence(s) { const n = tokenize(s).length; return n >= 4 && n <= 10 && !/[()—–;]/.test(s); }
+
+function makeTenseQuestion(type, tense) {
+  if (type === 'which') {
+    const uses = (tense.uses || []).filter(u => u.examples && u.examples.length);
+    if (!uses.length) return null;
+    const use = pick(uses); const ex = pick(use.examples);
+    const opts = shuffle([tense, ...distractorTenses(tense)]);
+    return { type, topicId: tense.id, prompt: 'Який час у цьому реченні?', sentence: ex, options: opts.map(t => ({ id: t.id, label: t.name })), answer: tense.id,
+      explain: `${tense.name} — ${use.case.toLowerCase()}. ${use.explain}` };
+  }
+  if (type === 'markers') {
+    const pool = uniqueMarkers().filter(m => m.tense.id === tense.id);
+    if (!pool.length) return null;
+    const m = pick(pool);
+    const opts = shuffle([tense, ...distractorTenses(tense)]);
+    return { type, topicId: tense.id, prompt: `З яким часом найчастіше вживають маркер «${m.marker}»?`, options: opts.map(t => ({ id: t.id, label: t.name })), answer: tense.id,
+      explain: `${tense.name}: ${tense.when}` };
+  }
+  if (type === 'formula') {
+    const opts = shuffle([tense, ...distractorTenses(tense)]);
+    return { type, topicId: tense.id, prompt: `Яка формула часу ${tense.name}?`, options: opts.map(t => ({ id: t.id, label: t.formula, mono: true })), answer: tense.id,
+      explain: `${tense.name}: ${tense.formulaLong}. Наприклад: ${tense.positive}` };
+  }
+  if (type === 'order') {
+    const sentences = (tense.uses || []).flatMap(u => u.examples).concat([tense.positive, tense.question]).filter(orderableSentence);
+    if (!sentences.length) return null;
+    const s = pick(sentences);
+    return makeOrderQuestion(s, tense.id, `${tense.name}: ${tense.formulaLong}`);
+  }
+  return null;
+}
+function makeOrderQuestion(sentence, topicId, explain) {
+  const tokens = tokenize(sentence);
+  let shuffled = shuffle(tokens.map((w, i) => ({ w, i })));
+  for (let k = 0; k < 5 && shuffled.every((x, i) => x.i === i); k++) shuffled = shuffle(shuffled);
+  return { type: 'order', topicId, prompt: 'Склади речення з цих слів', tokens: shuffled, answer: tokens.join(' '), explain };
+}
+
+const PRACTICE_TYPES = [
+  { id: 'mixed', label: 'Мікс' },
+  { id: 'which', label: 'Який це час?' },
+  { id: 'markers', label: 'Маркери часу' },
+  { id: 'formula', label: 'Формули' },
+  { id: 'order', label: 'Склади речення' },
+];
+function buildSession(scope, type, topics, count = 8) {
+  // scope: 'all' | 'present' | 'past' | 'future' | <topicId>
+  const lessonTopic = topics.find(t => t.id === scope && t.kind === 'lesson');
+  if (lessonTopic) {
+    const sentences = lessonTopic.grammar.blocks.flatMap(b => (b.examples || []).map(e => stripHtml(e.en))).filter(orderableSentence);
+    return shuffle(sentences).slice(0, count).map(s => makeOrderQuestion(s, lessonTopic.id, `${lessonTopic.name} — урок ${lessonTopic.lesson.number}`));
+  }
+  const pool = scope === 'all' ? TENSES : ['present', 'past', 'future'].includes(scope) ? TENSES.filter(t => t.group === scope) : TENSES.filter(t => t.id === scope);
+  const types = type === 'mixed' ? ['which', 'markers', 'formula', 'order'] : [type];
+  const out = [];
+  const seen = new Set();
+  for (let guard = 0; out.length < count && guard < count * 25; guard++) {
+    const q = makeTenseQuestion(pick(types), pick(pool));
+    if (!q) continue;
+    const key = q.type + (q.sentence || q.prompt || '') + (q.answer || '');
+    if (seen.has(key)) continue;
+    seen.add(key); out.push(q);
+  }
+  return out;
+}
+function lessonTopicPracticable(topic) {
+  return topic.kind === 'lesson' && topic.grammar.blocks.some(b => (b.examples || []).some(e => orderableSentence(stripHtml(e.en))));
+}
+
+// ── Компоненти ──
+const Star = ({ filled, ...p }) => <Icon {...p}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill={filled ? 'currentColor' : 'none'} /></Icon>;
+const Columns = (p) => <Icon {...p}><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></Icon>;
+const Target = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></Icon>;
+const Grid3 = (p) => <Icon {...p}><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></Icon>;
+
+const GB_TABS = [
+  { id: 'learn', label: 'Вчити', icon: BookOpen },
+  { id: 'matrix', label: 'Таблиця часів', icon: Grid3 },
+  { id: 'compare', label: 'Порівняти', icon: Columns },
+  { id: 'practice', label: 'Практика', icon: Target },
+  { id: 'progress', label: 'Мій прогрес', icon: Activity },
+];
+const COMPARE_PRESETS = [
+  ['present-simple', 'present-continuous'],
+  ['past-simple', 'present-perfect'],
+  ['past-simple', 'past-continuous'],
+  ['present-perfect', 'present-perfect-continuous'],
+  ['past-simple', 'past-perfect'],
+  ['future-simple', 'future-continuous'],
+];
+const GROUP_TONE = { present: 'sage', past: 'terracotta', future: 'sky' };
+
+function GrammarBank({ goHome, setRoute, session, canSeeLesson, isTeacher }) {
+  const topics = useMemo(() => buildGrammarTopics(canSeeLesson || (() => true)), [canSeeLesson]);
+  const progress = useGrammarProgress(session);
+  const [tab, setTab] = useState('learn');
+  const [topicId, setTopicId] = useState(null);
+  const [query, setQuery] = useState('');
+  const [compare, setCompare] = useState(COMPARE_PRESETS[0]);
+  const [practice, setPractice] = useState({ scope: 'all', type: 'mixed', run: null });
+  const topic = topics.find(t => t.id === topicId) || null;
+
+  const openTopic = (id) => {
+    setTopicId(id); setTab('learn'); setQuery('');
+    progress.markStudied(id);
+    requestAnimationFrame(() => { const el = document.getElementById('gb-top'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }); });
+  };
+  const startPractice = (scope, type = 'mixed') => {
+    setTab('practice'); setPractice({ scope, type, run: buildSession(scope, type, topics) });
+    requestAnimationFrame(() => { const el = document.getElementById('gb-top'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }); });
+  };
+  const startCompare = (a, b) => { setCompare([a, b]); setTab('compare'); };
+
+  const results = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (q.length < 2) return [];
+    const words = q.split(/\s+/);
+    return topics.filter(t => words.every(w => t.search.includes(w))).slice(0, 8);
+  }, [query, topics]);
+
   return (
-    <main className="page">
-      <Crumbs items={[{ label: 'Library', onClick: goHome }, { label: 'Grammar Bank', current: true }]} />
-      <header className="page-header">
-        <div className="page-eyebrow"><span className="dot" /> Grammar Bank</div>
-        <h1 className="page-title">Граматичні шпаргалки <em>під рукою.</em></h1>
-        <p style={{ fontSize: 16, color: 'var(--ink-2)', lineHeight: 1.6, marginTop: 14 }}>
-          Інтерактивні підсумки правил, формул і прикладів. Зручно повторити перед тестом або під час уроку.
-        </p>
-      </header>
+    <main className="page iw-gb">
+      <Crumbs items={[{ label: isTeacher ? 'Library' : 'Home', onClick: goHome }, { label: 'Grammar Bank', current: true }]} />
+      <PageHeader eyebrow="Grammar Bank"
+        title={<React.Fragment>Граматика <em>під рукою.</em></React.Fragment>}
+        subtitle="Пояснення, формули й приклади — а ще порівняння схожих тем і тренування. Зручно повторити перед тестом або під час уроку."
+        art="grammar" />
 
-      <a
-        className="external-link-card external-english-hub"
-        href="https://englishforkids.github.io/english-hub/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <div className="external-link-icon">📖</div>
-        <div className="external-link-body">
-          <div className="external-link-eyebrow">Розширений збірник граматики</div>
-          <div className="external-link-title">English Hub</div>
-          <div className="external-link-sub">Повна колекція граматичних тем англійської — від початкового до просунутого рівня. Відкриється у новій вкладці.</div>
+      <div className="iw-gb-search" role="search">
+        <div className="search-bar">
+          <Search size={20} aria-hidden="true" />
+          <input type="search" className="search-input" value={query} onChange={e => setQuery(e.target.value)}
+            placeholder="Шукай тему: Past Simple, маркер «yesterday», пасив, артиклі…" aria-label="Пошук граматичних тем"
+            aria-controls="gb-results" aria-expanded={results.length > 0}
+            onKeyDown={e => { if (e.key === 'Enter' && results[0]) openTopic(results[0].id); if (e.key === 'Escape') setQuery(''); }} />
+          {query && <button className="search-clear" onClick={() => setQuery('')} aria-label="Очистити"><X size={16} /></button>}
         </div>
-        <div className="external-link-cta">
-          Перейти <ExternalLink size={14} />
-        </div>
+        {query.trim().length >= 2 && (
+          <div className="iw-gb-results" id="gb-results">
+            {results.length === 0 && <div className="iw-gb-noresult">Нічого не знайдено. Спробуй іншу назву або маркер часу.</div>}
+            {results.map(t => (
+              <button key={t.id} type="button" className="iw-gb-result" onClick={() => openTopic(t.id)}>
+                <span className="iw-gb-result-name">{t.name}</span>
+                <span className="iw-gb-result-meta">
+                  {t.level && <Badge tone="lavender">{t.level}</Badge>}
+                  {t.kind === 'lesson' && <Badge>Урок {t.lesson.number}</Badge>}
+                  <span>{(GRAMMAR_CATEGORIES.find(c => c.id === t.category) || {}).label}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div id="gb-top" />
+      <Tabs label="Режими Grammar Bank" value={tab} onChange={(id) => { setTab(id); if (id !== 'learn') setTopicId(null); if (id !== 'practice') setPractice(s => ({ ...s, run: null })); }} tabs={GB_TABS} className="iw-gb-tabs">
+        {tab === 'learn' && (topic
+          ? <GrammarTopicView topic={topic} progress={progress} onBack={() => setTopicId(null)} onPractice={startPractice} onCompare={startCompare} setRoute={setRoute} />
+          : <GrammarCatalog topics={topics} progress={progress} openTopic={openTopic} />)}
+        {tab === 'matrix' && <div className="iw-gb-matrix"><TensesMatrix /></div>}
+        {tab === 'compare' && <GrammarCompare pair={compare} setPair={setCompare} openTopic={openTopic} onPractice={startPractice} />}
+        {tab === 'practice' && <GrammarPractice topics={topics} state={practice} setState={setPractice} start={startPractice} progress={progress} openTopic={openTopic} />}
+        {tab === 'progress' && <GrammarProgressView topics={topics} progress={progress} openTopic={openTopic} start={startPractice} isTeacher={isTeacher} />}
+      </Tabs>
+
+      <a className="iw-hub" href="https://englishforkids.github.io/english-hub/" target="_blank" rel="noopener noreferrer">
+        <span className="iw-hub-icon" aria-hidden="true"><BookOpen size={22} /></span>
+        <span className="iw-hub-body">
+          <span className="iw-kicker">Розширений збірник граматики</span>
+          <span className="iw-hub-title">English Hub</span>
+          <span className="iw-hub-sub">Повна колекція граматичних тем англійської — від початкового до просунутого рівня.</span>
+        </span>
+        <span className="iw-btn iw-btn-secondary iw-btn-sm">Перейти <ExternalLink size={14} aria-hidden="true" /><span className="sr-only"> (у новій вкладці)</span></span>
       </a>
-
-      <TensesMatrix />
     </main>
+  );
+}
+
+function FavButton({ on, onClick, size = 'sm' }) {
+  return (
+    <button type="button" className={cx('iw-fav', on && 'on', size === 'lg' && 'lg')} onClick={(e) => { e.stopPropagation(); onClick(); }}
+      aria-pressed={on} aria-label={on ? 'Прибрати з обраного' : 'Додати в обране'} data-tip={on ? 'В обраному' : 'В обране'}>
+      <Star size={size === 'lg' ? 18 : 16} filled={on} />
+    </button>
+  );
+}
+
+function topicAccuracy(row) {
+  if (!row || !row.practice_attempts) return null;
+  return Math.round((row.practice_correct / row.practice_attempts) * 100);
+}
+
+function GrammarCatalog({ topics, progress, openTopic }) {
+  const [level, setLevel] = useState('all');
+  const [cat, setCat] = useState('all');
+  const [favOnly, setFavOnly] = useState(false);
+  const hasLessonTopics = topics.some(t => t.kind === 'lesson');
+  const levelCount = (l) => topics.filter(t => l === 'all' ? true : l === 'course' ? t.kind === 'lesson' : t.level === l).length;
+  const shown = topics.filter(t => (level === 'all' || (level === 'course' ? t.kind === 'lesson' : t.level === level))
+    && (cat === 'all' || t.category === cat) && (!favOnly || (progress.get(t.id) || {}).favorite));
+  const cats = GRAMMAR_CATEGORIES.filter(c => topics.some(t => t.category === c.id));
+  const recent = Array.from(progress.rows.values()).filter(r => r.last_studied_at && topics.some(t => t.id === r.topic_id))
+    .sort((a, b) => new Date(b.last_studied_at) - new Date(a.last_studied_at)).slice(0, 5)
+    .map(r => topics.find(t => t.id === r.topic_id));
+  const favCount = topics.filter(t => (progress.get(t.id) || {}).favorite).length;
+
+  return (
+    <div className="iw-gb-catalog">
+      {recent.length > 0 && (
+        <div className="iw-gb-recent">
+          <span className="iw-kicker">Нещодавно</span>
+          <div className="iw-gb-recent-list">
+            {recent.map(t => <button key={t.id} type="button" className="iw-chip" onClick={() => openTopic(t.id)}><Clock size={13} aria-hidden="true" />{t.name}</button>)}
+          </div>
+        </div>
+      )}
+      <div className="iw-gb-filters">
+        <div className="iw-chips" role="group" aria-label="Рівень">
+          <button type="button" className="iw-chip" aria-pressed={level === 'all'} onClick={() => setLevel('all')}>Усі рівні<span className="iw-chip-count">{levelCount('all')}</span></button>
+          {CEFR.map(l => { const n = levelCount(l); return <button key={l} type="button" className="iw-chip" aria-pressed={level === l} disabled={!n} onClick={() => setLevel(l)}>{l}<span className="iw-chip-count">{n}</span></button>; })}
+          {hasLessonTopics && <button type="button" className="iw-chip" aria-pressed={level === 'course'} onClick={() => setLevel('course')}>З моїх уроків<span className="iw-chip-count">{levelCount('course')}</span></button>}
+        </div>
+        <div className="iw-chips" role="group" aria-label="Категорія">
+          <button type="button" className="iw-chip" aria-pressed={cat === 'all'} onClick={() => setCat('all')}>Усі теми</button>
+          {cats.map(c => <button key={c.id} type="button" className="iw-chip" aria-pressed={cat === c.id} onClick={() => setCat(c.id)}>{c.label}</button>)}
+          <button type="button" className="iw-chip iw-chip-fav" aria-pressed={favOnly} onClick={() => setFavOnly(f => !f)}><Star size={13} filled={favOnly} /> Обране<span className="iw-chip-count">{favCount}</span></button>
+        </div>
+      </div>
+      <p className="iw-gb-levelnote">Рівні A1–B2 для часів — орієнтовні (коли тему зазвичай вивчають). Теми з уроків показано без рівня.</p>
+
+      {shown.length === 0 ? (
+        <EmptyState art="books" title={favOnly ? 'В обраному поки порожньо' : 'Тут поки немає тем'}
+          text={favOnly ? 'Натисни ☆ на будь-якій темі, щоб зберегти її тут.' : 'Спробуй інший рівень або категорію.'}
+          action={<IwButton size="sm" onClick={() => { setLevel('all'); setCat('all'); setFavOnly(false); }}>Показати всі теми</IwButton>} />
+      ) : (
+        <ul className="iw-gb-grid">
+          {shown.map((t, i) => {
+            const row = progress.get(t.id);
+            const acc = topicAccuracy(row);
+            return (
+              <li key={t.id} className={cx('iw-gcard', t.group && `grp-${t.group}`, t.kind === 'lesson' && 'is-lesson', 'iw-reveal')} style={{ animationDelay: `${Math.min(i, 12) * 30}ms` }}>
+                <div className="iw-gcard-top">
+                  {t.level ? <Badge tone="lavender">{t.level}</Badge> : <Badge>Урок {t.lesson.number}</Badge>}
+                  <span className="iw-gcard-cat">{t.kind === 'tense' ? ({ present: 'Present', past: 'Past', future: 'Future' })[t.group] : (GRAMMAR_CATEGORIES.find(c => c.id === t.category) || {}).label}</span>
+                  <FavButton on={!!(row && row.favorite)} onClick={() => progress.toggleFavorite(t.id)} />
+                </div>
+                <button type="button" className="iw-gcard-main iw-stretch" onClick={() => openTopic(t.id)}>
+                  <span className="iw-gcard-title">{t.name}</span>
+                  {t.nameUk && <span className="iw-gcard-uk">{t.nameUk}</span>}
+                </button>
+                {t.kind === 'tense' && <code className="iw-gcard-formula">{t.tense.formula}</code>}
+                {t.kind === 'lesson' && <span className="iw-gcard-from">{t.course.title} · Unit {t.unit.number}</span>}
+                <div className="iw-gcard-foot">
+                  {row && row.studied_count > 0 ? <span className="iw-gcard-flag ok"><Check size={12} aria-hidden="true" /> вивчав(-ла)</span> : <span className="iw-gcard-flag">ще не відкривав(-ла)</span>}
+                  {acc != null && <span className={cx('iw-gcard-acc', acc >= 80 ? 'good' : acc < 60 ? 'low' : '')}>{acc}% у практиці</span>}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function GrammarTopicView({ topic, progress, onBack, onPractice, onCompare, setRoute }) {
+  const row = progress.get(topic.id);
+  const head = (
+    <div className="iw-gtopic-head">
+      <IwButton variant="ghost" size="sm" icon={ChevronLeft} onClick={onBack}>Усі теми</IwButton>
+      <div className="iw-gtopic-titlerow">
+        <div style={{ minWidth: 0 }}>
+          <div className="iw-gtopic-badges">
+            {topic.level && <Badge tone="lavender">{topic.level}</Badge>}
+            <Badge>{(GRAMMAR_CATEGORIES.find(c => c.id === topic.category) || {}).label}</Badge>
+            {topic.kind === 'lesson' && <Badge tone="brand">{topic.course.title} · Unit {topic.unit.number} · Урок {topic.lesson.number}</Badge>}
+          </div>
+          <h2 className="iw-gtopic-title">{topic.name}</h2>
+          {topic.nameUk && <div className="iw-gtopic-uk">{topic.nameUk}</div>}
+        </div>
+        <FavButton size="lg" on={!!(row && row.favorite)} onClick={() => progress.toggleFavorite(topic.id)} />
+      </div>
+    </div>
+  );
+
+  if (topic.kind === 'lesson') {
+    return (
+      <article className="iw-gtopic">
+        {head}
+        <div className="iw-gtopic-actions">
+          <IwButton variant="primary" icon={BookOpen} onClick={() => setRoute({ page: 'lesson', courseId: topic.course.id, lessonId: topic.lesson.id })}>Відкрити урок {topic.lesson.number}</IwButton>
+          {lessonTopicPracticable(topic) && <IwButton variant="secondary" icon={Target} onClick={() => onPractice(topic.id, 'order')}>Склади речення з прикладів</IwButton>}
+        </div>
+        <div className="iw-gtopic-lesson">
+          <GrammarSection data={topic.grammar} />
+        </div>
+      </article>
+    );
+  }
+
+  const t = topic.tense;
+  const related = COMPARE_PRESETS.filter(p => p.includes(t.id)).map(p => TENSES.find(x => x.id === (p[0] === t.id ? p[1] : p[0])));
+  return (
+    <article className={cx('iw-gtopic', `grp-${t.group}`)}>
+      {head}
+      <div className="iw-gtopic-grid">
+        <div className="iw-gtopic-main">
+          <section className="iw-gformula">
+            <span className="iw-kicker">Формула</span>
+            <div className={cx('iw-gformula-text', t.formulaLong.length > 32 && 'long')}>{t.formulaLong}</div>
+            <p className="iw-gformula-when">{t.when}</p>
+          </section>
+          <section className="iw-gforms" aria-label="Ствердження, заперечення, питання">
+            <div className="iw-gform pos"><span className="iw-gform-sign" aria-label="Ствердження">+</span><span>{t.positive}</span></div>
+            <div className="iw-gform neg"><span className="iw-gform-sign" aria-label="Заперечення">−</span><span>{t.negative}</span></div>
+            <div className="iw-gform que"><span className="iw-gform-sign" aria-label="Питання">?</span><span>{t.question}</span></div>
+          </section>
+          <section>
+            <h3 className="iw-card-title">Коли вживається</h3>
+            <div className="iw-guses">
+              {(t.uses || []).map((u, i) => (
+                <details key={i} className="iw-guse" open={i === 0}>
+                  <summary><span className="iw-guse-num">{i + 1}</span><span className="iw-guse-case">{u.case}</span><ChevronDown size={16} className="iw-guse-chev" aria-hidden="true" /></summary>
+                  <p>{u.explain}</p>
+                  <ul>{u.examples.map((ex, j) => <li key={j}>{ex}</li>)}</ul>
+                </details>
+              ))}
+            </div>
+          </section>
+        </div>
+        <aside className="iw-gtopic-side">
+          <section className="iw-card">
+            <h3 className="iw-card-title">Маркери часу</h3>
+            <div className="iw-gmarkers">{t.markers.split(/,\s*/).map((m, i) => <span key={i} className="iw-gmarker">{m}</span>)}</div>
+          </section>
+          <section className="iw-card iw-gpractice-cta">
+            <h3 className="iw-card-title">Потренуйся</h3>
+            <p>8 коротких завдань саме на {t.name}: приклади, маркери, формула, порядок слів.</p>
+            <IwButton variant="primary" icon={Target} onClick={() => onPractice(t.id)}>Почати практику</IwButton>
+            {topicAccuracy(row) != null && <div className="iw-gpractice-last">Твоя точність: <strong>{topicAccuracy(row)}%</strong> ({row.practice_correct}/{row.practice_attempts})</div>}
+          </section>
+          {related.length > 0 && (
+            <section className="iw-card">
+              <h3 className="iw-card-title">Часто плутають з</h3>
+              <div className="iw-grelated">
+                {related.map(r => <button key={r.id} type="button" className="iw-chip" onClick={() => onCompare(t.id, r.id)}><Columns size={13} aria-hidden="true" />{t.name} vs {r.name}</button>)}
+              </div>
+            </section>
+          )}
+        </aside>
+      </div>
+    </article>
+  );
+}
+
+function TenseSelect({ value, onChange, label }) {
+  return (
+    <label className="iw-select iw-gcompare-select">
+      <span className="sr-only">{label}</span>
+      <select value={value} onChange={e => onChange(e.target.value)}>
+        {TENSE_ROWS.map(r => <optgroup key={r.key} label={r.label}>{TENSES.filter(t => t.group === r.key).map(t => <option key={t.id} value={t.id}>{t.name}</option>)}</optgroup>)}
+      </select>
+      <ChevronDown size={15} aria-hidden="true" />
+    </label>
+  );
+}
+
+function GrammarCompare({ pair, setPair, openTopic, onPractice }) {
+  const [a, b] = pair.map(id => TENSES.find(t => t.id === id));
+
+  const rows = [
+    ['Формула', t => <code>{t.formulaLong}</code>],
+    ['Коли', t => t.when],
+    ['Маркери', t => <div className="iw-gmarkers">{t.markers.split(/,\s*/).map((m, i) => <span key={i} className="iw-gmarker">{m}</span>)}</div>],
+    ['+', t => t.positive], ['−', t => t.negative], ['?', t => t.question],
+    ['Вживання', t => <ul className="iw-gcompare-uses">{(t.uses || []).map((u, i) => <li key={i}><strong>{u.case}.</strong> {u.examples[0]}</li>)}</ul>],
+  ];
+  return (
+    <div className="iw-gcompare">
+      <div className="iw-gcompare-presets">
+        <span className="iw-kicker">Популярні пари</span>
+        <div className="iw-chips">
+          {COMPARE_PRESETS.map(p => {
+            const on = p[0] === pair[0] && p[1] === pair[1];
+            return <button key={p.join()} type="button" className="iw-chip" aria-pressed={on} onClick={() => setPair(p)}>{TENSES.find(t => t.id === p[0]).name} vs {TENSES.find(t => t.id === p[1]).name}</button>;
+          })}
+        </div>
+      </div>
+      <div className="iw-gcompare-pickers">
+        <TenseSelect value={pair[0]} label="Перший час" onChange={v => setPair([v, pair[1]])} />
+        <button type="button" className="iw-btn iw-btn-ghost iw-btn-icon" onClick={() => setPair([pair[1], pair[0]])} aria-label="Поміняти місцями" data-tip="Поміняти місцями"><RefreshCw size={16} /></button>
+        <TenseSelect value={pair[1]} label="Другий час" onChange={v => setPair([pair[0], v])} />
+      </div>
+      {a.id === b.id ? <p className="iw-help">Обери два різні часи.</p> : (
+        <div className="iw-gcompare-table" role="table" aria-label={`${a.name} проти ${b.name}`}>
+          <div className="iw-gcompare-row head" role="row">
+            <span role="columnheader" />
+            {[a, b].map(t => (
+              <span key={t.id} role="columnheader" className={cx('iw-gcompare-th', `grp-${t.group}`)}>
+                <button type="button" onClick={() => openTopic(t.id)}>{t.name}</button>
+                <small>{t.nameUk}</small>
+              </span>
+            ))}
+          </div>
+          {rows.map(([label, fn]) => (
+            <div key={label} className="iw-gcompare-row" role="row">
+              <span role="rowheader" className={cx('iw-gcompare-label', label.length === 1 && 'sign')}>{label}</span>
+              <span role="cell" className="iw-gcompare-cell" data-label={a.name}>{fn(a)}</span>
+              <span role="cell" className="iw-gcompare-cell" data-label={b.name}>{fn(b)}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="iw-gcompare-foot">
+        <IwButton variant="secondary" icon={Target} onClick={() => onPractice(a.group === b.group ? a.group : 'all', 'which')}>Потренуватися розрізняти</IwButton>
+      </div>
+    </div>
+  );
+}
+
+function GrammarPractice({ topics, state, setState, start, progress, openTopic }) {
+  const { scope, type, run } = state;
+  const [idx, setIdx] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [built, setBuilt] = useState([]);
+  const [answers, setAnswers] = useState([]);
+  useEffect(() => { setIdx(0); setPicked(null); setBuilt([]); setAnswers([]); }, [run]);
+  const scopeTopic = topics.find(t => t.id === scope);
+  const scopeLabel = scope === 'all' ? 'Усі часи' : scope === 'present' ? 'Present' : scope === 'past' ? 'Past' : scope === 'future' ? 'Future' : scopeTopic ? scopeTopic.name : scope;
+
+  if (!run) {
+    const lessonScopes = topics.filter(lessonTopicPracticable);
+    return (
+      <div className="iw-gpractice-setup">
+        <div className="iw-card">
+          <h3 className="iw-card-title">Що тренуємо?</h3>
+          <div className="iw-chips" role="group" aria-label="Тема">
+            {[['all', 'Усі часи'], ['present', 'Present'], ['past', 'Past'], ['future', 'Future']].map(([id, l]) => (
+              <button key={id} type="button" className="iw-chip" aria-pressed={scope === id} onClick={() => setState(s => ({ ...s, scope: id }))}>{l}</button>
+            ))}
+          </div>
+          <label className="iw-select iw-gpractice-tense">
+            <span className="sr-only">Окремий час або тема з уроку</span>
+            <select value={['all', 'present', 'past', 'future'].includes(scope) ? '' : scope} onChange={e => e.target.value && setState(s => ({ ...s, scope: e.target.value, type: e.target.value.startsWith('lesson:') ? 'order' : s.type }))}>
+              <option value="">…або обери окремий час</option>
+              <optgroup label="Часи">{TENSES.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}</optgroup>
+              {lessonScopes.length > 0 && <optgroup label="З уроків (склади речення)">{lessonScopes.map(t => <option key={t.id} value={t.id}>Урок {t.lesson.number}: {t.name}</option>)}</optgroup>}
+            </select>
+            <ChevronDown size={15} aria-hidden="true" />
+          </label>
+          {!scope.startsWith('lesson:') && (
+            <React.Fragment>
+              <h3 className="iw-card-title" style={{ marginTop: 22 }}>Тип завдань</h3>
+              <div className="iw-chips" role="group" aria-label="Тип завдань">
+                {PRACTICE_TYPES.map(p => <button key={p.id} type="button" className="iw-chip" aria-pressed={type === p.id} onClick={() => setState(s => ({ ...s, type: p.id }))}>{p.label}</button>)}
+              </div>
+            </React.Fragment>
+          )}
+          <div className="iw-gpractice-go">
+            <IwButton variant="primary" size="lg" icon={Play} onClick={() => start(scope, scope.startsWith('lesson:') ? 'order' : type)}>Почати · 8 завдань</IwButton>
+          </div>
+        </div>
+        <div className="iw-card iw-card-soft iw-gpractice-about">
+          <div className="iw-gpractice-art"><Illustration name="trophy" /></div>
+          <p>Завдання складаються з прикладів, формул і маркерів, які вже є в Grammar Bank і в твоїх уроках. Результати допомагають побачити, що варто повторити — це тренування, а не оцінка рівня англійської.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (run.length === 0) {
+    return <EmptyState art="books" title="Для цієї теми поки немає завдань" text="Обери інший час або тип завдань." action={<IwButton size="sm" onClick={() => setState(s => ({ ...s, run: null }))}>Назад</IwButton>} />;
+  }
+
+  if (idx >= run.length) {
+    const ok = answers.filter(a => a.correct).length;
+    const pct = Math.round((ok / run.length) * 100);
+    const wrong = answers.filter(a => !a.correct);
+    return (
+      <div className="iw-gresult">
+        <div className="iw-card iw-gresult-head">
+          {pct >= 80 && <div className="iw-gresult-art"><Illustration name="trophy" /></div>}
+          <ProgressRing value={ok} max={run.length} size={110} stroke={9} tone={pct >= 80 ? 'sage' : pct >= 50 ? 'mustard' : 'terracotta'} label="Результат">{ok}/{run.length}</ProgressRing>
+          <div>
+            <h3 className="iw-gresult-title">{pct >= 80 ? 'Чудова робота!' : pct >= 50 ? 'Непогано — ще трохи практики!' : 'Варто повторити тему'}</h3>
+            <p className="iw-modal-text">{scopeLabel} · {pct}% правильних відповідей</p>
+            <div className="iw-gresult-actions">
+              <IwButton variant="primary" icon={RefreshCw} onClick={() => start(scope, type)}>Ще раз</IwButton>
+              <IwButton variant="secondary" onClick={() => setState(s => ({ ...s, run: null }))}>Інші налаштування</IwButton>
+            </div>
+          </div>
+        </div>
+        {wrong.length > 0 && (
+          <section className="iw-card">
+            <h3 className="iw-card-title">Розбір помилок</h3>
+            <ul className="iw-gresult-list">
+              {wrong.map((a, i) => (
+                <li key={i}>
+                  <div className="iw-gresult-q">{a.q.sentence ? `«${a.q.sentence}»` : a.q.prompt}</div>
+                  <div className="iw-gresult-a">Правильно: <strong>{a.q.type === 'order' ? a.q.answer : (a.q.options.find(o => o.id === a.q.answer) || {}).label}</strong></div>
+                  <div className="iw-gresult-e">{a.q.explain}</div>
+                  {TENSES.some(t => t.id === a.q.topicId) && <button type="button" className="iw-link" onClick={() => openTopic(a.q.topicId)}>Повторити тему →</button>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
+    );
+  }
+
+  const q = run[idx];
+  const answered = picked != null;
+  const correct = answered && (q.type === 'order' ? picked === q.answer : picked === q.answer);
+  const submit = (value) => {
+    if (answered) return;
+    const isOk = value === q.answer;
+    setPicked(value);
+    const next = [...answers, { q, value, correct: isOk }];
+    setAnswers(next);
+    if (next.length === run.length) progress.recordPractice(next.map(a => ({ topicId: a.q.topicId, correct: a.correct })));
+  };
+  const nextQ = () => { setIdx(i => i + 1); setPicked(null); setBuilt([]); };
+  const onKey = (e) => {
+    if (q.type !== 'order' && !answered && /^[1-4]$/.test(e.key) && q.options[+e.key - 1]) submit(q.options[+e.key - 1].id);
+    if (answered && e.key === 'Enter') { e.preventDefault(); nextQ(); }
+  };
+
+  return (
+    <div className="iw-gq" onKeyDown={onKey}>
+      <div className="iw-gq-top">
+        <span className="iw-kicker">{scopeLabel} · {(PRACTICE_TYPES.find(p => p.id === q.type) || {}).label}</span>
+        <span className="iw-gq-count">{idx + 1} / {run.length}</span>
+        <IwButton size="sm" variant="ghost" onClick={() => setState(s => ({ ...s, run: null }))}>Завершити</IwButton>
+      </div>
+      <ProgressBar value={idx + (answered ? 1 : 0)} max={run.length} size="sm" tone="lavender-fill" label="Прогрес сесії" />
+      <div className="iw-card iw-gq-card" key={idx}>
+        <h3 className="iw-gq-prompt">{q.prompt}</h3>
+        {q.sentence && <blockquote className="iw-gq-sentence">{q.sentence}</blockquote>}
+
+        {q.type !== 'order' && (
+          <div className="iw-gq-options" role="group" aria-label="Варіанти відповіді">
+            {q.options.map((o, i) => {
+              const st = !answered ? '' : o.id === q.answer ? 'right' : o.id === picked ? 'wrong' : 'dim';
+              return (
+                <button key={o.id} type="button" className={cx('iw-gq-opt', st, o.mono && 'mono')} onClick={() => submit(o.id)} disabled={answered} autoFocus={i === 0 && !answered}>
+                  <span className="iw-gq-key" aria-hidden="true">{i + 1}</span>{o.label}
+                  {st === 'right' && <CheckCircle size={17} className="iw-gq-mark" aria-label="правильно" />}
+                  {st === 'wrong' && <X size={17} className="iw-gq-mark" aria-label="неправильно" />}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {q.type === 'order' && (
+          <div className="iw-gorder">
+            <div className={cx('iw-gorder-line', answered && (correct ? 'right' : 'wrong'))} aria-live="polite" aria-label="Твоє речення">
+              {built.length === 0 && <span className="iw-gorder-ph">Натискай на слова по черзі…</span>}
+              {built.map((tk, i) => (
+                <button key={tk.i} type="button" className="iw-gorder-tok in" disabled={answered} onClick={() => setBuilt(b => b.filter((_, j) => j !== i))}>{tk.w}</button>
+              ))}
+            </div>
+            <div className="iw-gorder-bank">
+              {q.tokens.map(tk => {
+                const used = built.some(b => b.i === tk.i);
+                return <button key={tk.i} type="button" className="iw-gorder-tok" disabled={used || answered} onClick={() => setBuilt(b => [...b, tk])}>{tk.w}</button>;
+              })}
+            </div>
+            {!answered && (
+              <div className="iw-gorder-actions">
+                <IwButton size="sm" variant="ghost" onClick={() => setBuilt([])} disabled={!built.length}>Очистити</IwButton>
+                <IwButton variant="primary" disabled={built.length !== q.tokens.length} onClick={() => submit(built.map(b => b.w).join(' '))}>Перевірити</IwButton>
+              </div>
+            )}
+          </div>
+        )}
+
+        {answered && (
+          <div className={cx('iw-gq-feedback', correct ? 'right' : 'wrong')} role="status">
+            <strong>{correct ? 'Правильно!' : 'Не зовсім.'}</strong>
+            {!correct && q.type === 'order' && <div>Правильний порядок: <em>{q.answer}</em></div>}
+            <p>{q.explain}</p>
+            <IwButton variant="primary" iconRight={ArrowRight} onClick={nextQ} autoFocus>{idx + 1 === run.length ? 'Результат' : 'Далі'}</IwButton>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function GrammarProgressView({ topics, progress, openTopic, start, isTeacher }) {
+  const rows = Array.from(progress.rows.values()).filter(r => topics.some(t => t.id === r.topic_id));
+  const studied = rows.filter(r => r.studied_count > 0);
+  const practiced = rows.filter(r => r.practice_attempts > 0);
+  const attempts = practiced.reduce((a, r) => a + r.practice_attempts, 0);
+  const correct = practiced.reduce((a, r) => a + r.practice_correct, 0);
+  const acc = attempts ? Math.round((correct / attempts) * 100) : null;
+  const topicOf = (id) => topics.find(t => t.id === id);
+  const revise = practiced.filter(r => r.practice_attempts >= 3 && r.practice_correct / r.practice_attempts < 0.7)
+    .sort((a, b) => a.practice_correct / a.practice_attempts - b.practice_correct / b.practice_attempts).slice(0, 5);
+  const notPracticed = studied.filter(r => !r.practice_attempts && TENSES.some(t => t.id === r.topic_id)).slice(0, 5);
+  const recent = [...studied].sort((a, b) => new Date(b.last_studied_at || 0) - new Date(a.last_studied_at || 0)).slice(0, 6);
+
+  return (
+    <div className="iw-gprog">
+      {progress.mode === 'local' && (
+        <div className="iw-gprog-note">
+          <Lock size={14} aria-hidden="true" />
+          {isTeacher
+            ? <span>Прогрес зараз зберігається лише в цьому браузері. Щоб він зберігався в акаунтах учнів, запусти в Supabase SQL з файлу <code>supabase/grammar_progress.sql</code>.
+                <button type="button" className="iw-link" onClick={() => { try { navigator.clipboard.writeText(GRAMMAR_PROGRESS_SQL).then(() => toast('SQL скопійовано', 'success')); } catch (e) {} }}> Скопіювати SQL</button></span>
+            : <span>Прогрес збережено на цьому пристрої.</span>}
+        </div>
+      )}
+      <div className="iw-stat-grid">
+        <StatCard icon={BookOpen} tone="sky" value={studied.length} label="Тем вивчено" sub={`з ${topics.length} доступних`} />
+        <StatCard icon={Target} tone="lavender-fill" value={practiced.length} label="Тем у практиці" />
+        <StatCard icon={CheckCircle} tone="sage" value={acc == null ? '—' : `${acc}%`} label="Точність у практиці" sub={attempts ? `${correct} з ${attempts} завдань` : 'ще не тренувався(-лась)'} />
+      </div>
+      <p className="iw-gb-levelnote">Точність показує результати тренувань у Grammar Bank — це не оцінка рівня англійської.</p>
+
+      {rows.length === 0 ? (
+        <EmptyState art="books" title="Тут з'явиться твій прогрес" text="Відкрий будь-яку тему або пройди коротку практику — і тут буде видно, що вже вивчено."
+          action={<IwButton variant="primary" size="sm" icon={Target} onClick={() => start('all')}>Почати практику</IwButton>} />
+      ) : (
+        <div className="iw-gprog-grid">
+          <section className="iw-card">
+            <h3 className="iw-card-title">Точність по темах</h3>
+            {practiced.length === 0 && <p className="iw-scard-muted">Пройди практику, щоб побачити точність по темах.</p>}
+            <div className="iw-gprog-bars">
+              {practiced.sort((a, b) => b.practice_attempts - a.practice_attempts).map(r => {
+                const t = topicOf(r.topic_id); const p = Math.round((r.practice_correct / r.practice_attempts) * 100);
+                return (
+                  <button key={r.topic_id} type="button" className="iw-gprog-bar" onClick={() => openTopic(r.topic_id)}>
+                    <ProgressBar value={r.practice_correct} max={r.practice_attempts} size="sm" tone={p >= 80 ? 'sage' : p >= 60 ? 'mustard' : 'terracotta'}
+                      label={t.name} valueLabel={`${p}% · ${r.practice_correct}/${r.practice_attempts}`} />
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+          <div className="iw-gprog-side">
+            {(revise.length > 0 || notPracticed.length > 0) && (
+              <section className="iw-card">
+                <h3 className="iw-card-title">Варто повторити</h3>
+                <ul className="iw-gprog-list">
+                  {revise.map(r => <li key={r.topic_id}><button type="button" className="iw-link" onClick={() => openTopic(r.topic_id)}>{topicOf(r.topic_id).name}</button><span>{Math.round((r.practice_correct / r.practice_attempts) * 100)}% у практиці</span><IwButton size="sm" variant="ghost" onClick={() => start(r.topic_id)}>Тренувати</IwButton></li>)}
+                  {notPracticed.map(r => <li key={r.topic_id}><button type="button" className="iw-link" onClick={() => openTopic(r.topic_id)}>{topicOf(r.topic_id).name}</button><span>вивчено, але ще без практики</span><IwButton size="sm" variant="ghost" onClick={() => start(r.topic_id)}>Тренувати</IwButton></li>)}
+                </ul>
+              </section>
+            )}
+            {recent.length > 0 && <section className="iw-card">
+              <h3 className="iw-card-title">Нещодавно вивчені</h3>
+              <ul className="iw-gprog-list">
+                {recent.map(r => <li key={r.topic_id}><button type="button" className="iw-link" onClick={() => openTopic(r.topic_id)}>{topicOf(r.topic_id).name}</button><span>{formatRelativeTime(r.last_studied_at)}</span></li>)}
+              </ul>
+            </section>}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
