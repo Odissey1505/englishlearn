@@ -2243,6 +2243,121 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   .iw-hub { flex-wrap: wrap; }
 }
 
+
+/* ═════════ INKWELL 2.0 · ФАЗА 6: VOCABULARY BANK ═════════ */
+.iw-vb .iw-page-header { margin-bottom: 18px; }
+.iw-vb-stats { margin-bottom: 16px; }
+.iw-vb-tabs > .iw-tabs { margin-bottom: 18px; }
+.iw-text-input { width: 100%; height: 46px; margin-top: 14px; padding: 0 14px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font: 16px var(--font-body); }
+.iw-text-input:focus { outline: none; border-color: var(--ink); box-shadow: 3px 3px 0 var(--cream-3); }
+.iw-text-input.right { border-color: var(--success); background: var(--success-soft); }
+.iw-text-input.wrong { border-color: var(--error); background: var(--error-soft); }
+.iw-menu-empty { padding: 10px 12px; font-size: 13px; color: var(--text-muted); font-style: italic; }
+
+/* Щоденний челендж */
+.iw-daily { display: flex; align-items: center; gap: 16px; margin-bottom: 26px; padding: 16px 20px; border-radius: var(--radius-lg); border: 1px solid color-mix(in srgb, var(--gold) 45%, var(--border)); background: linear-gradient(120deg, var(--gold-soft), var(--surface) 70%); }
+.iw-daily-icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; background: linear-gradient(150deg, var(--gold), var(--mustard-deep)); color: #fffaf0; box-shadow: 0 6px 16px color-mix(in srgb, var(--gold) 40%, transparent); }
+.iw-daily.done .iw-daily-icon { background: var(--sage-deep); box-shadow: none; }
+.iw-daily-body { flex: 1; min-width: 0; }
+.iw-daily-body .iw-kicker { margin: 0; color: var(--gold-deep); }
+.dark .iw-daily-body .iw-kicker { color: var(--gold); }
+.iw-daily-title { margin: 2px 0; font: 600 18px/1.25 var(--font-display); color: var(--text); }
+.iw-daily-sub { font-size: 13px; color: var(--text-2); }
+.iw-daily-streak { padding: 6px 12px; border-radius: 999px; background: var(--success-soft); color: var(--success); font-size: 13px; font-weight: 600; white-space: nowrap; }
+
+/* Слова */
+.iw-vb-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-bottom: 16px; }
+.iw-word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.iw-word { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-sm); border-top: 3px solid var(--accent); }
+.iw-word-top { display: flex; align-items: center; justify-content: space-between; }
+.iw-word-emoji { font-size: 30px; line-height: 1; }
+.iw-word-tools { display: inline-flex; gap: 2px; }
+.iw-word-en { margin: 4px 0 0; font: 600 19px/1.25 var(--font-display); letter-spacing: -0.01em; color: var(--text); }
+.iw-word-uk { font-size: 15px; font-weight: 600; color: var(--brand-deep); }
+.dark .iw-word-uk { color: var(--terracotta); }
+.iw-word-explain { margin: 2px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--text-2); }
+.iw-word-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin-top: auto; padding-top: 8px; }
+.iw-word-origin { font-size: 11.5px; color: var(--text-muted); }
+.iw-speak { width: 32px; height: 32px; display: grid; place-items: center; border: 0; border-radius: 10px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all var(--dur-fast) ease; }
+.iw-speak:hover, .iw-speak[aria-expanded="true"] { background: var(--surface-2); color: var(--text); }
+.iw-vlessons { list-style: none; margin: 0; padding: 4px 10px 10px; border-top: 1px dashed var(--border-soft); display: grid; gap: 4px; }
+.iw-vlesson { border-radius: 12px; }
+.iw-vlesson.open { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
+.iw-vlesson-head { width: 100%; display: grid; grid-template-columns: 42px minmax(0, 1fr) auto auto; align-items: center; gap: 12px; padding: 10px 8px; border: 0; border-radius: 10px; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.iw-vlesson-head:hover { background: color-mix(in srgb, var(--surface-2) 60%, transparent); }
+.iw-vlesson.open .iw-unit-chev { transform: rotate(180deg); }
+.iw-vlesson-count { font-size: 12.5px; color: var(--text-muted); white-space: nowrap; }
+.iw-vlesson-body { padding: 4px 8px 14px; animation: iwFade var(--dur) ease backwards; }
+.iw-vlesson-actions { margin-bottom: 12px; }
+
+/* Флешкартки — запуск */
+.iw-vcards-main { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 24px; align-items: center; padding: 24px; }
+.iw-vcards-main .iw-modal-text { margin: 8px 0 16px; max-width: 560px; }
+.iw-vcards-size { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 18px; font-size: 13.5px; color: var(--text-2); }
+.iw-vsets { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.iw-vset { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); color: var(--text); font: inherit; text-align: left; cursor: pointer; transition: all var(--dur-fast) ease; }
+.iw-vset svg { color: var(--gold); flex-shrink: 0; }
+.iw-vset span { display: flex; flex-direction: column; min-width: 0; }
+.iw-vset strong { font: 600 15.5px var(--font-display); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iw-vset small { font-size: 12.5px; color: var(--text-muted); }
+.iw-vset:hover:not(:disabled) { border-color: var(--ink); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.iw-vset:disabled { opacity: .5; cursor: not-allowed; }
+.iw-vset.on { border-color: var(--ink); background: var(--surface-2); }
+
+/* Практика */
+.iw-vq-big { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 18px; font: 600 clamp(24px, 3.4vw, 32px)/1.2 var(--font-display); letter-spacing: -0.015em; color: var(--text); }
+.iw-vq-listen { margin-bottom: 18px; }
+.iw-vq-answer { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 15px; }
+.iw-vtype { display: flex; gap: 10px; align-items: center; }
+.iw-vtype .iw-text-input { margin: 0; }
+.iw-vmatch { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.iw-vmatch-col { display: grid; gap: 8px; align-content: start; }
+.iw-vmatch-item { min-height: 50px; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font: 600 14.5px var(--font-body); text-align: left; cursor: pointer; transition: all var(--dur-fast) ease; }
+.iw-vmatch-item:hover:not(:disabled) { border-color: var(--ink); }
+.iw-vmatch-item.sel { border-color: var(--lavender-deep); background: var(--lavender-soft); box-shadow: 0 0 0 3px color-mix(in srgb, var(--lavender) 30%, transparent); }
+.iw-vmatch-item.ok { border-color: transparent; background: var(--success-soft); color: var(--success); opacity: .8; }
+.iw-vmatch-item.bad { border-color: var(--error); background: var(--error-soft); animation: iwShake .35s ease; }
+.iw-vmatch-item:disabled { cursor: default; }
+.iw-daily-result { background: linear-gradient(120deg, var(--gold-soft), var(--surface) 70%); }
+
+/* Колекції */
+.iw-vcols { display: grid; gap: 16px; }
+.iw-vcols-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.iw-vcols-head svg { vertical-align: -2px; }
+.iw-vcol-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.iw-vcol-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.iw-vcol-list li { display: grid; grid-template-columns: 28px minmax(0, auto) minmax(0, 1fr) auto auto; align-items: center; gap: 10px; padding: 6px 4px; border-radius: 10px; }
+.iw-vcol-list li:hover { background: var(--surface-2); }
+.iw-vcol-list strong { font: 600 15px var(--font-display); }
+.iw-vcol-uk { font-size: 13.5px; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.iw-alias { border-color: color-mix(in srgb, var(--mustard) 45%, var(--border)); background: linear-gradient(120deg, color-mix(in srgb, var(--mustard) 16%, var(--paper)), var(--surface)); }
+.iw-alias .iw-hub-icon { background: var(--mustard-deep); }
+
+/* Флешкартки — сторінка */
+.fc-speak { position: absolute; top: 14px; right: 14px; z-index: 2; }
+.flashcard-face { position: relative; }
+.fc-swipe-hint { display: none; margin-top: 10px; text-align: center; font-size: 12.5px; color: var(--text-muted); }
+.flashcard.dragging { transition: none !important; }
+@media (hover: none) and (pointer: coarse) { .fc-swipe-hint { display: block; } }
+
+@media (max-width: 720px) {
+  .iw-daily { flex-wrap: wrap; padding: 14px; }
+  .iw-daily > .iw-btn { width: 100%; }
+  .iw-vb .iw-chips { flex-wrap: nowrap; overflow-x: auto; margin-left: -18px; margin-right: -18px; padding: 0 18px 2px; scrollbar-width: none; }
+  .iw-vb-toolbar { display: block; }
+  .iw-vb-toolbar > .iw-chip { margin-top: 10px; }
+  .iw-word-grid { grid-template-columns: 1fr; }
+  .iw-vcards-main { grid-template-columns: 1fr; padding: 18px; }
+  .iw-vcards-main-art { width: 130px; }
+  .iw-vmatch { gap: 8px; }
+  .iw-vmatch-item { padding: 10px; font-size: 13.5px; }
+  .iw-vtype { flex-direction: column; align-items: stretch; }
+  .iw-vlesson-head { grid-template-columns: 34px minmax(0, 1fr) auto; }
+  .iw-vlesson-count { display: none; }
+  .iw-vcol-list li { grid-template-columns: 24px minmax(0, 1fr) auto auto; }
+  .iw-vcol-uk { grid-column: 2; grid-row: 2; }
+}
+
 /* Доступність: менше руху */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
@@ -3110,6 +3225,46 @@ function Illustration({ name = 'books', className, title }) {
         </g>
         <path d="M212 40 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 Z" className="f-gold iw-float-2" />
         <path d="M28 46 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" className="f-plum iw-float" opacity="0.8" />
+      </svg>
+    );
+  }
+
+  if (name === 'vocab') {
+    return (
+      <svg viewBox="0 0 240 190" className={cx('iw-ill', className)} {...label}>
+        <IllDefs id={id} />
+        <circle cx="128" cy="86" r="70" className="f-sage halo" />
+        <ellipse cx="120" cy="176" rx="94" ry="9" fill={`url(#${id}gs)`} />
+        {/* стос карток */}
+        <g transform="rotate(-10 96 120)">
+          <rect x="40" y="82" width="104" height="72" rx="12" className="f-plum" />
+          <rect x="40" y="82" width="104" height="72" rx="12" fill={lt} />
+        </g>
+        <g transform="rotate(-3 110 118)">
+          <rect x="52" y="80" width="110" height="76" rx="12" className="f-sky" />
+          <rect x="52" y="80" width="110" height="76" rx="12" fill={lt} />
+        </g>
+        <g className="iw-float" transform="rotate(5 132 112)">
+          <rect x="70" y="72" width="122" height="84" rx="14" className="f-white s-line" strokeWidth="1.2" />
+          <rect x="70" y="72" width="122" height="84" rx="14" fill={lt} opacity="0.4" />
+          <text x="131" y="112" textAnchor="middle" fontSize="22" className="t-ink">hello</text>
+          <rect x="104" y="124" width="54" height="6" rx="3" className="f-line" />
+          <circle cx="176" cy="88" r="6" className="f-must" />
+        </g>
+        {/* звукові хвилі */}
+        <g className="s-terrad iw-signal-1" fill="none" strokeWidth="3" strokeLinecap="round">
+          <path d="M200 64 q 10 12 0 24" /><path d="M210 56 q 18 20 0 40" opacity="0.6" />
+        </g>
+        {/* літери */}
+        <g className="iw-float-2">
+          <rect x="34" y="34" width="34" height="34" rx="9" className="f-terra" transform="rotate(-10 51 51)" />
+          <text x="51" y="59" textAnchor="middle" fontSize="20" className="t-ink" style={{ fill: '#fffaf0' }} transform="rotate(-10 51 51)">A</text>
+        </g>
+        <g className="iw-float-3">
+          <rect x="150" y="22" width="30" height="30" rx="8" className="f-must" transform="rotate(8 165 37)" />
+          <text x="165" y="44" textAnchor="middle" fontSize="18" className="t-ink" style={{ fill: '#fffaf0' }} transform="rotate(8 165 37)">я</text>
+        </g>
+        <path d="M110 30 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 Z" className="f-gold iw-float-2" />
       </svg>
     );
   }
@@ -6542,7 +6697,7 @@ function formatHwStatus(hw) {
 // FLASHCARDS PAGE
 // ═══════════════════════════════════════════════════════════
 
-function FlashcardsPage({ session, mode, courseId, lessonId, unitId, canSeeVocabWord, goHome, setRoute }) {
+function FlashcardsPage({ session, mode, courseId, lessonId, unitId, wordIds, limit, canSeeVocabWord, goHome, setRoute }) {
   // mode: 'lesson' (тренуємо всі слова з певного уроку) | 'due' (усі слова на повторення сьогодні)
   const allItems = useMemo(() => getAllVocabItems(), []);
   const [cards, setCards] = useState([]);         // масив карток для тренування
@@ -6553,6 +6708,7 @@ function FlashcardsPage({ session, mode, courseId, lessonId, unitId, canSeeVocab
   const [error, setError] = useState('');
   const [stats, setStats] = useState({ notKnown: 0, hard: 0, good: 0, easy: 0 });
   const [saving, setSaving] = useState(false);
+  const swipeRef = useRef({ x: null, moved: false });
 
   useEffect(() => {
     async function load() {
@@ -6602,7 +6758,12 @@ function FlashcardsPage({ session, mode, courseId, lessonId, unitId, canSeeVocab
           return dueWordIds.has(w.wordId) || !pMap.has(w.wordId);
         });
         // Обмежуємо: максимум 20 карток за сесію, щоб не перевантажити
-        selectedCards = selectedCards.slice(0, 20);
+        // (учень може обрати менше: 5 або 10)
+        selectedCards = selectedCards.slice(0, Math.min(Number(limit) || 20, 20));
+      } else if ((mode === 'favorites' || mode === 'collection') && Array.isArray(wordIds)) {
+        // Обране або власна колекція — лише слова, доступні учню
+        const set = new Set(wordIds);
+        selectedCards = allItems.filter(w => set.has(w.wordId) && canSeeVocabWord(w));
       }
 
       // Перемішуємо
@@ -6613,13 +6774,14 @@ function FlashcardsPage({ session, mode, courseId, lessonId, unitId, canSeeVocab
       setLoading(false);
     }
     load();
-  }, [mode, courseId, lessonId, unitId, session.user.id]);
+  }, [mode, courseId, lessonId, unitId, limit, (wordIds || []).join(','), session.user.id]);
 
   // Клавіатура: пробіл — перевернути; 1/2/3/4 — оцінити
   useEffect(() => {
     function handleKey(e) {
       if (!cards.length || currentIndex >= cards.length) return;
       if (e.key === ' ' || e.key === 'Enter') {
+        if (e.target && e.target.closest && e.target.closest('button, a, input, textarea, select')) return;
         e.preventDefault();
         setFlipped(f => !f);
       } else if (flipped) {
@@ -6651,7 +6813,7 @@ function FlashcardsPage({ session, mode, courseId, lessonId, unitId, canSeeVocab
       .upsert(payload, { onConflict: 'student_id,word_id' });
 
     if (error) {
-      alert('Помилка збереження: ' + error.message);
+      toast('Помилка збереження: ' + error.message, 'error');
       setSaving(false);
       return;
     }
@@ -6693,7 +6855,7 @@ function FlashcardsPage({ session, mode, courseId, lessonId, unitId, canSeeVocab
       {empty && (
         <div className="empty-inline" style={{ marginTop: 40 }}>
           <div className="empty-inline-title" style={{ fontSize: 22 }}>
-            {mode === 'due' ? '🎉 На сьогодні все повторено!' : 'Немає слів для тренування'}
+            {mode === 'due' ? '🎉 На сьогодні все повторено!' : mode === 'favorites' || mode === 'collection' ? 'У цьому наборі поки немає слів' : 'Немає слів для тренування'}
           </div>
           <div style={{ marginTop: 10 }}>
             {mode === 'due'
@@ -6718,10 +6880,20 @@ function FlashcardsPage({ session, mode, courseId, lessonId, unitId, canSeeVocab
             </span>
           </div>
 
-          <div className={`flashcard ${flipped ? 'flipped' : ''}`} onClick={() => setFlipped(f => !f)}>
+          <div className={`flashcard ${flipped ? 'flipped' : ''}`} onClick={() => { if (!swipeRef.current.moved) setFlipped(f => !f); }}
+            role="button" tabIndex={0} aria-label={flipped ? `${current.uk}. Натисни, щоб перевернути назад` : `${current.en}. Натисни, щоб побачити переклад`}
+            onPointerDown={(e) => { swipeRef.current = { x: e.clientX, y: e.clientY, moved: false }; }}
+            onPointerUp={(e) => {
+              const s0 = swipeRef.current; if (s0.x == null) return;
+              const dx = e.clientX - s0.x, dy = e.clientY - s0.y;
+              swipeRef.current = { x: null, moved: Math.abs(dx) > 12 };
+              // Свайп працює лише після перевертання: вліво — «Не знаю», вправо — «Добре»
+              if (flipped && Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) * 1.5) gradeCard(dx > 0 ? 4 : 0);
+            }}>
             <div className="flashcard-inner">
               {/* FRONT */}
               <div className={`flashcard-face flashcard-front accent-${current.accent || 'sage'}`}>
+                <span className="fc-speak"><SpeakButton text={current.en} size={18} /></span>
                 <div className="flashcard-emoji">{current.emoji}</div>
                 <div className="flashcard-word">{current.en}</div>
                 <div className="flashcard-hint">натисни, щоб побачити переклад</div>
@@ -6735,6 +6907,7 @@ function FlashcardsPage({ session, mode, courseId, lessonId, unitId, canSeeVocab
             </div>
           </div>
 
+          {flipped && <div className="fc-swipe-hint">Свайп вліво — «Не знаю», вправо — «Добре»</div>}
           {flipped && (
             <div className="fc-grade-buttons">
               <button className="fc-grade fc-grade-notknown" onClick={() => gradeCard(0)} disabled={saving}>
@@ -7767,9 +7940,9 @@ function App({ session, onLogout }) {
         {route.page === 'lesson' && <LessonPage courseId={route.courseId} lessonId={route.lessonId} goHome={goHome} goCourse={goCourse} goLesson={goLesson} favorites={favorites} toggleFavorite={toggleFavorite} canSeeLesson={canSeeLesson} isTeacher={isTeacher} session={session} />}
         {route.page === 'grammar' && <GrammarBank goHome={goHome} setRoute={setRoute} session={session} canSeeLesson={canSeeLesson} isTeacher={isTeacher} />}
         {route.page === 'vocabulary' && <VocabularyBank goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} />}
-        {route.page === 'vocab-course' && <VocabCoursePage courseId={route.courseId} goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} />}
-        {route.page === 'vocab-lesson' && <VocabLessonPage courseId={route.courseId} lessonId={route.lessonId} goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} />}
-        {route.page === 'flashcards' && <FlashcardsPage session={session} mode={route.mode} courseId={route.courseId} lessonId={route.lessonId} unitId={route.unitId} canSeeVocabWord={canSeeVocabWord} goHome={goHome} setRoute={setRoute} />}
+        {route.page === 'vocab-course' && <VocabCoursePage courseId={route.courseId} goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} />}
+        {route.page === 'vocab-lesson' && <VocabLessonPage courseId={route.courseId} lessonId={route.lessonId} goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} />}
+        {route.page === 'flashcards' && <FlashcardsPage session={session} mode={route.mode} courseId={route.courseId} lessonId={route.lessonId} unitId={route.unitId} wordIds={route.wordIds} limit={route.limit} canSeeVocabWord={canSeeVocabWord} goHome={goHome} setRoute={setRoute} />}
         {route.page === 'my-homework' && <MyHomeworkPage session={session} goHome={goHome} setRoute={setRoute} />}
         {route.page === 'students' && <StudentsPage session={session} goHome={goHome} setRoute={setRoute} />}
         {route.page === 'homework-review' && <HomeworkReviewPage session={session} goHome={goHome} setRoute={setRoute} />}
@@ -9695,342 +9868,943 @@ function GrammarProgressView({ topics, progress, openTopic, start, isTeacher }) 
 // VOCABULARY BANK
 // ═══════════════════════════════════════════════════════════
 
-// Головна сторінка Vocab Bank — список курсів як категорій
-function VocabularyBank({ goHome, setRoute, canSeeVocabWord, isTeacher, session }) {
-  const allItems = useMemo(() => getAllVocabItems(), []);
-  const [dueCount, setDueCount] = useState(0);
-  const [newCount, setNewCount] = useState(0);
+// ═══════════════════════════════════════════════════════════
+// INKWELL 2.0 · ФАЗА 6 — Vocabulary Bank
+// ═══════════════════════════════════════════════════════════
+// Правила:
+// • Доступ до слів — як і раніше: canSeeVocabWord (завершений урок або
+//   ручний доступ від вчителя). Пошук, практика, челендж і колекції
+//   працюють ЛИШЕ з доступними словами.
+// • Інтервальне повторення — наявний алгоритм SM-2 (computeNextReview)
+//   і таблиця vocab_progress. Статуси слова:
+//     нове — ще не повторювалось; вчу — інтервал < 21 дня;
+//     у довготривалій пам'яті — інтервал ≥ 21 дня (як «зріла» картка в SM-2);
+//     на повторення — next_review_at уже настав.
+// • Практика й щоденний челендж — окремі вправи Vocabulary Bank, вони не
+//   змінюють розклад флешкарток.
 
-  // Рахуємо, скільки карток чекають на повторення (тільки для учня)
+const STRONG_INTERVAL_DAYS = 21;
+const VOCAB_EXTRAS_SQL = `-- Inkwell 2.0 · колекції слів, обране, практика та щоденний челендж
+create table if not exists public.vocab_collections (
+  id uuid primary key default gen_random_uuid(),
+  student_id uuid not null references public.profiles(id) on delete cascade,
+  name text not null check (char_length(name) between 1 and 60),
+  word_ids text[] not null default '{}',
+  is_favorites boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+create unique index if not exists vocab_collections_one_favorites
+  on public.vocab_collections (student_id) where is_favorites;
+
+create table if not exists public.vocab_activity (
+  id uuid primary key default gen_random_uuid(),
+  student_id uuid not null references public.profiles(id) on delete cascade,
+  kind text not null check (kind in ('practice', 'daily')),
+  mode text,
+  day date not null default current_date,
+  score integer not null default 0,
+  total integer not null default 0,
+  created_at timestamptz not null default now()
+);
+create unique index if not exists vocab_activity_one_daily
+  on public.vocab_activity (student_id, day) where kind = 'daily';
+
+alter table public.vocab_collections enable row level security;
+alter table public.vocab_activity enable row level security;
+drop policy if exists "vocab_collections: own rows" on public.vocab_collections;
+create policy "vocab_collections: own rows" on public.vocab_collections
+  for all to authenticated using (student_id = auth.uid()) with check (student_id = auth.uid());
+drop policy if exists "vocab_activity: own rows" on public.vocab_activity;
+create policy "vocab_activity: own rows" on public.vocab_activity
+  for all to authenticated using (student_id = auth.uid()) with check (student_id = auth.uid());
+drop policy if exists "vocab_activity: teachers read" on public.vocab_activity;
+create policy "vocab_activity: teachers read" on public.vocab_activity
+  for select to authenticated
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'teacher'));`;
+
+// ── Вимова (вбудований синтезатор мовлення браузера) ──
+const canSpeak = () => typeof window !== 'undefined' && 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+function speakWord(text) {
+  if (!canSpeak()) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(String(text).replace(/[—–].*$/, '').replace(/[()]/g, ''));
+    u.lang = 'en-GB'; u.rate = 0.9;
+    const voices = window.speechSynthesis.getVoices();
+    const v = voices.find(x => /en-GB/i.test(x.lang)) || voices.find(x => /^en/i.test(x.lang));
+    if (v) u.voice = v;
+    window.speechSynthesis.speak(u);
+  } catch (e) {}
+}
+const Volume = (p) => <Icon {...p}><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></Icon>;
+const FolderPlus = (p) => <Icon {...p}><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><line x1="12" y1="10" x2="12" y2="16"/><line x1="9" y1="13" x2="15" y2="13"/></Icon>;
+const Folder = (p) => <Icon {...p}><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></Icon>;
+const Zap = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
+const EyeOff = (p) => <Icon {...p}><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></Icon>;
+
+function SpeakButton({ text, size = 16 }) {
+  if (!canSpeak()) return null;
+  return (
+    <button type="button" className="iw-speak" onClick={(e) => { e.stopPropagation(); speakWord(text); }} aria-label={`Вимова: ${text}`} data-tip="Послухати">
+      <Volume size={size} />
+    </button>
+  );
+}
+
+// ── Сховище: обране, колекції, активність ──
+function useVocabStore(session) {
+  const uid = session.user.id;
+  const localKey = `inkwell-vocab:${uid}`;
+  const empty = { favorites: [], collections: [], activity: [] };
+  const [state, setState] = useState({ mode: 'loading', favRowId: null, ...empty });
+  const ref = useRef(state); ref.current = state;
+  const readLocal = () => { try { return { ...empty, ...JSON.parse(localStorage.getItem(localKey) || '{}') }; } catch (e) { return empty; } };
+  const writeLocal = (s) => { try { localStorage.setItem(localKey, JSON.stringify({ favorites: s.favorites, collections: s.collections, activity: s.activity.slice(-200) })); } catch (e) {} };
+
   useEffect(() => {
-    if (isTeacher || !session) return;
-    async function loadDue() {
-      const { data } = await window.SB
-        .from('vocab_progress')
-        .select('word_id, next_review_at')
-        .eq('student_id', session.user.id);
-      const now = new Date();
-      const seenIds = new Set((data || []).map(r => r.word_id));
-      const dueIds = new Set(
-        (data || [])
-          .filter(r => new Date(r.next_review_at) <= now)
-          .map(r => r.word_id)
-      );
-      const visible = allItems.filter(w => canSeeVocabWord(w));
-      const due = visible.filter(w => dueIds.has(w.wordId)).length;
-      const neu = visible.filter(w => !seenIds.has(w.wordId)).length;
-      setDueCount(due);
-      setNewCount(neu);
-    }
-    loadDue();
-  }, [session, isTeacher]);
-
-  // Групуємо доступні слова за курсами
-  const availableByCourse = useMemo(() => {
-    const map = new Map();
-    allItems.forEach(item => {
-      if (!canSeeVocabWord(item)) return;
-      if (!map.has(item.courseId)) {
-        const course = COURSES.find(c => c.id === item.courseId);
-        map.set(item.courseId, {
-          courseId: item.courseId,
-          courseTitle: course ? course.title : item.courseTitle,
-          courseSubtitle: course ? course.subtitle : null,
-          courseAccent: course ? course.accent : 'sage',
-          count: 0
-        });
+    let alive = true;
+    (async () => {
+      const [c, a] = await Promise.all([
+        window.SB.from('vocab_collections').select('*').eq('student_id', uid),
+        window.SB.from('vocab_activity').select('*').eq('student_id', uid).order('created_at', { ascending: false }),
+      ]).catch(() => [{ error: true }, { error: true }]);
+      if (!alive) return;
+      if (c.error || a.error) { setState({ mode: 'local', favRowId: null, ...readLocal() }); return; }
+      let favRow = (c.data || []).find(r => r.is_favorites);
+      const collections = (c.data || []).filter(r => !r.is_favorites).map(r => ({ id: r.id, name: r.name, wordIds: r.word_ids || [], updated_at: r.updated_at }));
+      const activity = (a.data || []).map(r => ({ id: r.id, kind: r.kind, mode: r.mode, day: r.day, score: r.score, total: r.total, at: r.created_at }));
+      let favorites = favRow ? (favRow.word_ids || []) : [];
+      // Переносимо в акаунт те, що було збережено в браузері до появи таблиць
+      const local = readLocal();
+      if (local.favorites.length || local.collections.length || local.activity.length) {
+        favorites = Array.from(new Set([...favorites, ...local.favorites]));
+        if (local.favorites.length) {
+          if (favRow) await window.SB.from('vocab_collections').update({ word_ids: favorites, updated_at: new Date().toISOString() }).eq('id', favRow.id);
+          else { const r = await window.SB.from('vocab_collections').insert({ student_id: uid, name: 'Обране', word_ids: favorites, is_favorites: true }).select().single(); favRow = r.data; }
+        }
+        for (const col of local.collections) {
+          const r = await window.SB.from('vocab_collections').insert({ student_id: uid, name: col.name, word_ids: col.wordIds }).select().single();
+          if (r.data) collections.push({ id: r.data.id, name: r.data.name, wordIds: r.data.word_ids || [] });
+        }
+        const acts = local.activity.filter(x => !(x.kind === 'daily' && activity.some(y => y.kind === 'daily' && y.day === x.day)));
+        if (acts.length) await window.SB.from('vocab_activity').insert(acts.map(x => ({ student_id: uid, kind: x.kind, mode: x.mode, day: x.day, score: x.score, total: x.total })));
+        acts.forEach(x => activity.unshift(x));
+        try { localStorage.removeItem(localKey); } catch (e) {}
       }
-      map.get(item.courseId).count++;
-    });
-    return Array.from(map.values());
-  }, [allItems, canSeeVocabWord, isTeacher]);
+      if (alive) setState({ mode: 'db', favRowId: favRow ? favRow.id : null, favorites, collections, activity });
+    })();
+    return () => { alive = false; };
+  }, [uid]);
+
+  const commitLocal = (next) => { setState(next); writeLocal(next); };
+  const fail = (e) => toast('Не вдалося зберегти: ' + (e && e.message ? e.message : 'помилка'), 'error');
+
+  async function toggleFavorite(wordId) {
+    const s = ref.current;
+    const on = s.favorites.includes(wordId);
+    const favorites = on ? s.favorites.filter(x => x !== wordId) : [...s.favorites, wordId];
+    if (s.mode !== 'db') { commitLocal({ ...s, favorites }); return; }
+    setState({ ...s, favorites });
+    if (s.favRowId) {
+      const { error } = await window.SB.from('vocab_collections').update({ word_ids: favorites, updated_at: new Date().toISOString() }).eq('id', s.favRowId);
+      if (error) fail(error);
+    } else {
+      const { data, error } = await window.SB.from('vocab_collections').insert({ student_id: uid, name: 'Обране', word_ids: favorites, is_favorites: true }).select().single();
+      if (error) fail(error); else setState(st => ({ ...st, favRowId: data.id }));
+    }
+  }
+  async function createCollection(name, wordIds = []) {
+    const s = ref.current;
+    if (s.mode !== 'db') {
+      const col = { id: 'local-' + Date.now(), name, wordIds };
+      commitLocal({ ...s, collections: [...s.collections, col] }); return col;
+    }
+    const { data, error } = await window.SB.from('vocab_collections').insert({ student_id: uid, name, word_ids: wordIds }).select().single();
+    if (error) { fail(error); return null; }
+    const col = { id: data.id, name: data.name, wordIds: data.word_ids || [] };
+    setState(st => ({ ...st, collections: [...st.collections, col] }));
+    return col;
+  }
+  async function updateCollection(id, changes) {
+    const s = ref.current;
+    const collections = s.collections.map(c => c.id === id ? { ...c, ...changes } : c);
+    if (s.mode !== 'db') { commitLocal({ ...s, collections }); return; }
+    setState({ ...s, collections });
+    const patch = { updated_at: new Date().toISOString() };
+    if (changes.name != null) patch.name = changes.name;
+    if (changes.wordIds) patch.word_ids = changes.wordIds;
+    const { error } = await window.SB.from('vocab_collections').update(patch).eq('id', id);
+    if (error) fail(error);
+  }
+  async function deleteCollection(id) {
+    const s = ref.current;
+    const collections = s.collections.filter(c => c.id !== id);
+    if (s.mode !== 'db') { commitLocal({ ...s, collections }); return; }
+    setState({ ...s, collections });
+    const { error } = await window.SB.from('vocab_collections').delete().eq('id', id);
+    if (error) fail(error);
+  }
+  async function toggleInCollection(id, wordId) {
+    const col = ref.current.collections.find(c => c.id === id);
+    if (!col) return;
+    const has = col.wordIds.includes(wordId);
+    await updateCollection(id, { wordIds: has ? col.wordIds.filter(x => x !== wordId) : [...col.wordIds, wordId] });
+    return !has;
+  }
+  async function logActivity(kind, mode, score, total) {
+    const s = ref.current;
+    const entry = { kind, mode, day: localDayKey(Date.now()), score, total, at: new Date().toISOString() };
+    if (kind === 'daily' && s.activity.some(a => a.kind === 'daily' && a.day === entry.day)) return;
+    if (s.mode !== 'db') { commitLocal({ ...s, activity: [entry, ...s.activity] }); return; }
+    setState({ ...s, activity: [entry, ...s.activity] });
+    const { error } = await window.SB.from('vocab_activity').insert({ student_id: uid, kind, mode, day: entry.day, score, total });
+    if (error) fail(error);
+  }
+  return { ...state, toggleFavorite, createCollection, updateCollection, deleteCollection, toggleInCollection, logActivity };
+}
+
+function wordStatus(row, now = new Date()) {
+  if (!row) return 'new';
+  if (row.next_review_at && new Date(row.next_review_at) <= now) return 'due';
+  if ((row.interval_days || 0) >= STRONG_INTERVAL_DAYS) return 'strong';
+  return 'learning';
+}
+const WORD_STATUS = {
+  new: { label: 'Нове', tone: null },
+  due: { label: 'На повторення', tone: 'warning' },
+  learning: { label: 'Вчу', tone: 'info' },
+  strong: { label: 'Довготривала пам’ять', tone: 'success' },
+};
+
+// ── Генерація вправ зі слів ──
+function seededRandom(seedStr) {
+  let h = 1779033703 ^ seedStr.length;
+  for (let i = 0; i < seedStr.length; i++) { h = Math.imul(h ^ seedStr.charCodeAt(i), 3432918353); h = (h << 13) | (h >>> 19); }
+  let a = h >>> 0;
+  return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+function shuffleWith(arr, rnd) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const normAnswer = (s) => String(s || '').toLowerCase().replace(/[’']/g, "'").replace(/[.,!?;:"()]/g, '').replace(/\s+/g, ' ').trim().replace(/^(to|a|an|the) /, '');
+const typeable = (w) => /^[A-Za-z' -]{2,24}$/.test(w.en) && w.en.trim().split(/\s+/).length <= 3;
+function maskExplain(w) {
+  if (!w.explain) return null;
+  const re = new RegExp(w.en.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'ig');
+  const masked = w.explain.replace(re, '_____');
+  return masked;
+}
+
+const VOCAB_PRACTICE_TYPES = [
+  { id: 'mix', label: 'Мікс' },
+  { id: 'match', label: 'Пари' },
+  { id: 'en2uk', label: 'Англ → Укр' },
+  { id: 'uk2en', label: 'Укр → Англ' },
+  { id: 'meaning', label: 'За поясненням' },
+  { id: 'listen', label: 'На слух' },
+  { id: 'type', label: 'Напиши переклад' },
+];
+
+function makeWordQuestion(type, w, pool, rnd) {
+  const others = shuffleWith(pool.filter(x => x.wordId !== w.wordId && x.en !== w.en && x.uk !== w.uk), rnd).slice(0, 3);
+  if (others.length < 3 && type !== 'type') return null;
+  const opts = (key) => shuffleWith([w, ...others], rnd).map(x => ({ id: x.wordId, label: x[key], emoji: key === 'en' ? null : null }));
+  if (type === 'en2uk') return { type, word: w, prompt: 'Як це перекладається?', big: w.en, emoji: w.emoji, options: opts('uk'), answer: w.wordId };
+  if (type === 'uk2en') return { type, word: w, prompt: 'Як це англійською?', big: w.uk, emoji: w.emoji, options: opts('en'), answer: w.wordId };
+  if (type === 'meaning') {
+    const m = maskExplain(w); if (!m) return null;
+    return { type, word: w, prompt: 'Яке слово підходить до пояснення?', context: m, options: opts('en'), answer: w.wordId };
+  }
+  if (type === 'listen') {
+    if (!canSpeak()) return null;
+    return { type, word: w, prompt: 'Послухай і обери слово', listen: w.en, options: opts('en'), answer: w.wordId };
+  }
+  if (type === 'type') {
+    if (!typeable(w)) return null;
+    return { type, word: w, prompt: 'Напиши англійською', big: w.uk, emoji: w.emoji, answer: w.en };
+  }
+  return null;
+}
+
+function buildVocabSession(words, type, count, seed) {
+  const rnd = seed ? seededRandom(seed) : Math.random;
+  if (words.length < 4) return [];
+  if (type === 'match') {
+    const rounds = [];
+    const pool = shuffleWith(words.filter((w, i, a) => a.findIndex(x => x.en === w.en || x.uk === w.uk) === i), rnd);
+    for (let i = 0; i + 4 <= pool.length && rounds.length < Math.max(1, Math.floor(count / 5)); i += 5) {
+      const set = pool.slice(i, i + 5);
+      if (set.length >= 4) rounds.push({ type: 'match', pairs: set, right: shuffleWith(set, rnd) });
+    }
+    return rounds;
+  }
+  const types = type === 'mix' ? ['en2uk', 'uk2en', 'meaning', 'listen', 'type'].filter(t => t !== 'listen' || canSpeak()) : [type];
+  const out = []; const used = new Set();
+  const order = shuffleWith(words, rnd);
+  for (let i = 0, guard = 0; out.length < count && guard < count * 12; guard++, i++) {
+    const w = order[i % order.length];
+    if (used.has(w.wordId) && used.size < order.length) continue;
+    const t = types[Math.floor(rnd() * types.length)];
+    const q = makeWordQuestion(t, w, words, rnd);
+    if (!q) continue;
+    used.add(w.wordId); out.push(q);
+  }
+  return out;
+}
+
+// ── Сторінка Vocabulary Bank ──
+const VB_TABS = [
+  { id: 'words', label: 'Слова', icon: Library },
+  { id: 'cards', label: 'Флешкартки', icon: Layers2 },
+  { id: 'practice', label: 'Практика', icon: Target },
+  { id: 'collections', label: 'Колекції', icon: Folder },
+];
+
+function VocabularyBank({ goHome, setRoute, canSeeVocabWord, isTeacher, session, focusCourseId, focusLessonId, initialTab }) {
+  const allItems = useMemo(() => getAllVocabItems(), []);
+  const words = useMemo(() => allItems.filter(w => canSeeVocabWord(w)), [allItems, canSeeVocabWord]);
+  const store = useVocabStore(session);
+  const [progress, setProgress] = useState(new Map());
+  const [loaded, setLoaded] = useState(false);
+  const [tab, setTab] = useState(initialTab || 'words');
+  const [query, setQuery] = useState('');
+  const [practiceCfg, setPracticeCfg] = useState({ scope: 'all', type: 'mix', run: null, daily: false });
+
+  useEffect(() => {
+    let alive = true;
+    window.SB.from('vocab_progress').select('word_id, next_review_at, interval_days, repetitions, last_reviewed_at').eq('student_id', session.user.id)
+      .then(({ data }) => { if (alive) { setProgress(new Map((data || []).map(r => [r.word_id, r]))); setLoaded(true); } }, () => setLoaded(true));
+    return () => { alive = false; };
+  }, [session.user.id]);
+
+  const stats = useMemo(() => {
+    const now = new Date(); let reviewed = 0, due = 0, strong = 0, fresh = 0;
+    words.forEach(w => { const s = wordStatus(progress.get(w.wordId), now); if (s === 'new') fresh++; else reviewed++; if (s === 'due') due++; if (s === 'strong') strong++; });
+    return { total: words.length, reviewed, due, strong, fresh, sessions: store.activity.filter(a => a.kind === 'practice').length };
+  }, [words, progress, store.activity]);
+
+  const today = localDayKey(Date.now());
+  const dailyDone = store.activity.find(a => a.kind === 'daily' && a.day === today);
+  const startPractice = (cfg) => {
+    const pool = resolveScope(cfg.scope, words, store);
+    const run = cfg.daily
+      ? buildVocabSession(words, 'mix', 5, `${session.user.id}:${today}`).map(q => q)
+      : buildVocabSession(pool, cfg.type, cfg.type === 'match' ? 10 : 10);
+    setPracticeCfg({ ...cfg, run });
+    setTab('practice');
+    requestAnimationFrame(() => { const el = document.getElementById('vb-top'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }); });
+  };
+  const course = focusCourseId ? COURSES.find(c => c.id === focusCourseId) : null;
 
   return (
-    <main className="page">
-      <Crumbs items={[{ label: 'Library', onClick: goHome }, { label: 'Vocabulary Bank', current: true }]} />
-      <header className="page-header">
-        <div className="page-eyebrow"><span className="dot" /> Vocabulary Bank</div>
-        <h1 className="page-title">Твої вивчені слова <em>під рукою.</em></h1>
-        <p style={{ fontSize: 16, color: 'var(--ink-2)', lineHeight: 1.6, marginTop: 14, maxWidth: 640 }}>
-          {isTeacher
-            ? 'Уся лексика з усіх курсів. Обери курс, щоб побачити всі слова з нього.'
-            : 'Тут з’являються слова з уроків, які ти вже завершив. Обери курс, щоб переглянути вивчену лексику.'}
-        </p>
-      </header>
+    <main className="page iw-vb">
+      <Crumbs items={[
+        { label: isTeacher ? 'Library' : 'Home', onClick: goHome },
+        course ? { label: 'Vocabulary Bank', onClick: () => setRoute({ page: 'vocabulary' }) } : { label: 'Vocabulary Bank', current: true },
+        ...(course ? [{ label: course.title, current: true }] : []),
+      ]} />
+      <PageHeader eyebrow="Vocabulary Bank"
+        title={<React.Fragment>Твої слова <em>під рукою.</em></React.Fragment>}
+        subtitle={isTeacher ? 'Уся лексика курсів: пошук, перегляд за юнітами й уроками, практика.' : 'Тут з’являються слова з уроків, які ти завершив. Повторюй флешкартками, тренуйся та збирай власні колекції.'}
+        art="vocab" />
 
-      <a
-        className="external-link-card external-alias"
-        href="https://odissey1505.github.io/alias-game/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <div className="external-link-icon">🎯</div>
-        <div className="external-link-body">
-          <div className="external-link-eyebrow">Гра для тренування слів</div>
-          <div className="external-link-title">Alias</div>
-          <div className="external-link-sub">Класична гра «Alias» онлайн — поясни слово, поки товариш його вгадує. Чудовий спосіб закріпити нову лексику. Відкриється у новій вкладці.</div>
+      <div className="iw-gb-search" role="search">
+        <div className="search-bar">
+          <Search size={20} aria-hidden="true" />
+          <input type="search" className="search-input" value={query} onChange={e => { setQuery(e.target.value); if (e.target.value) setTab('words'); }}
+            placeholder="Шукай англійською чи українською, або за уроком…" aria-label="Пошук слів" />
+          {query && <button className="search-clear" onClick={() => setQuery('')} aria-label="Очистити"><X size={16} /></button>}
         </div>
-        <div className="external-link-cta">
-          Грати <ExternalLink size={14} />
+      </div>
+
+      {!isTeacher && (
+        <div className="iw-stat-grid iw-vb-stats">
+          <StatCard icon={Library} tone="sage" value={stats.total} label="Слів доступно" sub={stats.fresh ? `${stats.fresh} ще нових` : 'усі вже повторював(-ла)'} />
+          <StatCard icon={RefreshCw} tone="sky" value={loaded ? stats.reviewed : '–'} label="Повторено у флешкартках" />
+          <StatCard icon={Clock} tone="mustard" value={loaded ? stats.due : '–'} label="На повторення сьогодні" />
+          <StatCard icon={CheckCircle} tone="plum" value={loaded ? stats.strong : '–'} label="У довготривалій пам’яті" sub={`інтервал ≥ ${STRONG_INTERVAL_DAYS} днів`} />
         </div>
+      )}
+
+      {words.length >= 4 && (
+        <div className={cx('iw-daily', dailyDone && 'done')}>
+          <div className="iw-daily-icon" aria-hidden="true">{dailyDone ? <CheckCircle size={22} /> : <Zap size={22} />}</div>
+          <div className="iw-daily-body">
+            <div className="iw-kicker">Щоденний челендж · {new Date().toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' })}</div>
+            <div className="iw-daily-title">{dailyDone ? `Виконано: ${dailyDone.score} з ${dailyDone.total}` : '5 питань зі слів, які ти вже знаєш'}</div>
+            <div className="iw-daily-sub">{dailyDone ? 'Новий челендж з’явиться завтра.' : 'Кілька хвилин на день — і слова не забуваються.'}</div>
+          </div>
+          {!dailyDone && <IwButton variant="primary" iconRight={ArrowRight} onClick={() => startPractice({ scope: 'all', type: 'mix', daily: true })}>Почати</IwButton>}
+          {dailyDone && <div className="iw-daily-streak">{dailyStreak(store.activity)} {pluralUk(dailyStreak(store.activity), 'день', 'дні', 'днів')} поспіль</div>}
+        </div>
+      )}
+
+      <div id="vb-top" />
+      <Tabs label="Розділи Vocabulary Bank" value={tab} onChange={(id) => { setTab(id); if (id !== 'practice') setPracticeCfg(c => ({ ...c, run: null, daily: false })); }} tabs={VB_TABS} className="iw-vb-tabs">
+        {tab === 'words' && <VocabWordsTab words={words} progress={progress} store={store} query={query} isTeacher={isTeacher}
+          focusCourseId={focusCourseId} focusLessonId={focusLessonId} setRoute={setRoute} />}
+        {tab === 'cards' && <VocabCardsTab words={words} progress={progress} store={store} isTeacher={isTeacher} setRoute={setRoute} stats={stats} />}
+        {tab === 'practice' && <VocabPracticeTab words={words} store={store} cfg={practiceCfg} setCfg={setPracticeCfg} start={startPractice} />}
+        {tab === 'collections' && <VocabCollectionsTab words={words} store={store} setRoute={setRoute} start={startPractice} isTeacher={isTeacher} />}
+      </Tabs>
+
+      <a className="iw-hub iw-alias" href="https://odissey1505.github.io/alias-game/" target="_blank" rel="noopener noreferrer">
+        <span className="iw-hub-icon" aria-hidden="true"><Users size={22} /></span>
+        <span className="iw-hub-body">
+          <span className="iw-kicker">Гра для тренування слів · окремий застосунок</span>
+          <span className="iw-hub-title">Alias</span>
+          <span className="iw-hub-sub">Поясни слово англійською, поки товариш вгадує. Чудово працює в парах і на уроці.</span>
+        </span>
+        <span className="iw-btn iw-btn-primary iw-btn-sm">Грати <ExternalLink size={14} aria-hidden="true" /><span className="sr-only"> (у новій вкладці)</span></span>
       </a>
-
-      {!isTeacher && (dueCount > 0 || newCount > 0) && (
-        <button
-          className="fc-review-banner"
-          onClick={() => setRoute({ page: 'flashcards', mode: 'due' })}
-        >
-          <div className="fc-review-banner-icon">🎴</div>
-          <div className="fc-review-banner-body">
-            <div className="fc-review-banner-title">
-              {dueCount > 0 && newCount > 0 && `${dueCount} на повторення + ${newCount} нових`}
-              {dueCount > 0 && newCount === 0 && `${dueCount} карток чекають на повторення`}
-              {dueCount === 0 && newCount > 0 && `${newCount} нових слів для вивчення`}
-            </div>
-            <div className="fc-review-banner-sub">Клікни, щоб почати тренування (макс 20 за раз)</div>
-          </div>
-          <ChevronRight size={20} />
-        </button>
-      )}
-
-      {availableByCourse.length === 0 ? (
-        <div className="empty-inline">
-          <div className="empty-inline-title">Поки що порожньо</div>
-          <div>
-            {isTeacher
-              ? 'Немає курсів зі словами. Додай хоча б один курс з vocabPresentation.'
-              : 'Слова з’являться, коли ти завершиш перший урок. Твій вчитель позначить його як завершений.'}
-          </div>
-        </div>
-      ) : (
-        <div className="vocab-course-grid">
-          {availableByCourse.map(c => (
-            <button
-              key={c.courseId}
-              className={`vocab-course-card accent-${c.courseAccent}`}
-              onClick={() => setRoute({ page: 'vocab-course', courseId: c.courseId })}
-            >
-              <div className="vocab-course-icon"><Library size={22} /></div>
-              <div className="vocab-course-body">
-                <h3 className="vocab-course-title">{c.courseTitle}</h3>
-                {c.courseSubtitle && <div className="vocab-course-sub">{c.courseSubtitle}</div>}
-                <div className="vocab-course-count">
-                  <strong>{c.count}</strong> вивчен{c.count === 1 ? 'е слово' : c.count < 5 ? 'і слова' : 'их слів'}
-                </div>
-              </div>
-              <ChevronRight size={18} className="vocab-course-chevron" />
-            </button>
-          ))}
-        </div>
-      )}
     </main>
   );
 }
 
-// Сторінка курсу у Vocab Bank — юніти та уроки
-function VocabCoursePage({ courseId, goHome, setRoute, canSeeVocabWord, isTeacher }) {
-  const course = COURSES.find(c => c.id === courseId);
-  const allItems = useMemo(() => getAllVocabItems(), []);
-  if (!course) return <main className="page"><p>Курс не знайдено.</p></main>;
+function dailyStreak(activity) {
+  const days = new Set(activity.filter(a => a.kind === 'daily').map(a => a.day));
+  let n = 0; const d = new Date();
+  if (!days.has(localDayKey(d))) d.setDate(d.getDate() - 1);
+  while (days.has(localDayKey(d))) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
 
-  // Групуємо доступні слова за юнітами та уроками
-  const structure = useMemo(() => {
-    const unitsMap = new Map();
-    allItems
-      .filter(item => item.courseId === courseId && canSeeVocabWord(item))
-      .forEach(item => {
-        if (!unitsMap.has(item.unitId)) {
-          unitsMap.set(item.unitId, {
-            unitId: item.unitId,
-            unitNumber: item.unitNumber,
-            unitTitle: item.unitTitle,
-            lessons: new Map()
-          });
-        }
-        const unit = unitsMap.get(item.unitId);
-        if (!unit.lessons.has(item.lessonId)) {
-          unit.lessons.set(item.lessonId, {
-            lessonId: item.lessonId,
-            lessonNumber: item.lessonNumber,
-            lessonTitle: item.lessonTitle,
-            lessonTitleUk: item.lessonTitleUk,
-            count: 0
-          });
-        }
-        unit.lessons.get(item.lessonId).count++;
-      });
-    // Перетворюємо в масиви для рендеру, сортуємо за номером
-    return Array.from(unitsMap.values())
-      .sort((a, b) => a.unitNumber - b.unitNumber)
-      .map(u => ({
-        ...u,
-        lessons: Array.from(u.lessons.values()).sort((a, b) => a.lessonNumber - b.lessonNumber)
-      }));
-  }, [allItems, courseId, canSeeVocabWord, isTeacher]);
+function resolveScope(scope, words, store) {
+  if (!scope || scope === 'all') return words;
+  if (scope === 'favorites') return words.filter(w => store.favorites.includes(w.wordId));
+  if (scope.startsWith('col:')) { const c = store.collections.find(x => x.id === scope.slice(4)); return c ? words.filter(w => c.wordIds.includes(w.wordId)) : []; }
+  if (scope.startsWith('course:')) return words.filter(w => w.courseId === scope.slice(7));
+  if (scope.startsWith('unit:')) { const [, cid, uid] = scope.split(':'); return words.filter(w => w.courseId === cid && w.unitId === uid); }
+  if (scope.startsWith('lesson:')) { const [, cid, lid] = scope.split(':'); return words.filter(w => w.courseId === cid && w.lessonId === lid); }
+  return words;
+}
 
-  const totalWords = structure.reduce((sum, u) => sum + u.lessons.reduce((s, l) => s + l.count, 0), 0);
+function AddToCollectionMenu({ word, store }) {
+  const [creating, setCreating] = useState(false);
+  const [name, setName] = useState('');
+  return (
+    <React.Fragment>
+      <DropdownMenu label={`Колекції для ${word.en}`} trigger={({ ref, toggle, menuProps }) => (
+        <button ref={ref} type="button" className="iw-speak" onClick={(e) => { e.stopPropagation(); toggle(); }} aria-label={`Додати «${word.en}» до колекції`} data-tip="До колекції" {...menuProps}>
+          <FolderPlus size={16} />
+        </button>
+      )}>
+        {(close) => (
+          <React.Fragment>
+            {store.collections.length === 0 && <div className="iw-menu-empty">Колекцій ще немає</div>}
+            {store.collections.map(c => {
+              const on = c.wordIds.includes(word.wordId);
+              return (
+                <MenuItem key={c.id} icon={on ? CheckCircle : Folder} role="menuitemcheckbox" aria-checked={on}
+                  onSelect={async () => { const added = await store.toggleInCollection(c.id, word.wordId); toast(added ? `Додано в «${c.name}»` : `Прибрано з «${c.name}»`, 'success'); }}>
+                  {c.name}<span className="iw-menu-meta">{c.wordIds.length}</span>
+                </MenuItem>
+              );
+            })}
+            <div className="iw-menu-sep" role="separator" />
+            <MenuItem icon={FolderPlus} onSelect={() => { close(); setName(''); setCreating(true); }}>Нова колекція…</MenuItem>
+          </React.Fragment>
+        )}
+      </DropdownMenu>
+      <Modal open={creating} onClose={() => setCreating(false)} title="Нова колекція"
+        actions={<React.Fragment>
+          <IwButton variant="ghost" onClick={() => setCreating(false)}>Скасувати</IwButton>
+          <IwButton variant="primary" disabled={!name.trim()} onClick={async () => { const c = await store.createCollection(name.trim(), [word.wordId]); setCreating(false); if (c) toast(`Колекцію «${c.name}» створено`, 'success'); }}>Створити</IwButton>
+        </React.Fragment>}>
+        <p className="iw-modal-text">Слово «{word.en}» одразу потрапить у нову колекцію.</p>
+        <input className="iw-text-input" value={name} maxLength={60} onChange={e => setName(e.target.value)} placeholder="Наприклад: Подорожі" aria-label="Назва колекції"
+          onKeyDown={async e => { if (e.key === 'Enter' && name.trim()) { const c = await store.createCollection(name.trim(), [word.wordId]); setCreating(false); if (c) toast(`Колекцію «${c.name}» створено`, 'success'); } }} />
+      </Modal>
+    </React.Fragment>
+  );
+}
+
+function WordCard({ word, store, status, showUk, showOrigin }) {
+  const fav = store.favorites.includes(word.wordId);
+  const st = status ? WORD_STATUS[status] : null;
+  return (
+    <article className="iw-word" style={{ '--accent': ACCENT_MAP[word.accent] || ACCENT_MAP.sage }}>
+      <div className="iw-word-top">
+        <span className="iw-word-emoji" aria-hidden="true">{word.emoji}</span>
+        <span className="iw-word-tools">
+          <SpeakButton text={word.en} />
+          <AddToCollectionMenu word={word} store={store} />
+          <FavButton on={fav} onClick={() => store.toggleFavorite(word.wordId)} />
+        </span>
+      </div>
+      <h4 className="iw-word-en">{word.en}</h4>
+      {showUk ? <div className="iw-word-uk">{word.uk}</div> : <Spoiler label="Переклад"><strong>{word.uk}</strong></Spoiler>}
+      {word.explain && <p className="iw-word-explain">{word.explain}</p>}
+      <div className="iw-word-foot">
+        {showOrigin && <span className="iw-word-origin">Unit {word.unitNumber} · L{word.lessonNumber} {word.lessonTitle}</span>}
+        {st && <Badge tone={st.tone}>{st.label}</Badge>}
+      </div>
+    </article>
+  );
+}
+
+const WORD_FILTERS = [
+  { id: 'all', label: 'Усі' }, { id: 'due', label: 'На повторення' }, { id: 'new', label: 'Нові' },
+  { id: 'strong', label: 'Довготривала пам’ять' }, { id: 'fav', label: 'Обране' },
+];
+
+function VocabWordsTab({ words, progress, store, query, isTeacher, focusCourseId, focusLessonId, setRoute }) {
+  const [filter, setFilter] = useState('all');
+  const [showUk, setShowUk] = useState(true);
+  const [openUnits, setOpenUnits] = useState(() => {
+    if (focusLessonId) { const w = words.find(x => x.lessonId === focusLessonId && x.courseId === focusCourseId); return new Set(w ? [`${w.courseId}:${w.unitId}`] : []); }
+    return new Set();
+  });
+  const [openLesson, setOpenLesson] = useState(focusCourseId && focusLessonId ? `${focusCourseId}:${focusLessonId}` : null);
+  const now = new Date();
+  const statusOf = (w) => isTeacher ? null : wordStatus(progress.get(w.wordId), now);
+  const q = query.trim().toLowerCase();
+
+  useEffect(() => {
+    if (!focusLessonId) return;
+    const el = document.getElementById(`vl-${focusCourseId}:${focusLessonId}`);
+    if (el) setTimeout(() => window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' }), 120);
+  }, []);
+
+  const flat = q || filter !== 'all';
+  const shown = flat ? words.filter(w => {
+    if (q && ![w.en, w.uk, w.explain, w.lessonTitle, w.lessonTitleUk, w.unitTitle, w.courseTitle, `l${w.lessonNumber}`, `unit ${w.unitNumber}`].some(f => (f || '').toLowerCase().includes(q))) return false;
+    if (filter === 'fav') return store.favorites.includes(w.wordId);
+    if (filter !== 'all') return statusOf(w) === filter;
+    return true;
+  }) : [];
+
+  const tree = useMemo(() => {
+    const courses = [];
+    COURSES.forEach(c => {
+      if (focusCourseId && c.id !== focusCourseId) return;
+      const units = c.units.map(u => {
+        const lessons = u.lessons.map(l => ({ lesson: l, words: words.filter(w => w.courseId === c.id && w.lessonId === l.id) })).filter(x => x.words.length);
+        return { unit: u, lessons, count: lessons.reduce((a, x) => a + x.words.length, 0) };
+      }).filter(u => u.count);
+      if (units.length) courses.push({ course: c, units, count: units.reduce((a, u) => a + u.count, 0) });
+    });
+    return courses;
+  }, [words, focusCourseId]);
+
+  if (words.length === 0) {
+    return <EmptyState art="books" title="Слів поки немає" text={isTeacher ? 'У курсах немає слів у розділі vocabPresentation.' : 'Слова з’являться, коли вчитель позначить твій перший урок як завершений.'} />;
+  }
 
   return (
-    <main className="page">
-      <Crumbs items={[
-        { label: 'Library', onClick: goHome },
-        { label: 'Vocabulary Bank', onClick: () => setRoute({ page: 'vocabulary' }) },
-        { label: course.title, current: true }
-      ]} />
-      <header className="page-header">
-        <div className="page-eyebrow"><span className="dot" /> {course.title}</div>
-        <h1 className="page-title">Словник курсу</h1>
-        <p style={{ fontSize: 15, color: 'var(--ink-2)', lineHeight: 1.6, marginTop: 14 }}>
-          {totalWords} {totalWords === 1 ? 'слово доступне' : totalWords < 5 ? 'слова доступних' : 'слів доступних'} у {structure.length} {structure.length === 1 ? 'юніті' : 'юнітах'}. Обери урок, щоб переглянути його лексику.
-        </p>
-      </header>
+    <div className="iw-vb-words">
+      <div className="iw-vb-toolbar">
+        {!isTeacher && (
+          <div className="iw-chips" role="group" aria-label="Фільтр слів">
+            {WORD_FILTERS.map(f => {
+              const n = f.id === 'all' ? words.length : f.id === 'fav' ? words.filter(w => store.favorites.includes(w.wordId)).length : words.filter(w => statusOf(w) === f.id).length;
+              return <button key={f.id} type="button" className="iw-chip" aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}>{f.id === 'fav' && <Star size={13} filled={filter === 'fav'} />}{f.label}<span className="iw-chip-count">{n}</span></button>;
+            })}
+          </div>
+        )}
+        <button type="button" className="iw-chip" aria-pressed={!showUk} onClick={() => setShowUk(v => !v)}><EyeOff size={14} aria-hidden="true" /> Сховати переклад</button>
+      </div>
 
-      {totalWords > 0 && !isTeacher && (
-        <div style={{ marginBottom: 28 }}>
-          <button
-            className="fc-cta-btn"
-            onClick={() => setRoute({ page: 'flashcards', mode: 'course', courseId })}
-          >
-            🎴 Тренуватися всім курсом ({totalWords} {totalWords === 1 ? 'слово' : totalWords < 5 ? 'слова' : 'слів'})
-          </button>
+      {flat ? (
+        shown.length === 0
+          ? <EmptyState art="books" title="Нічого не знайдено" text={q ? 'Спробуй інше слово — англійською чи українською.' : 'У цьому фільтрі поки порожньо.'} />
+          : <React.Fragment>
+              <p className="iw-students-count">{shown.length} {pluralUk(shown.length, 'слово', 'слова', 'слів')}</p>
+              <div className="iw-word-grid">{shown.slice(0, 120).map(w => <WordCard key={w.wordId} word={w} store={store} status={statusOf(w)} showUk={showUk} showOrigin />)}</div>
+              {shown.length > 120 && <p className="iw-help">Показано перші 120 — уточни пошук.</p>}
+            </React.Fragment>
+      ) : tree.map(({ course, units, count }) => (
+        <section key={course.id} className="iw-course-block">
+          <div className="iw-course-block-head">
+            <div><div className="iw-kicker">Курс · {count} {pluralUk(count, 'слово', 'слова', 'слів')}</div><h3 className="iw-course-sum-title">{course.title}</h3></div>
+            {!isTeacher && <IwButton size="sm" variant="secondary" icon={Layers2} onClick={() => setRoute({ page: 'flashcards', mode: 'course', courseId: course.id })}>Флешкартки курсу</IwButton>}
+          </div>
+          <ul className="iw-units">
+            {units.map(({ unit, lessons, count: uc }) => {
+              const k = `${course.id}:${unit.id}`; const isOpen = openUnits.has(k);
+              const reviewed = isTeacher ? 0 : lessons.reduce((a, l) => a + l.words.filter(w => progress.has(w.wordId)).length, 0);
+              return (
+                <li key={unit.id} className={cx('iw-unit', isOpen && 'open')}>
+                  <div className="iw-unit-head as-row">
+                    <button type="button" className="iw-unit-toggle" aria-expanded={isOpen} onClick={() => setOpenUnits(s => { const n = new Set(s); n.has(k) ? n.delete(k) : n.add(k); return n; })}>
+                      <span className="iw-unit-num">{unit.number}</span>
+                      <span className="iw-unit-titles">
+                        <span className="iw-unit-title">{unit.title}</span>
+                        <span className="iw-unit-sub">{lessons.length} {pluralUk(lessons.length, 'урок', 'уроки', 'уроків')} · {uc} {pluralUk(uc, 'слово', 'слова', 'слів')}{!isTeacher && ` · повторено ${reviewed}`}</span>
+                      </span>
+                      {!isTeacher && <span className="iw-unit-bar"><ProgressBar value={reviewed} max={uc} size="sm" tone="sage" label={`Повторено в юніті ${unit.number}`} valueLabel={`${reviewed}/${uc}`} /></span>}
+                      <ChevronDown size={18} className="iw-unit-chev" aria-hidden="true" />
+                    </button>
+                    {!isTeacher && <IwButton size="sm" variant="ghost" icon={Layers2} onClick={() => setRoute({ page: 'flashcards', mode: 'unit', courseId: course.id, unitId: unit.id })}>Тренувати</IwButton>}
+                  </div>
+                  {isOpen && (
+                    <ul className="iw-vlessons">
+                      {lessons.map(({ lesson, words: lw }) => {
+                        const lk = `${course.id}:${lesson.id}`; const lOpen = openLesson === lk;
+                        return (
+                          <li key={lesson.id} id={`vl-${lk}`} className={cx('iw-vlesson', lOpen && 'open')}>
+                            <button type="button" className="iw-vlesson-head" aria-expanded={lOpen} onClick={() => setOpenLesson(lOpen ? null : lk)}>
+                              <span className="iw-lrow-num">L{lesson.number}</span>
+                              <span className="iw-lrow-titles"><span className="iw-lrow-title">{lesson.title}</span>{lesson.titleUk && <span className="iw-lrow-sub">{lesson.titleUk}</span>}</span>
+                              <span className="iw-vlesson-count">{lw.length} {pluralUk(lw.length, 'слово', 'слова', 'слів')}</span>
+                              <ChevronDown size={16} className="iw-unit-chev" aria-hidden="true" />
+                            </button>
+                            {lOpen && (
+                              <div className="iw-vlesson-body">
+                                {!isTeacher && <div className="iw-vlesson-actions"><IwButton size="sm" variant="primary" icon={Layers2} onClick={() => setRoute({ page: 'flashcards', mode: 'lesson', courseId: course.id, lessonId: lesson.id })}>Флешкартки уроку ({lw.length})</IwButton></div>}
+                                <div className="iw-word-grid">{lw.map(w => <WordCard key={w.wordId} word={w} store={store} status={statusOf(w)} showUk={showUk} />)}</div>
+                              </div>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+function VocabCardsTab({ words, progress, store, isTeacher, setRoute, stats }) {
+  const [size, setSize] = useState(20);
+  if (isTeacher) {
+    return <EmptyState art="books" title="Флешкартки — для учнів" text="Флешкартки зберігають прогрес повторення в акаунті учня, тому вони доступні лише учням. Переглянути слова можна у вкладці «Слова»." />;
+  }
+  const favWords = words.filter(w => store.favorites.includes(w.wordId));
+  const todayCount = Math.min(size, stats.due + stats.fresh);
+  return (
+    <div className="iw-vcards">
+      <div className="iw-card iw-vcards-main">
+        <div className="iw-vcards-main-art" aria-hidden="true"><Illustration name="vocab" /></div>
+        <div>
+          <div className="iw-kicker">Розумне повторення</div>
+          <h3 className="iw-course-sum-title">На сьогодні: {stats.due} на повторення · {stats.fresh} нових</h3>
+          <p className="iw-modal-text">Картки повертаються саме тоді, коли слово починає забуватися: «Не знаю» — завтра, «Легко» — через кілька днів чи тижнів.</p>
+          <div className="iw-vcards-size">
+            <span>Карток за сесію:</span>
+            <div className="iw-chips" role="group" aria-label="Кількість карток">
+              {[5, 10, 20].map(n => <button key={n} type="button" className="iw-chip" aria-pressed={size === n} onClick={() => setSize(n)}>{n}</button>)}
+            </div>
+          </div>
+          <IwButton variant="primary" size="lg" icon={Play} disabled={todayCount === 0} onClick={() => setRoute({ page: 'flashcards', mode: 'due', limit: size })}>
+            {todayCount ? `Почати · ${todayCount} ${pluralUk(todayCount, 'картка', 'картки', 'карток')}` : 'На сьогодні все повторено'}
+          </IwButton>
+        </div>
+      </div>
+      <h3 className="iw-home-h" style={{ marginTop: 26 }}>Інші набори</h3>
+      <div className="iw-vsets">
+        <button type="button" className="iw-vset" disabled={!favWords.length} onClick={() => setRoute({ page: 'flashcards', mode: 'favorites', wordIds: store.favorites })}>
+          <Star size={18} filled /><span><strong>Обране</strong><small>{favWords.length} {pluralUk(favWords.length, 'слово', 'слова', 'слів')}</small></span>
+        </button>
+        {store.collections.map(c => {
+          const n = words.filter(w => c.wordIds.includes(w.wordId)).length;
+          return (
+            <button key={c.id} type="button" className="iw-vset" disabled={!n} onClick={() => setRoute({ page: 'flashcards', mode: 'collection', collectionId: c.id, wordIds: c.wordIds })}>
+              <Folder size={18} /><span><strong>{c.name}</strong><small>{n} {pluralUk(n, 'слово', 'слова', 'слів')}</small></span>
+            </button>
+          );
+        })}
+      </div>
+      <p className="iw-help">Флешкартки окремого уроку чи юніту — у вкладці «Слова».</p>
+    </div>
+  );
+}
+
+function scopeOptions(words, store) {
+  const opts = [{ id: 'all', label: `Усі мої слова (${words.length})` }];
+  const fav = words.filter(w => store.favorites.includes(w.wordId)).length;
+  if (fav >= 4) opts.push({ id: 'favorites', label: `Обране (${fav})` });
+  store.collections.forEach(c => { const n = words.filter(w => c.wordIds.includes(w.wordId)).length; if (n >= 4) opts.push({ id: `col:${c.id}`, label: `Колекція «${c.name}» (${n})` }); });
+  COURSES.forEach(c => c.units.forEach(u => { const n = words.filter(w => w.courseId === c.id && w.unitId === u.id).length; if (n >= 4) opts.push({ id: `unit:${c.id}:${u.id}`, label: `Unit ${u.number}: ${u.title} (${n})` }); }));
+  return opts;
+}
+
+function VocabPracticeTab({ words, store, cfg, setCfg, start }) {
+  const { scope, type, run, daily } = cfg;
+  const [idx, setIdx] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [typed, setTyped] = useState('');
+  const [answers, setAnswers] = useState([]);
+  const [match, setMatch] = useState({ left: null, done: [], wrong: null });
+  useEffect(() => { setIdx(0); setPicked(null); setTyped(''); setAnswers([]); setMatch({ left: null, done: [], wrong: null }); }, [run]);
+  const q = run && run[idx];
+  useEffect(() => { if (q && q.type === 'listen') setTimeout(() => speakWord(q.listen), 250); }, [q]);
+
+  if (words.length < 4) return <EmptyState art="books" title="Для практики потрібно хоча б 4 слова" text="Слова з’являться після завершення уроків." />;
+
+  if (!run) {
+    const opts = scopeOptions(words, store);
+    const pool = resolveScope(scope, words, store);
+    return (
+      <div className="iw-gpractice-setup">
+        <div className="iw-card">
+          <h3 className="iw-card-title">Які слова тренуємо?</h3>
+          <label className="iw-select iw-gpractice-tense">
+            <span className="sr-only">Набір слів</span>
+            <select value={scope} onChange={e => setCfg(c => ({ ...c, scope: e.target.value }))}>
+              {opts.map(o => <option key={o.id} value={o.id}>{o.label}</option>)}
+            </select>
+            <ChevronDown size={15} aria-hidden="true" />
+          </label>
+          <h3 className="iw-card-title" style={{ marginTop: 22 }}>Тип вправи</h3>
+          <div className="iw-chips" role="group" aria-label="Тип вправи">
+            {VOCAB_PRACTICE_TYPES.filter(t => t.id !== 'listen' || canSpeak()).map(t => <button key={t.id} type="button" className="iw-chip" aria-pressed={type === t.id} onClick={() => setCfg(c => ({ ...c, type: t.id }))}>{t.label}</button>)}
+          </div>
+          <div className="iw-gpractice-go">
+            <IwButton variant="primary" size="lg" icon={Play} disabled={pool.length < 4} onClick={() => start({ scope, type, daily: false })}>Почати · {type === 'match' ? '2 раунди пар' : '10 завдань'}</IwButton>
+          </div>
+        </div>
+        <div className="iw-card iw-card-soft iw-gpractice-about">
+          <div className="iw-gpractice-art"><Illustration name="trophy" /></div>
+          <p>Практика не змінює розклад флешкарток — це окреме тренування. Слова беруться лише з уже доступних тобі уроків.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (run.length === 0) return <EmptyState art="books" title="Не вдалося скласти завдання" text="Для цього типу потрібно більше слів. Обери інший набір." action={<IwButton size="sm" onClick={() => setCfg(c => ({ ...c, run: null }))}>Назад</IwButton>} />;
+
+  const total = run.reduce((a, r) => a + (r.type === 'match' ? r.pairs.length : 1), 0);
+  const finish = (all) => {
+    const ok = all.filter(a => a.correct).length;
+    store.logActivity(daily ? 'daily' : 'practice', daily ? 'daily' : type, ok, all.length);
+  };
+
+  if (idx >= run.length) {
+    const ok = answers.filter(a => a.correct).length;
+    const pct = Math.round((ok / Math.max(answers.length, 1)) * 100);
+    const wrong = answers.filter(a => !a.correct && a.word);
+    return (
+      <div className="iw-gresult">
+        <div className={cx('iw-card iw-gresult-head', daily && 'iw-daily-result')}>
+          {pct >= 80 && <div className="iw-gresult-art"><Illustration name="trophy" /></div>}
+          <ProgressRing value={ok} max={answers.length} size={110} stroke={9} tone={pct >= 80 ? 'sage' : pct >= 50 ? 'mustard' : 'terracotta'} label="Результат">{ok}/{answers.length}</ProgressRing>
+          <div>
+            <h3 className="iw-gresult-title">{daily ? (pct >= 80 ? 'Челендж виконано на відмінно!' : 'Челендж виконано!') : pct >= 80 ? 'Чудова робота!' : pct >= 50 ? 'Непогано — ще трохи практики!' : 'Варто повторити ці слова'}</h3>
+            <p className="iw-modal-text">{daily ? 'Повертайся завтра по новий челендж.' : `${pct}% правильних відповідей`}</p>
+            <div className="iw-gresult-actions">
+              {!daily && <IwButton variant="primary" icon={RefreshCw} onClick={() => start({ scope, type, daily: false })}>Ще раз</IwButton>}
+              <IwButton variant="secondary" onClick={() => setCfg(c => ({ ...c, run: null, daily: false }))}>{daily ? 'До практики' : 'Інші налаштування'}</IwButton>
+            </div>
+          </div>
+        </div>
+        {wrong.length > 0 && (
+          <section className="iw-card">
+            <h3 className="iw-card-title">Слова, які варто повторити</h3>
+            <div className="iw-word-grid">{Array.from(new Map(wrong.map(a => [a.word.wordId, a.word])).values()).map(w => <WordCard key={w.wordId} word={w} store={store} showUk />)}</div>
+          </section>
+        )}
+      </div>
+    );
+  }
+
+  const record = (entries) => {
+    const next = [...answers, ...entries];
+    setAnswers(next);
+    if (idx + 1 >= run.length) finish(next);
+    return next;
+  };
+  const nextQ = () => { setIdx(i => i + 1); setPicked(null); setTyped(''); setMatch({ left: null, done: [], wrong: null }); };
+  const header = (
+    <React.Fragment>
+      <div className="iw-gq-top">
+        <span className="iw-kicker">{daily ? 'Щоденний челендж' : (VOCAB_PRACTICE_TYPES.find(t => t.id === (q.type === 'match' ? 'match' : q.type)) || {}).label}</span>
+        <span className="iw-gq-count">{idx + 1} / {run.length}</span>
+        <IwButton size="sm" variant="ghost" onClick={() => setCfg(c => ({ ...c, run: null, daily: false }))}>Завершити</IwButton>
+      </div>
+      <ProgressBar value={idx + (picked != null ? 1 : 0)} max={run.length} size="sm" tone={daily ? 'gold-fill' : 'lavender-fill'} label="Прогрес" />
+    </React.Fragment>
+  );
+
+  if (q.type === 'match') {
+    const doneIds = match.done;
+    const allDone = doneIds.length === q.pairs.length;
+    const clickRight = (w) => {
+      if (!match.left || doneIds.includes(w.wordId)) return;
+      if (match.left === w.wordId) {
+        const done = [...doneIds, w.wordId];
+        setMatch({ left: null, done, wrong: null });
+        if (done.length === q.pairs.length) {
+          setPicked('done');
+          record(q.pairs.map(p => ({ word: p, correct: !(match.misses || []).includes(p.wordId) })));
+        }
+      } else {
+        setMatch(m => ({ ...m, wrong: w.wordId, misses: Array.from(new Set([...(m.misses || []), m.left])) }));
+        setTimeout(() => setMatch(m => ({ ...m, wrong: null })), 500);
+      }
+    };
+    return (
+      <div className="iw-gq">
+        {header}
+        <div className="iw-card iw-gq-card" key={idx}>
+          <h3 className="iw-gq-prompt">З’єднай слово з перекладом</h3>
+          <div className="iw-vmatch">
+            <div className="iw-vmatch-col" role="group" aria-label="Англійські слова">
+              {q.pairs.map(w => (
+                <button key={w.wordId} type="button" className={cx('iw-vmatch-item', match.left === w.wordId && 'sel', doneIds.includes(w.wordId) && 'ok')}
+                  disabled={doneIds.includes(w.wordId)} aria-pressed={match.left === w.wordId} onClick={() => setMatch(m => ({ ...m, left: w.wordId }))}>
+                  <span aria-hidden="true">{w.emoji}</span> {w.en}
+                </button>
+              ))}
+            </div>
+            <div className="iw-vmatch-col" role="group" aria-label="Переклади">
+              {q.right.map(w => (
+                <button key={w.wordId} type="button" className={cx('iw-vmatch-item', doneIds.includes(w.wordId) && 'ok', match.wrong === w.wordId && 'bad')}
+                  disabled={doneIds.includes(w.wordId) || !match.left} onClick={() => clickRight(w)}>{w.uk}</button>
+              ))}
+            </div>
+          </div>
+          {allDone && (
+            <div className="iw-gq-feedback right" role="status">
+              <strong>Усі пари знайдено!</strong>
+              <p>{(match.misses || []).length ? `Помилок: ${(match.misses || []).length}. Ці слова варто повторити.` : 'Без жодної помилки.'}</p>
+              <IwButton variant="primary" iconRight={ArrowRight} onClick={nextQ} autoFocus>{idx + 1 === run.length ? 'Результат' : 'Далі'}</IwButton>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  const answered = picked != null;
+  const isTyped = q.type === 'type';
+  const correct = answered && (isTyped ? normAnswer(picked) === normAnswer(q.answer) : picked === q.answer);
+  const submit = (val) => { if (answered) return; setPicked(val); record([{ word: q.word, correct: isTyped ? normAnswer(val) === normAnswer(q.answer) : val === q.answer }]); };
+  const onKey = (e) => {
+    if (!isTyped && !answered && /^[1-4]$/.test(e.key) && q.options[+e.key - 1]) submit(q.options[+e.key - 1].id);
+    if (answered && e.key === 'Enter') { e.preventDefault(); nextQ(); }
+  };
+  return (
+    <div className="iw-gq" onKeyDown={onKey}>
+      {header}
+      <div className="iw-card iw-gq-card" key={idx}>
+        <h3 className="iw-gq-prompt">{q.prompt}</h3>
+        {q.big && <div className="iw-vq-big"><span aria-hidden="true">{q.emoji}</span> {q.big}{q.type === 'en2uk' && <SpeakButton text={q.big} size={18} />}</div>}
+        {q.context && <blockquote className="iw-gq-sentence">{q.context}</blockquote>}
+        {q.listen && <div className="iw-vq-listen"><IwButton variant="secondary" size="lg" icon={Volume} onClick={() => speakWord(q.listen)}>Послухати ще раз</IwButton></div>}
+        {!isTyped && (
+          <div className="iw-gq-options" role="group" aria-label="Варіанти відповіді">
+            {q.options.map((o, i) => {
+              const st = !answered ? '' : o.id === q.answer ? 'right' : o.id === picked ? 'wrong' : 'dim';
+              return (
+                <button key={o.id} type="button" className={cx('iw-gq-opt', st)} onClick={() => submit(o.id)} disabled={answered} autoFocus={i === 0 && !answered && q.type !== 'listen'}>
+                  <span className="iw-gq-key" aria-hidden="true">{i + 1}</span>{o.label}
+                  {st === 'right' && <CheckCircle size={17} className="iw-gq-mark" aria-label="правильно" />}
+                  {st === 'wrong' && <X size={17} className="iw-gq-mark" aria-label="неправильно" />}
+                </button>
+              );
+            })}
+          </div>
+        )}
+        {isTyped && (
+          <form className="iw-vtype" onSubmit={e => { e.preventDefault(); if (typed.trim()) submit(typed); }}>
+            <input className={cx('iw-text-input', answered && (correct ? 'right' : 'wrong'))} value={answered ? picked : typed} onChange={e => setTyped(e.target.value)} disabled={answered}
+              autoFocus autoComplete="off" autoCapitalize="off" spellCheck={false} placeholder="Твоя відповідь англійською" aria-label="Відповідь англійською" />
+            {!answered && <IwButton type="submit" variant="primary" disabled={!typed.trim()}>Перевірити</IwButton>}
+          </form>
+        )}
+        {answered && (
+          <div className={cx('iw-gq-feedback', correct ? 'right' : 'wrong')} role="status">
+            <strong>{correct ? 'Правильно!' : 'Не зовсім.'}</strong>
+            <div className="iw-vq-answer"><span aria-hidden="true">{q.word.emoji}</span> <b>{q.word.en}</b> — {q.word.uk} <SpeakButton text={q.word.en} /></div>
+            {q.word.explain && <p>{q.word.explain}</p>}
+            <IwButton variant="primary" iconRight={ArrowRight} onClick={nextQ} autoFocus={!isTyped || answered}>{idx + 1 === run.length ? 'Результат' : 'Далі'}</IwButton>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function VocabCollectionsTab({ words, store, setRoute, start, isTeacher }) {
+  const [openId, setOpenId] = useState(null);
+  const [creating, setCreating] = useState(false);
+  const [renaming, setRenaming] = useState(null);
+  const [name, setName] = useState('');
+  const [toDelete, setToDelete] = useState(null);
+  const favWords = words.filter(w => store.favorites.includes(w.wordId));
+  const sets = [{ id: 'favorites', name: 'Обране', fav: true, wordIds: store.favorites }, ...store.collections];
+  const open = sets.find(s => s.id === openId);
+  const openWords = open ? words.filter(w => open.wordIds.includes(w.wordId)) : [];
+
+  return (
+    <div className="iw-vcols">
+      {store.mode === 'local' && (
+        <div className="iw-gprog-note"><Lock size={14} aria-hidden="true" />
+          {isTeacher
+            ? <span>Колекції, обране й челенджі зараз зберігаються лише в цьому браузері. Щоб вони зберігались в акаунтах, запусти SQL з <code>supabase/vocab_extras.sql</code>.
+                <button type="button" className="iw-link" onClick={() => { try { navigator.clipboard.writeText(VOCAB_EXTRAS_SQL).then(() => toast('SQL скопійовано', 'success')); } catch (e) {} }}> Скопіювати SQL</button></span>
+            : <span>Колекції збережено на цьому пристрої.</span>}
         </div>
       )}
-
-      {structure.length === 0 ? (
-        <div className="empty-inline">
-          <div className="empty-inline-title">Ще немає слів</div>
-          <div>Заверши перший урок цього курсу, щоб слова з’явилися тут.</div>
-        </div>
-      ) : (
-        structure.map(unit => {
-          const unitWordCount = unit.lessons.reduce((s, l) => s + l.count, 0);
+      <div className="iw-vcols-head">
+        <p className="iw-help" style={{ margin: 0 }}>Збирай слова за темами: натисни <FolderPlus size={14} /> на будь-якому слові, щоб додати його в колекцію, або ☆ — в обране.</p>
+        <IwButton variant="primary" icon={FolderPlus} onClick={() => { setName(''); setCreating(true); }}>Нова колекція</IwButton>
+      </div>
+      <div className="iw-vsets">
+        {sets.map(s => {
+          const n = words.filter(w => s.wordIds.includes(w.wordId)).length;
           return (
-          <div key={unit.unitId} className="vocab-unit-block">
-            <div className="vocab-unit-head">
-              <div className="vocab-unit-num">{unit.unitNumber}</div>
-              <div style={{ flex: 1 }}>
-                <div className="vocab-unit-eyebrow">Unit {unit.unitNumber}</div>
-                <h3 className="vocab-unit-title">{unit.unitTitle}</h3>
-              </div>
-              {!isTeacher && unitWordCount > 0 && (
-                <button
-                  className="fc-cta-btn fc-cta-btn-sm"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setRoute({ page: 'flashcards', mode: 'unit', courseId, unitId: unit.unitId });
-                  }}
-                  title={`Тренувати всі ${unitWordCount} слів цього юніта`}
-                >
-                  🎴 Тренуватися юнітом ({unitWordCount})
-                </button>
-              )}
+            <button key={s.id} type="button" className={cx('iw-vset', openId === s.id && 'on')} aria-pressed={openId === s.id} onClick={() => setOpenId(openId === s.id ? null : s.id)}>
+              {s.fav ? <Star size={18} filled /> : <Folder size={18} />}
+              <span><strong>{s.name}</strong><small>{n} {pluralUk(n, 'слово', 'слова', 'слів')}</small></span>
+            </button>
+          );
+        })}
+      </div>
+      {open && (
+        <section className="iw-card iw-vcol-open">
+          <div className="iw-card-head">
+            <h3 className="iw-card-title">{open.name}</h3>
+            <div className="iw-vcol-actions">
+              {!isTeacher && <IwButton size="sm" variant="secondary" icon={Layers2} disabled={!openWords.length} onClick={() => setRoute(open.fav ? { page: 'flashcards', mode: 'favorites', wordIds: store.favorites } : { page: 'flashcards', mode: 'collection', collectionId: open.id, wordIds: open.wordIds })}>Флешкартки</IwButton>}
+              <IwButton size="sm" variant="secondary" icon={Target} disabled={openWords.length < 4} onClick={() => start({ scope: open.fav ? 'favorites' : `col:${open.id}`, type: 'mix', daily: false })}>Практика</IwButton>
+              {!open.fav && <IwButton size="sm" variant="ghost" icon={Pencil} onClick={() => { setName(open.name); setRenaming(open); }}>Перейменувати</IwButton>}
+              {!open.fav && <IwButton size="sm" variant="ghost" icon={Trash2} onClick={() => setToDelete(open)} aria-label="Видалити колекцію" />}
             </div>
-            <ul className="vocab-lesson-list">
-              {unit.lessons.map(lesson => (
-                <li
-                  key={lesson.lessonId}
-                  className="vocab-lesson-row"
-                  onClick={() => setRoute({ page: 'vocab-lesson', courseId, lessonId: lesson.lessonId })}
-                >
-                  <div className="vocab-lesson-num">L{lesson.lessonNumber}</div>
-                  <div className="vocab-lesson-body">
-                    <div className="vocab-lesson-title">{lesson.lessonTitle}</div>
-                    <div className="vocab-lesson-titleuk">{lesson.lessonTitleUk}</div>
-                  </div>
-                  <div className="vocab-lesson-count">
-                    <strong>{lesson.count}</strong> {lesson.count === 1 ? 'слово' : lesson.count < 5 ? 'слова' : 'слів'}
-                  </div>
-                  <ChevronRight size={16} className="vocab-lesson-chevron" />
+          </div>
+          {openWords.length === 0 ? <p className="iw-scard-muted">Тут поки порожньо. Додавай слова з вкладки «Слова».</p> : (
+            <ul className="iw-vcol-list">
+              {openWords.map(w => (
+                <li key={w.wordId}>
+                  <span aria-hidden="true">{w.emoji}</span><strong>{w.en}</strong><span className="iw-vcol-uk">{w.uk}</span>
+                  <SpeakButton text={w.en} />
+                  <button type="button" className="iw-speak" aria-label={`Прибрати «${w.en}»`} data-tip="Прибрати"
+                    onClick={() => open.fav ? store.toggleFavorite(w.wordId) : store.toggleInCollection(open.id, w.wordId)}><X size={15} /></button>
                 </li>
               ))}
             </ul>
-          </div>
-          );
-        })
+          )}
+        </section>
       )}
-    </main>
+      <Modal open={creating || !!renaming} onClose={() => { setCreating(false); setRenaming(null); }} title={renaming ? 'Перейменувати колекцію' : 'Нова колекція'}
+        actions={<React.Fragment>
+          <IwButton variant="ghost" onClick={() => { setCreating(false); setRenaming(null); }}>Скасувати</IwButton>
+          <IwButton variant="primary" disabled={!name.trim()} onClick={async () => {
+            if (renaming) { await store.updateCollection(renaming.id, { name: name.trim() }); setRenaming(null); }
+            else { const c = await store.createCollection(name.trim()); setCreating(false); if (c) setOpenId(c.id); }
+          }}>{renaming ? 'Зберегти' : 'Створити'}</IwButton>
+        </React.Fragment>}>
+        <input className="iw-text-input" value={name} maxLength={60} autoFocus onChange={e => setName(e.target.value)} placeholder="Наприклад: Подорожі" aria-label="Назва колекції" />
+      </Modal>
+      <ConfirmDialog open={!!toDelete} danger title="Видалити колекцію?" text={toDelete ? `Колекцію «${toDelete.name}» буде видалено. Самі слова залишаться у Vocabulary Bank.` : ''}
+        confirmLabel="Видалити" onCancel={() => setToDelete(null)} onConfirm={async () => { await store.deleteCollection(toDelete.id); setToDelete(null); setOpenId(null); toast('Колекцію видалено'); }} />
+    </div>
   );
 }
 
-// Сторінка уроку у Vocab Bank — самі слова
-function VocabLessonPage({ courseId, lessonId, goHome, setRoute, canSeeVocabWord, isTeacher }) {
-  const course = COURSES.find(c => c.id === courseId);
-  const allItems = useMemo(() => getAllVocabItems(), []);
-  const [query, setQuery] = useState('');
-
-  if (!course) return <main className="page"><p>Курс не знайдено.</p></main>;
-
-  const found = findLesson(courseId, lessonId);
-  if (!found) return <main className="page"><p>Урок не знайдено.</p></main>;
-  const { unit, lesson } = found;
-
-  const words = allItems.filter(item => item.courseId === courseId && item.lessonId === lessonId && canSeeVocabWord(item));
-
-  const q = query.toLowerCase().trim();
-  const filtered = q
-    ? words.filter(w => (w.en || '').toLowerCase().includes(q) || (w.uk || '').toLowerCase().includes(q))
-    : words;
-
-  return (
-    <main className="page">
-      <Crumbs items={[
-        { label: 'Library', onClick: goHome },
-        { label: 'Vocabulary Bank', onClick: () => setRoute({ page: 'vocabulary' }) },
-        { label: course.title, onClick: () => setRoute({ page: 'vocab-course', courseId }) },
-        { label: `Lesson ${lesson.number}`, current: true }
-      ]} />
-      <header className="page-header">
-        <div className="page-eyebrow"><span className="dot" /> Unit {unit.number} · Lesson {lesson.number}</div>
-        <h1 className="page-title">{lesson.title}</h1>
-        <p style={{ fontSize: 15, color: 'var(--ink-2)', lineHeight: 1.6, marginTop: 14 }}>
-          {words.length} {words.length === 1 ? 'слово' : words.length < 5 ? 'слова' : 'слів'} у цьому уроці. Відкрий український переклад натисканням на «Українською», щоб перевірити себе.
-        </p>
-      </header>
-
-      {words.length > 0 && !isTeacher && (
-        <div style={{ marginBottom: 24 }}>
-          <button
-            className="fc-cta-btn"
-            onClick={() => setRoute({ page: 'flashcards', mode: 'lesson', courseId, lessonId })}
-          >
-            🎴 Тренуватися флешкартками ({words.length})
-          </button>
-        </div>
-      )}
-
-      {words.length > 5 && (
-        <div style={{ marginBottom: 24 }}>
-          <input
-            type="text"
-            className="students-search"
-            style={{ width: '100%' }}
-            placeholder="Пошук по словах (en або uk)..."
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-          />
-        </div>
-      )}
-
-      {filtered.length === 0 ? (
-        <div className="empty-inline">
-          <div className="empty-inline-title">Нічого не знайдено</div>
-          <div>Спробуй інше слово в пошуку</div>
-        </div>
-      ) : (
-        <div className="vocab-presentation">
-          {filtered.map(word => (
-            <div key={word.wordId} className="vocab-pres-card" style={{ '--accent': ACCENT_MAP[word.accent] || ACCENT_MAP.sage }}>
-              <div className="vocab-pres-emoji">{word.emoji}</div>
-              <div className="vocab-pres-word">{word.en}</div>
-              <div className="vocab-pres-explain">{word.explain}</div>
-              <Spoiler label="Переклад"><strong>{word.uk}</strong></Spoiler>
-            </div>
-          ))}
-        </div>
-      )}
-    </main>
-  );
+// Старі маршрути vocab-course / vocab-lesson ведуть у новий банк
+function VocabCoursePage({ courseId, goHome, setRoute, canSeeVocabWord, isTeacher, session }) {
+  return <VocabularyBank goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} focusCourseId={courseId} />;
 }
+function VocabLessonPage({ courseId, lessonId, goHome, setRoute, canSeeVocabWord, isTeacher, session }) {
+  return <VocabularyBank goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} focusCourseId={courseId} focusLessonId={lessonId} />;
+}
+
 
 function Footer({ setRoute, isTeacher }) {
   const go = (r) => { if (setRoute) setRoute(r); };
