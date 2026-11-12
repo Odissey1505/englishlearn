@@ -11,6 +11,7 @@ window.INKWELL = window.INKWELL || { courses: [] };
 
 window.INKWELL.COURSE_FILES = [
   'courses/intermediate-10-12.js',
+  'courses/tense-instinct.js',          // інтерактивний курс (код — у courses/tense-instinct/)
   // 'courses/beginner-7-9.js',
   // 'courses/advanced-teens.js',
 ];

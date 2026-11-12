@@ -200,6 +200,34 @@ body { font-family: var(--font-body); color: var(--ink); background: var(--paper
 .course-card-stats { display: flex; align-items: center; gap: 16px; padding-top: 14px; border-top: 1px dashed var(--line); position: relative; z-index: 1; font-size: 12px; color: var(--ink-3); }
 .course-card-stats strong { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--ink); margin-right: 4px; }
 .course-card-stat-divider { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-3); opacity: 0.4; }
+/* ── Tense Instinct: преміальна обкладинка (Midnight Academy). Лише для .course-card-midnight ── */
+.course-card.course-card-midnight { --accent: #A78BFA; --accent-deep: #C4B5FD; background: linear-gradient(150deg, #0B1020 0%, #111A30 55%, #161B3D 100%); border-color: rgba(167, 139, 250, 0.28); color: #F3F5FF; box-shadow: 0 10px 30px rgba(11, 16, 32, 0.35); }
+.course-card-midnight::before { background: linear-gradient(90deg, #A78BFA, #38BDF8, #2DD4BF); }
+.course-card-midnight::after { display: none; }
+.course-card-midnight:hover { border-color: rgba(56, 189, 248, 0.55); box-shadow: 0 18px 44px rgba(56, 120, 248, 0.22); }
+.course-card-midnight:focus-visible { outline: 2px solid #38BDF8; outline-offset: 3px; }
+.course-card-midnight .cm-glow { position: absolute; inset: -30% -20% auto auto; width: 75%; height: 120%; background: radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.45), transparent 60%), radial-gradient(circle at 30% 80%, rgba(45, 212, 191, 0.18), transparent 55%); filter: blur(10px); animation: cmDrift 14s ease-in-out infinite alternate; pointer-events: none; }
+.course-card-midnight .cm-timeline { position: absolute; left: 0; right: 0; bottom: 64px; width: 100%; height: 48px; opacity: 0.55; pointer-events: none; }
+.course-card-midnight .cm-line { stroke-dasharray: 320; stroke-dashoffset: 320; animation: cmDraw 2.4s ease forwards 0.2s; }
+.course-card-midnight .cm-node { fill: #0B1020; stroke: #A78BFA; stroke-width: 2; }
+.course-card-midnight .cm-node-1 { stroke: #38BDF8; animation: cmPulse 3s ease-in-out infinite; transform-origin: 160px 30px; }
+.course-card-midnight .cm-node-2 { stroke: #2DD4BF; }
+.course-card-midnight .cm-wave { fill: none; stroke: #A78BFA; stroke-width: 1.5; opacity: 0.8; }
+.course-card-midnight .cm-span { stroke: #F5C76B; stroke-width: 3; stroke-linecap: round; opacity: 0.85; }
+.course-card-midnight .cm-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; color: #E0E7FF; background: linear-gradient(140deg, rgba(99, 102, 241, 0.55), rgba(56, 189, 248, 0.25)); border: 1px solid rgba(167, 139, 250, 0.45); box-shadow: 0 0 24px rgba(99, 102, 241, 0.35); position: relative; z-index: 1; }
+.course-card-midnight .cm-badge { background: rgba(167, 139, 250, 0.14); border-color: rgba(167, 139, 250, 0.4); color: #DDD6FE; }
+.course-card-midnight .cm-eyebrow { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #7DD3FC; font-weight: 600; position: relative; z-index: 1; }
+.course-card-midnight .cm-title { color: #F3F5FF; font-size: 27px; letter-spacing: 0.01em; text-transform: uppercase; margin-top: -6px; }
+.course-card-midnight .cm-subtitle { font-family: var(--font-display); font-style: italic; font-size: 14px; color: #C7D2FE; margin-top: -8px; position: relative; z-index: 1; }
+.course-card-midnight .cm-desc { color: #AAB5D1; padding-bottom: 46px; }
+.course-card-midnight .cm-stats { border-top-color: rgba(170, 181, 209, 0.25); color: #AAB5D1; }
+.course-card-midnight .cm-stats strong { color: #F3F5FF; }
+.course-card-midnight .course-card-stat-divider { background: #AAB5D1; }
+.course-card-midnight .cm-cta { color: #F5C76B; }
+@keyframes cmDraw { to { stroke-dashoffset: 0; } }
+@keyframes cmPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.35); } }
+@keyframes cmDrift { from { transform: translate(0, 0); } to { transform: translate(-8%, 6%); } }
+@media (prefers-reduced-motion: reduce) { .course-card-midnight .cm-glow, .course-card-midnight .cm-node-1 { animation: none; } .course-card-midnight .cm-line { animation: none; stroke-dashoffset: 0; } }
 .course-card-cta { display: inline-flex; align-items: center; gap: 6px; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--accent-deep); margin-left: auto; }
 
 .page { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 48px 28px 80px; }
@@ -4093,10 +4121,22 @@ const EXTERNAL_COURSES = [
   },
 ];
 
+// ── Інтерактивні курси (kind: 'interactive', напр. Tense Instinct) ──
+// Мають власний інтерфейс, що вантажиться ліниво (див. InteractiveCourseHost).
+function isInteractiveCourse(courseId) {
+  const c = COURSES.find(x => x.id === courseId);
+  return !!(c && c.kind === 'interactive');
+}
+// Курс може мати кілька рівнів/вікових груп (levels/ages); старі — один рядок.
+function courseLevels(c) { return c.levels && c.levels.length ? c.levels : [c.level]; }
+function courseAges(c) { return c.ages && c.ages.length ? c.ages : [c.age]; }
+
 function getAllLessons() {
   const flat = [];
   COURSES.forEach(course => course.units.forEach(unit => unit.lessons.forEach(lesson => {
-    flat.push({ ...lesson, courseId: course.id, unitId: unit.id, unitNumber: unit.number, level: course.level, age: course.age });
+    // Порожні заготовки інтерактивних курсів не показуємо в пошуку уроків
+    if (course.kind === 'interactive' && lesson.status === 'coming-soon') return;
+    flat.push({ ...lesson, courseId: course.id, unitId: unit.id, unitNumber: unit.number, level: course.level, age: course.age, levels: courseLevels(course), ages: courseAges(course) });
   })));
   return flat;
 }
@@ -8514,7 +8554,8 @@ function App({ session, onLogout }) {
     if (meta) meta.setAttribute('content', theme === 'dark' ? '#161412' : '#faf6ee');
     return () => rootEl.classList.remove('dark');
   }, [theme]);
-  const [route, setRouteRaw] = useState({ page: 'home' });
+  // Інтерактивні курси мають власні адреси (#/tense-instinct/...) — refresh і прямі посилання
+  const [route, setRouteRaw] = useState(() => interactiveRouteFromHash() || { page: 'home' });
   const [routeHistory, setRouteHistory] = useState([]); // стек попередніх routes
   const [query, setQuery] = useState('');
   const [activeFilters, setActiveFilters] = useState({ level: [], age: [], type: [] });
@@ -8630,8 +8671,8 @@ function App({ session, onLogout }) {
     return visibleLessons.filter(l => {
       const q = query.toLowerCase().trim();
       const matchesQuery = !q || l.title.toLowerCase().includes(q) || (l.titleUk && l.titleUk.toLowerCase().includes(q)) || l.tags.some(t => t.toLowerCase().includes(q));
-      const matchesLevel = !activeFilters.level.length || activeFilters.level.includes(l.level);
-      const matchesAge = !activeFilters.age.length || activeFilters.age.includes(l.age);
+      const matchesLevel = !activeFilters.level.length || (l.levels || [l.level]).some(v => activeFilters.level.includes(v));
+      const matchesAge = !activeFilters.age.length || (l.ages || [l.age]).some(v => activeFilters.age.includes(v));
       const matchesType = !activeFilters.type.length || activeFilters.type.includes(l.type);
       return matchesQuery && matchesLevel && matchesAge && matchesType;
     });
@@ -8640,8 +8681,8 @@ function App({ session, onLogout }) {
   // Курси (за замовчуванням на головній)
   const filteredCourses = useMemo(() => {
     return visibleCourses.filter(c => {
-      const matchesLevel = !activeFilters.level.length || activeFilters.level.includes(c.level);
-      const matchesAge = !activeFilters.age.length || activeFilters.age.includes(c.age);
+      const matchesLevel = !activeFilters.level.length || courseLevels(c).some(v => activeFilters.level.includes(v));
+      const matchesAge = !activeFilters.age.length || courseAges(c).some(v => activeFilters.age.includes(v));
       return matchesLevel && matchesAge;
     });
   }, [activeFilters, visibleCourses]);
@@ -8660,7 +8701,14 @@ function App({ session, onLogout }) {
   // Поки доступи учня вантажаться, показуємо спільний екран завантаження —
   // інакше головна встигає порахувати «немає уроків» з порожніх даних.
   const permsReady = isTeacher || !permissions.loading;
-  const showTabBar = !['lesson', 'flashcards'].includes(route.page);
+  const interactiveRoute = (route.page === 'course' || route.page === 'lesson') && isInteractiveCourse(route.courseId);
+  const showTabBar = !['lesson', 'flashcards'].includes(route.page) && !interactiveRoute;
+  // Вийшли з інтерактивного курсу — прибираємо його адресу з рядка браузера
+  useEffect(() => {
+    if (!interactiveRoute && interactiveRouteFromHash()) {
+      try { history.replaceState(null, '', window.location.pathname + window.location.search); } catch (e) {}
+    }
+  }, [interactiveRoute]);
   const focusMain = () => { const m = document.getElementById('iw-main'); if (m) m.focus(); };
 
   return (
@@ -8711,15 +8759,16 @@ function App({ session, onLogout }) {
             canSeeVocabWord={canSeeVocabWord}
           />
         )}
-        {route.page !== 'home' && canGoBack && (
+        {route.page !== 'home' && canGoBack && !interactiveRoute && (
           <div className="page-container back-btn-wrapper">
             <button className="back-btn-floating" onClick={goBack} title="Повернутись до попередньої сторінки">
               <ChevronLeft size={16} /> Назад
             </button>
           </div>
         )}
-        {route.page === 'course' && <CoursePage courseId={route.courseId} goHome={goHome} goLesson={goLesson} canSeeLesson={canSeeLesson} isLessonCompleted={isLessonCompleted} isTeacher={isTeacher} session={session} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} />}
-        {route.page === 'lesson' && <LessonPage courseId={route.courseId} lessonId={route.lessonId} goHome={goHome} goCourse={goCourse} goLesson={goLesson} favorites={favorites} toggleFavorite={toggleFavorite} canSeeLesson={canSeeLesson} isTeacher={isTeacher} session={session} />}
+        {interactiveRoute && <InteractiveCourseHost key={route.courseId} route={route} session={session} isTeacher={isTeacher} canSeeCourse={canSeeCourse} canSeeLesson={canSeeLesson} isLessonCompleted={isLessonCompleted} permissions={permissions} setRoute={setRoute} goBack={canGoBack ? goBack : goHome} goHome={goHome} theme={theme} />}
+        {route.page === 'course' && !interactiveRoute && <CoursePage courseId={route.courseId} goHome={goHome} goLesson={goLesson} canSeeLesson={canSeeLesson} isLessonCompleted={isLessonCompleted} isTeacher={isTeacher} session={session} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} />}
+        {route.page === 'lesson' && !interactiveRoute && <LessonPage courseId={route.courseId} lessonId={route.lessonId} goHome={goHome} goCourse={goCourse} goLesson={goLesson} favorites={favorites} toggleFavorite={toggleFavorite} canSeeLesson={canSeeLesson} isTeacher={isTeacher} session={session} />}
         {route.page === 'grammar' && <GrammarBank key={route.topic || 'gb'} initialTopic={route.topic} goHome={goHome} setRoute={setRoute} session={session} canSeeLesson={canSeeLesson} isTeacher={isTeacher} />}
         {route.page === 'vocabulary' && <VocabularyBank goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} />}
         {route.page === 'vocab-course' && <VocabCoursePage courseId={route.courseId} goHome={goHome} setRoute={setRoute} canSeeVocabWord={canSeeVocabWord} isTeacher={isTeacher} session={session} />}
@@ -9075,7 +9124,50 @@ function CourseGrid({ courses, goCourse }) {
   );
 }
 
+// Преміальна обкладинка інтерактивного курсу (Tense Instinct · Midnight Academy).
+// Стилі — .course-card-midnight (ізольовані, решту карток не зачіпають).
+function MidnightCourseCard({ course, goCourse, delay = 0 }) {
+  const totalLessons = course.units.reduce((sum, u) => sum + u.lessons.length, 0);
+  const open = () => goCourse(course.id);
+  return (
+    <article className="course-card course-card-midnight" style={{ animationDelay: `${delay}ms` }} onClick={open}
+      role="link" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } }}
+      aria-label={`${course.title} — ${course.subtitle}`}>
+      <div className="cm-glow" aria-hidden="true" />
+      <svg className="cm-timeline" viewBox="0 0 320 60" aria-hidden="true" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="cmLine" x1="0" x2="1"><stop offset="0" stopColor="#A78BFA" /><stop offset=".5" stopColor="#38BDF8" /><stop offset="1" stopColor="#2DD4BF" /></linearGradient>
+        </defs>
+        <line x1="8" y1="30" x2="312" y2="30" stroke="url(#cmLine)" strokeWidth="2" strokeLinecap="round" className="cm-line" />
+        {[40, 160, 280].map((x, i) => <circle key={x} cx={x} cy="30" r={i === 1 ? 6 : 4.5} className={`cm-node cm-node-${i}`} />)}
+        <path d="M70 30 q 15 -18 30 0 t 30 0" className="cm-wave" />
+        <path d="M190 30 h 60" className="cm-span" />
+      </svg>
+      <div className="course-card-top">
+        <div className="cm-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /><path d="M3 12h2M19 12h2" /></svg>
+        </div>
+        <div className="course-card-badges">
+          <span className="badge cm-badge">{course.levelLabel || course.level}</span>
+          <span className="badge cm-badge">{course.ageLabel || course.age}</span>
+        </div>
+      </div>
+      <div className="cm-eyebrow">Interactive course · {course.category}</div>
+      <h3 className="course-card-title cm-title">{course.title}</h3>
+      {course.subtitle && <div className="cm-subtitle">{course.subtitle}</div>}
+      {course.description && <p className="course-card-desc cm-desc">{course.description}</p>}
+      <div className="course-card-stats cm-stats">
+        <span><strong>{totalLessons}</strong>lessons</span>
+        <span className="course-card-stat-divider" />
+        <span><strong>{course.units.length}</strong>units</span>
+        <span className="course-card-cta cm-cta">Enter course <ArrowRight size={13} /></span>
+      </div>
+    </article>
+  );
+}
+
 function CourseCard({ course, goCourse, delay = 0 }) {
+  if (course.cardVariant === 'midnight') return <MidnightCourseCard course={course} goCourse={goCourse} delay={delay} />;
   const totalLessons = course.units.reduce((sum, u) => sum + u.lessons.length, 0);
   return (
     <article className={`course-card accent-${course.accent || 'sage'}`} style={{ animationDelay: `${delay}ms` }} onClick={() => goCourse(course.id)}>
@@ -9147,6 +9239,97 @@ function grammarTopicName(lesson) {
   const g = lesson.grammar;
   if (!g || !g.blocks || !g.blocks.length) return null;
   return /^grammar presentation$/i.test(g.title || '') ? g.blocks.map(b => stripHtml(b.title)).join(' · ') : g.title;
+}
+
+// ═══════════════════════════════════════════════════════════
+// Інтерактивні курси — лінивий модуль (Tense Instinct та майбутні)
+// ═══════════════════════════════════════════════════════════
+// course.module = { id, css, files: [...jsx] }. Файли вантажаться лише при
+// відкритті курсу, компілюються Babel разом (одна область видимості, обгорнута
+// в IIFE) і кешуються в localStorage за хешем — як основний код Inkwell.
+// Модуль реєструє себе: window.INKWELL.modules[id] = { Root }.
+const IW_BABEL_URL = 'https://unpkg.com/@babel/standalone@8.0.7/babel.min.js';
+const iwModuleLoads = {};
+
+function interactiveRouteFromHash() {
+  const m = /^#\/([a-z0-9-]+)(?:\/(.*))?$/.exec(window.location.hash || '');
+  if (!m || !isInteractiveCourse(m[1])) return null;
+  return { page: 'course', courseId: m[1], sub: decodeURIComponent(m[2] || '') };
+}
+
+function loadInteractiveModule(spec) {
+  window.INKWELL.modules = window.INKWELL.modules || {};
+  if (window.INKWELL.modules[spec.id]) return Promise.resolve(window.INKWELL.modules[spec.id]);
+  if (iwModuleLoads[spec.id]) return iwModuleLoads[spec.id];
+  const job = (async () => {
+    const cssReady = spec.css && !document.querySelector(`link[data-iw-module="${spec.id}"]`)
+      ? new Promise(res => {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet'; link.href = spec.css; link.setAttribute('data-iw-module', spec.id);
+          link.onload = res; link.onerror = res; // без стилів курс усе одно відкриється
+          document.head.appendChild(link);
+        })
+      : Promise.resolve();
+    const texts = await Promise.all(spec.files.map(f => fetch(f, { cache: 'no-cache' }).then(r => {
+      if (!r.ok) throw new Error(`Не вдалося завантажити ${f} (${r.status})`);
+      return r.text();
+    })));
+    const source = '(function () {\n' + texts.map((t, i) => `// ── ${spec.files[i]} ──\n${t}`).join('\n;\n') + '\n})();';
+    const hash = hashCode(source);
+    const cacheKey = `inkwell-mod:${spec.id}`;
+    let code = null;
+    try { const c = JSON.parse(localStorage.getItem(cacheKey) || 'null'); if (c && c.h === hash) code = c.code; } catch (e) {}
+    if (!code) {
+      if (typeof Babel === 'undefined') await loadScript(IW_BABEL_URL);
+      code = Babel.transform(source, { presets: [['react', { runtime: 'classic' }]], sourceType: 'script' }).code;
+      try { localStorage.setItem(cacheKey, JSON.stringify({ h: hash, code })); } catch (e) { try { localStorage.removeItem(cacheKey); } catch (e2) {} }
+    }
+    await cssReady;
+    const el = document.createElement('script');
+    el.textContent = code;
+    document.body.appendChild(el);
+    const mod = window.INKWELL.modules[spec.id];
+    if (!mod || !mod.Root) throw new Error('Модуль курсу не зареєструвався (помилка в коді курсу — див. консоль)');
+    return mod;
+  })();
+  iwModuleLoads[spec.id] = job;
+  job.catch(() => { delete iwModuleLoads[spec.id]; });
+  return job;
+}
+
+function InteractiveCourseHost({ route, session, isTeacher, canSeeCourse, canSeeLesson, isLessonCompleted, permissions, setRoute, goBack, goHome, theme }) {
+  const course = COURSES.find(c => c.id === route.courseId);
+  const [state, setState] = useState({ status: 'loading', mod: null, error: null });
+  const [attempt, setAttempt] = useState(0);
+  const allowed = isTeacher || canSeeCourse(route.courseId);
+  useEffect(() => {
+    if (!course || !course.module || !allowed) return;
+    let alive = true;
+    setState({ status: 'loading', mod: null, error: null });
+    loadInteractiveModule(course.module)
+      .then(mod => { if (alive) setState({ status: 'ready', mod, error: null }); })
+      .catch(err => { console.error('[Inkwell] interactive course', err); if (alive) setState({ status: 'error', mod: null, error: err.message || String(err) }); });
+    return () => { alive = false; };
+  }, [route.courseId, attempt, allowed]);
+
+  if (!course) return <div className="page-container"><EmptyState title="Курс не знайдено" text="Можливо, його ще не зареєстровано в courses-index.js." action={<IwButton onClick={goHome}>На головну</IwButton>} /></div>;
+  if (!allowed) return <div className="page-container"><EmptyState art="notebook" title="Курс ще не відкрито" text="Попроси вчителя відкрити тобі цей курс — і він з'явиться тут." action={<IwButton onClick={goHome}>На головну</IwButton>} /></div>;
+  if (state.status === 'loading') return <PageLoader label={`Відкриваю ${course.title}…`} />;
+  if (state.status === 'error') return <div className="page-container"><EmptyState title="Не вдалося відкрити курс" text={state.error} action={<IwButton variant="primary" onClick={() => setAttempt(a => a + 1)}>Спробувати ще раз</IwButton>} /></div>;
+  const Root = state.mod.Root;
+  const initialPath = route.sub != null && route.sub !== '' ? route.sub : (route.page === 'lesson' && route.lessonId ? `lesson/${route.lessonId}` : '');
+  return (
+    <Root
+      course={course}
+      initialPath={initialPath}
+      session={session}
+      isTeacher={isTeacher}
+      canSeeLesson={canSeeLesson}
+      isLessonCompleted={isLessonCompleted}
+      theme={theme}
+      inkwell={{ setRoute, goBack, goHome, toast }}
+    />
+  );
 }
 
 function CoursePage({ courseId, goHome, goLesson, canSeeLesson, isLessonCompleted, isTeacher, session, setRoute, canSeeVocabWord }) {

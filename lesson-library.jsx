@@ -1,0 +1,1699 @@
+import React, { useState, useMemo, useEffect } from 'react';
+import { Search, BookOpen, Sparkles, Bookmark, BookmarkCheck, Download, FileText, ChevronRight, Filter, X, Sun, Moon, Menu, GraduationCap, Library, MessageCircle, Brain, Map as MapIcon, Gamepad2, Clock, Star, ArrowRight, Layers, PanelLeftClose, PanelLeft } from 'lucide-react';
+
+// ═══════════════════════════════════════════════════════════════
+// DATA LAYER (would normally live in /src/data/*)
+// ═══════════════════════════════════════════════════════════════
+
+const LEVELS = ['Beginner', 'Elementary', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Advanced'];
+const AGE_GROUPS = ['Kids 7–9', 'Kids 10–12', 'Teens 13–17', 'Adults'];
+const TYPES = ['Grammar', 'Vocabulary', 'Speaking', 'Reading', 'Listening', 'Revision', 'Quiz/Game'];
+
+const LESSONS = [
+  { id: 1, title: 'Present Simple vs Present Continuous', level: 'Pre-Intermediate', age: 'Teens 13–17', type: 'Grammar', topic: 'Tenses', tags: ['tenses', 'verbs', 'routines'], updated: '2 days ago', favorite: true, accent: 'sage' },
+  { id: 2, title: 'Travelling the World', level: 'Intermediate', age: 'Adults', type: 'Vocabulary', topic: 'Travel', tags: ['travel', 'transport', 'culture'], updated: '4 days ago', favorite: false, accent: 'terracotta' },
+  { id: 3, title: 'My Favourite Food — Speaking Cards', level: 'Elementary', age: 'Kids 10–12', type: 'Speaking', topic: 'Food', tags: ['food', 'cards', 'pair-work'], updated: '1 week ago', favorite: true, accent: 'mustard' },
+  { id: 4, title: 'Second Conditional Stories', level: 'Upper-Intermediate', age: 'Adults', type: 'Grammar', topic: 'Conditionals', tags: ['conditionals', 'storytelling', 'imagination'], updated: '3 days ago', favorite: false, accent: 'plum' },
+  { id: 5, title: 'Animals Around Us', level: 'Beginner', age: 'Kids 7–9', type: 'Vocabulary', topic: 'Animals', tags: ['animals', 'flashcards', 'colours'], updated: 'today', favorite: true, accent: 'sage' },
+  { id: 6, title: 'Reported Speech: He Said, She Said', level: 'Intermediate', age: 'Teens 13–17', type: 'Grammar', topic: 'Reported Speech', tags: ['reported-speech', 'gossip', 'interview'], updated: '5 days ago', favorite: false, accent: 'terracotta' },
+  { id: 7, title: 'School Life Around the World', level: 'Pre-Intermediate', age: 'Teens 13–17', type: 'Reading', topic: 'School', tags: ['reading', 'culture', 'comparison'], updated: '1 week ago', favorite: false, accent: 'mustard' },
+  { id: 8, title: 'Modal Verbs of Possibility', level: 'Intermediate', age: 'Adults', type: 'Grammar', topic: 'Modals', tags: ['modals', 'speculation', 'mystery'], updated: '6 days ago', favorite: true, accent: 'plum' },
+  { id: 9, title: 'Crime & Punishment Debate', level: 'Advanced', age: 'Adults', type: 'Speaking', topic: 'Crime', tags: ['debate', 'crime', 'justice'], updated: '2 weeks ago', favorite: false, accent: 'sage' },
+  { id: 10, title: 'Weather & Seasons Bingo', level: 'Beginner', age: 'Kids 7–9', type: 'Quiz/Game', topic: 'Weather', tags: ['game', 'bingo', 'weather'], updated: '3 days ago', favorite: true, accent: 'terracotta' },
+  { id: 11, title: 'Passive Voice in News Headlines', level: 'Upper-Intermediate', age: 'Adults', type: 'Grammar', topic: 'Passive Voice', tags: ['passive', 'news', 'media'], updated: '4 days ago', favorite: false, accent: 'mustard' },
+  { id: 12, title: 'Friendship & Relationships', level: 'Intermediate', age: 'Teens 13–17', type: 'Vocabulary', topic: 'Friendship', tags: ['friendship', 'emotions', 'social'], updated: '1 week ago', favorite: true, accent: 'plum' },
+  { id: 13, title: 'Listening: Podcast Snippets', level: 'Upper-Intermediate', age: 'Adults', type: 'Listening', topic: 'Media', tags: ['listening', 'podcast', 'authentic'], updated: '5 days ago', favorite: false, accent: 'sage' },
+  { id: 14, title: 'Articles: A, An, The', level: 'Elementary', age: 'Teens 13–17', type: 'Grammar', topic: 'Articles', tags: ['articles', 'basics', 'drills'], updated: '2 weeks ago', favorite: false, accent: 'terracotta' },
+  { id: 15, title: 'Technology in Our Lives', level: 'Intermediate', age: 'Teens 13–17', type: 'Vocabulary', topic: 'Technology', tags: ['tech', 'social-media', 'apps'], updated: '3 days ago', favorite: true, accent: 'mustard' },
+  { id: 16, title: 'Mid-Term Revision: Units 1–6', level: 'Pre-Intermediate', age: 'Teens 13–17', type: 'Revision', topic: 'Mixed', tags: ['revision', 'mixed', 'test-prep'], updated: 'today', favorite: false, accent: 'plum' },
+  { id: 17, title: 'Environment & Climate Change', level: 'Upper-Intermediate', age: 'Adults', type: 'Reading', topic: 'Environment', tags: ['environment', 'climate', 'reading'], updated: '1 week ago', favorite: true, accent: 'sage' },
+  { id: 18, title: 'Hobbies Speaking Marathon', level: 'Pre-Intermediate', age: 'Adults', type: 'Speaking', topic: 'Hobbies', tags: ['speaking', 'hobbies', 'pair-work'], updated: '4 days ago', favorite: false, accent: 'terracotta' },
+  { id: 19, title: 'Emotions & Feelings Wheel', level: 'Elementary', age: 'Kids 10–12', type: 'Vocabulary', topic: 'Emotions', tags: ['emotions', 'wheel', 'visual'], updated: '6 days ago', favorite: true, accent: 'mustard' },
+  { id: 20, title: 'Final Quiz: Year Wrap-Up', level: 'Intermediate', age: 'Teens 13–17', type: 'Quiz/Game', topic: 'Mixed', tags: ['quiz', 'review', 'fun'], updated: 'today', favorite: false, accent: 'plum' },
+  { id: 21, title: 'Mixed Conditionals Workshop', level: 'Advanced', age: 'Adults', type: 'Grammar', topic: 'Conditionals', tags: ['conditionals', 'workshop', 'advanced'], updated: '2 days ago', favorite: false, accent: 'sage' },
+  { id: 22, title: 'Shopping Roleplay Cards', level: 'Beginner', age: 'Kids 10–12', type: 'Speaking', topic: 'Shopping', tags: ['shopping', 'roleplay', 'cards'], updated: '5 days ago', favorite: true, accent: 'terracotta' },
+];
+
+const GRAMMAR_BANK = [
+  { cat: 'Tenses', icon: Clock, count: 14, blurb: 'Twelve English tenses with timelines and exercises.', topics: ['Present Simple', 'Present Continuous', 'Past Simple', 'Present Perfect', 'Future Forms'] },
+  { cat: 'Modals', icon: Brain, count: 9, blurb: 'Can, must, should, might — meaning and nuance.', topics: ['Ability', 'Possibility', 'Obligation', 'Advice', 'Deduction'] },
+  { cat: 'Conditionals', icon: Layers, count: 7, blurb: 'Zero through third, plus mixed conditionals.', topics: ['Zero', 'First', 'Second', 'Third', 'Mixed'] },
+  { cat: 'Passive Voice', icon: ArrowRight, count: 6, blurb: 'Forming and using the passive across tenses.', topics: ['Present Passive', 'Past Passive', 'Modal Passive', 'Causative'] },
+  { cat: 'Articles', icon: FileText, count: 5, blurb: 'A, an, the — and when to use no article at all.', topics: ['Definite', 'Indefinite', 'Zero Article', 'Geography'] },
+  { cat: 'Reported Speech', icon: MessageCircle, count: 8, blurb: 'Backshift, questions, commands, and reporting verbs.', topics: ['Statements', 'Questions', 'Commands', 'Reporting Verbs'] },
+  { cat: 'Advanced Grammar', icon: Sparkles, count: 11, blurb: 'Inversion, cleft sentences, subjunctive, and more.', topics: ['Inversion', 'Cleft Sentences', 'Subjunctive', 'Ellipsis'] },
+];
+
+const VOCAB_BANK = [
+  { topic: 'Travelling', count: 84, level: 'Intermediate', age: 'Adults', emoji: '✈' },
+  { topic: 'School', count: 62, level: 'Elementary', age: 'Teens 13–17', emoji: '✎' },
+  { topic: 'Emotions', count: 48, level: 'Pre-Intermediate', age: 'Kids 10–12', emoji: '♥' },
+  { topic: 'Technology', count: 71, level: 'Intermediate', age: 'Teens 13–17', emoji: '⌬' },
+  { topic: 'Friendship', count: 39, level: 'Intermediate', age: 'Adults', emoji: '✦' },
+  { topic: 'Crime', count: 56, level: 'Upper-Intermediate', age: 'Adults', emoji: '◊' },
+  { topic: 'Environment', count: 67, level: 'Upper-Intermediate', age: 'Adults', emoji: '❀' },
+  { topic: 'Food & Cooking', count: 92, level: 'Elementary', age: 'Adults', emoji: '✿' },
+];
+
+const COURSE_MAP = [
+  { unit: 1, title: 'Hobbies & Free Time', type: 'Vocabulary', done: true },
+  { unit: 2, title: 'School Life Around the World', type: 'Reading', done: true },
+  { unit: 3, title: 'Present Simple vs Continuous', type: 'Grammar', done: true },
+  { unit: 4, title: 'Travelling the World', type: 'Vocabulary', done: false, current: true },
+  { unit: 5, title: 'Past Simple Storytelling', type: 'Grammar', done: false },
+  { unit: 6, title: 'Mid-Term Revision: Units 1–6', type: 'Revision', done: false },
+  { unit: 7, title: 'Future Plans & Predictions', type: 'Grammar', done: false },
+  { unit: 8, title: 'Food & Cooking Roleplay', type: 'Speaking', done: false },
+];
+
+const SEARCH_SUGGESTIONS = ['present perfect', 'speaking topics', 'beginners kids', 'second conditional', 'travel vocabulary', 'revision intermediate', 'modal verbs'];
+
+// ═══════════════════════════════════════════════════════════════
+// MAIN APP
+// ═══════════════════════════════════════════════════════════════
+
+export default function App() {
+  const [theme, setTheme] = useState('light');
+  const [page, setPage] = useState('home'); // home | grammar | vocabulary | map
+  const [query, setQuery] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [activeFilters, setActiveFilters] = useState({ level: [], age: [], type: [] });
+  const [favorites, setFavorites] = useState(new Set([1, 3, 5, 8, 10, 12, 15, 17, 19, 22]));
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mobileMenu, setMobileMenu] = useState(false);
+
+  // Filter logic
+  const filteredLessons = useMemo(() => {
+    return LESSONS.filter(l => {
+      const q = query.toLowerCase().trim();
+      const matchesQuery = !q ||
+        l.title.toLowerCase().includes(q) ||
+        l.topic.toLowerCase().includes(q) ||
+        l.level.toLowerCase().includes(q) ||
+        l.tags.some(t => t.toLowerCase().includes(q));
+      const matchesLevel = !activeFilters.level.length || activeFilters.level.includes(l.level);
+      const matchesAge = !activeFilters.age.length || activeFilters.age.includes(l.age);
+      const matchesType = !activeFilters.type.length || activeFilters.type.includes(l.type);
+      return matchesQuery && matchesLevel && matchesAge && matchesType;
+    });
+  }, [query, activeFilters]);
+
+  const toggleFilter = (group, value) => {
+    setActiveFilters(prev => ({
+      ...prev,
+      [group]: prev[group].includes(value) ? prev[group].filter(v => v !== value) : [...prev[group], value]
+    }));
+  };
+
+  const clearFilters = () => setActiveFilters({ level: [], age: [], type: [] });
+  const hasFilters = activeFilters.level.length + activeFilters.age.length + activeFilters.type.length > 0;
+
+  const toggleFavorite = (id) => {
+    setFavorites(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const isDark = theme === 'dark';
+
+  return (
+    <div className={isDark ? 'dark' : ''}>
+      <style>{styles}</style>
+      <div className="app-root">
+        {/* Decorative background */}
+        <div className="bg-deco" aria-hidden>
+          <div className="bg-grain" />
+          <div className="bg-blob bg-blob-1" />
+          <div className="bg-blob bg-blob-2" />
+        </div>
+
+        <Nav theme={theme} setTheme={setTheme} page={page} setPage={setPage} mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
+
+        {page === 'home' && (
+          <>
+            <Hero query={query} setQuery={setQuery} showSuggestions={showSuggestions} setShowSuggestions={setShowSuggestions} setPage={setPage} />
+
+            <main className="layout">
+              <Sidebar
+                open={sidebarOpen}
+                setOpen={setSidebarOpen}
+                activeFilters={activeFilters}
+                toggleFilter={toggleFilter}
+                clearFilters={clearFilters}
+                hasFilters={hasFilters}
+              />
+
+              <section className={`content ${sidebarOpen ? '' : 'wide'}`}>
+                <ResultHeader count={filteredLessons.length} query={query} hasFilters={hasFilters} />
+                <LessonGrid lessons={filteredLessons} favorites={favorites} toggleFavorite={toggleFavorite} />
+
+                {!query && !hasFilters && (
+                  <>
+                    <SectionStrip title="Recent Lessons" subtitle="Just added to the library" icon={Clock} lessons={LESSONS.slice(0, 4)} favorites={favorites} toggleFavorite={toggleFavorite} />
+                    <SectionStrip title="Favorite Lessons" subtitle="The ones you keep coming back to" icon={Star} lessons={LESSONS.filter(l => favorites.has(l.id)).slice(0, 4)} favorites={favorites} toggleFavorite={toggleFavorite} />
+                    <SectionStrip title="Revision Lessons" subtitle="End-of-unit reviews and consolidation" icon={Layers} lessons={LESSONS.filter(l => l.type === 'Revision' || l.tags.includes('revision')).slice(0, 4)} favorites={favorites} toggleFavorite={toggleFavorite} />
+                    <QuickAccess setPage={setPage} />
+                  </>
+                )}
+              </section>
+            </main>
+          </>
+        )}
+
+        {page === 'grammar' && <GrammarBank setPage={setPage} />}
+        {page === 'vocabulary' && <VocabularyBank setPage={setPage} />}
+        {page === 'map' && <LessonMap setPage={setPage} />}
+
+        <Footer />
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// COMPONENTS
+// ═══════════════════════════════════════════════════════════════
+
+function Nav({ theme, setTheme, page, setPage, mobileMenu, setMobileMenu }) {
+  const links = [
+    { key: 'home', label: 'Library', icon: BookOpen },
+    { key: 'grammar', label: 'Grammar Bank', icon: Brain },
+    { key: 'vocabulary', label: 'Vocabulary Bank', icon: Library },
+    { key: 'map', label: 'Lesson Map', icon: MapIcon },
+  ];
+
+  return (
+    <header className="nav">
+      <div className="nav-inner">
+        <button className="brand" onClick={() => setPage('home')}>
+          <div className="brand-mark" aria-hidden>
+            <svg viewBox="0 0 32 32" width="28" height="28">
+              <path d="M4 6 Q16 2 28 6 L28 24 Q16 20 4 24 Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+              <path d="M16 4 L16 22" stroke="currentColor" strokeWidth="1.6" />
+              <circle cx="16" cy="13" r="1.4" fill="currentColor" />
+            </svg>
+          </div>
+          <div className="brand-text">
+            <span className="brand-name">Inkwell</span>
+            <span className="brand-sub">English Library</span>
+          </div>
+        </button>
+
+        <nav className={`nav-links ${mobileMenu ? 'open' : ''}`}>
+          {links.map(l => (
+            <button
+              key={l.key}
+              className={`nav-link ${page === l.key ? 'active' : ''}`}
+              onClick={() => { setPage(l.key); setMobileMenu(false); }}
+            >
+              <l.icon size={16} />
+              <span>{l.label}</span>
+            </button>
+          ))}
+        </nav>
+
+        <div className="nav-tools">
+          <button className="icon-btn" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label="Toggle theme">
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
+          <button className="icon-btn mobile-only" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Menu">
+            {mobileMenu ? <X size={18} /> : <Menu size={18} />}
+          </button>
+          <div className="teacher-chip">
+            <div className="teacher-avatar">A</div>
+            <span>Ms. Anya</span>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function Hero({ query, setQuery, showSuggestions, setShowSuggestions, setPage }) {
+  const filtered = SEARCH_SUGGESTIONS.filter(s => s.toLowerCase().includes(query.toLowerCase()) && s.toLowerCase() !== query.toLowerCase());
+
+  return (
+    <section className="hero">
+      <div className="hero-inner">
+        <div className="hero-eyebrow">
+          <span className="dot" /> A teacher's quiet little library
+        </div>
+
+        <h1 className="hero-title">
+          Find any lesson <em>in seconds.</em>
+        </h1>
+
+        <p className="hero-sub">
+          Grammar, vocabulary, speaking, revision, games — every presentation, worksheet, and warm-up, gathered in one calm corner of the internet.
+        </p>
+
+        <div className="search-wrap">
+          <div className="search-bar">
+            <Search size={20} className="search-icon" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+              placeholder="Search by title, grammar topic, level, or tag…"
+              className="search-input"
+            />
+            {query && (
+              <button className="search-clear" onClick={() => setQuery('')} aria-label="Clear">
+                <X size={16} />
+              </button>
+            )}
+            <kbd className="search-kbd">⌘ K</kbd>
+          </div>
+
+          {showSuggestions && filtered.length > 0 && (
+            <div className="search-suggestions">
+              <div className="suggestions-label">Try searching for</div>
+              {filtered.slice(0, 5).map(s => (
+                <button key={s} className="suggestion" onMouseDown={() => setQuery(s)}>
+                  <Search size={14} /> {s}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="quick-buttons">
+          <button className="quick-btn" onClick={() => setPage('grammar')}>
+            <Brain size={15} /> Grammar Bank
+          </button>
+          <button className="quick-btn" onClick={() => setPage('vocabulary')}>
+            <Library size={15} /> Vocabulary Bank
+          </button>
+          <button className="quick-btn" onClick={() => setPage('map')}>
+            <MapIcon size={15} /> Lesson Map
+          </button>
+          <button className="quick-btn">
+            <Gamepad2 size={15} /> Games & Quizzes
+          </button>
+          <button className="quick-btn">
+            <MessageCircle size={15} /> Speaking Topics
+          </button>
+        </div>
+
+        <div className="hero-stats">
+          <div className="stat"><strong>342</strong><span>Lessons</span></div>
+          <div className="stat-divider" />
+          <div className="stat"><strong>78</strong><span>Grammar topics</span></div>
+          <div className="stat-divider" />
+          <div className="stat"><strong>24</strong><span>Vocabulary banks</span></div>
+          <div className="stat-divider" />
+          <div className="stat"><strong>6</strong><span>Levels covered</span></div>
+        </div>
+      </div>
+
+      <div className="hero-illust" aria-hidden>
+        <svg viewBox="0 0 400 320" width="100%" height="100%">
+          <defs>
+            <pattern id="dots" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="currentColor" opacity="0.25" />
+            </pattern>
+          </defs>
+          <rect x="40" y="60" width="220" height="200" rx="8" fill="url(#dots)" />
+          <rect x="60" y="40" width="200" height="240" rx="6" fill="var(--cream-2)" stroke="currentColor" strokeWidth="1.2" />
+          <line x1="80" y1="80" x2="240" y2="80" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+          <line x1="80" y1="100" x2="220" y2="100" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+          <line x1="80" y1="120" x2="230" y2="120" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+          <line x1="80" y1="140" x2="180" y2="140" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+          <rect x="80" y="170" width="60" height="40" rx="3" fill="var(--sage)" opacity="0.7" />
+          <rect x="150" y="170" width="60" height="40" rx="3" fill="var(--terracotta)" opacity="0.7" />
+          <rect x="80" y="220" width="130" height="14" rx="2" fill="currentColor" opacity="0.15" />
+          <circle cx="320" cy="100" r="50" fill="var(--mustard)" opacity="0.5" />
+          <circle cx="320" cy="100" r="50" fill="none" stroke="currentColor" strokeWidth="1" />
+          <path d="M300 95 L315 105 L340 85" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <g transform="translate(280, 200) rotate(-8)">
+            <rect x="0" y="0" width="90" height="60" rx="4" fill="var(--plum)" opacity="0.6" />
+            <rect x="0" y="0" width="90" height="60" rx="4" fill="none" stroke="currentColor" strokeWidth="1" />
+            <text x="45" y="38" textAnchor="middle" fontFamily="Fraunces, serif" fontSize="22" fontStyle="italic" fill="currentColor">A+</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+  );
+}
+
+function Sidebar({ open, setOpen, activeFilters, toggleFilter, clearFilters, hasFilters }) {
+  const groups = [
+    { key: 'level', label: 'English Level', items: LEVELS },
+    { key: 'age', label: 'Age Group', items: AGE_GROUPS },
+    { key: 'type', label: 'Lesson Type', items: TYPES },
+  ];
+
+  return (
+    <aside className={`sidebar ${open ? '' : 'closed'}`}>
+      <div className="sidebar-header">
+        <button className="sidebar-toggle" onClick={() => setOpen(!open)} aria-label={open ? 'Collapse filters' : 'Expand filters'}>
+          {open ? <PanelLeftClose size={16} /> : <PanelLeft size={16} />}
+          {open && <span>Filters</span>}
+        </button>
+        {open && hasFilters && (
+          <button className="clear-btn" onClick={clearFilters}>
+            Clear
+          </button>
+        )}
+      </div>
+
+      {open && (
+        <div className="sidebar-body">
+          {groups.map(g => (
+            <div key={g.key} className="filter-group">
+              <div className="filter-title">{g.label}</div>
+              <div className="filter-list">
+                {g.items.map(item => {
+                  const checked = activeFilters[g.key].includes(item);
+                  return (
+                    <label key={item} className={`check ${checked ? 'checked' : ''}`}>
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => toggleFilter(g.key, item)}
+                      />
+                      <span className="check-box">
+                        {checked && (
+                          <svg viewBox="0 0 12 12" width="10" height="10">
+                            <path d="M2 6 L5 9 L10 3" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </span>
+                      <span className="check-label">{item}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+
+          <div className="sidebar-tip">
+            <Sparkles size={14} />
+            <p>Tip: combine a level + a type to plan a whole week of classes.</p>
+          </div>
+        </div>
+      )}
+    </aside>
+  );
+}
+
+function ResultHeader({ count, query, hasFilters }) {
+  return (
+    <div className="result-header">
+      <div>
+        <h2 className="result-title">
+          {query ? <>Results for <em>"{query}"</em></> : hasFilters ? 'Filtered lessons' : 'All lessons'}
+        </h2>
+        <p className="result-count">{count} lesson{count !== 1 ? 's' : ''} found</p>
+      </div>
+      <div className="result-sort">
+        <select defaultValue="recent">
+          <option value="recent">Most recent</option>
+          <option value="title">Title A–Z</option>
+          <option value="level">By level</option>
+        </select>
+      </div>
+    </div>
+  );
+}
+
+function LessonGrid({ lessons, favorites, toggleFavorite }) {
+  if (!lessons.length) {
+    return (
+      <div className="empty">
+        <div className="empty-mark">∅</div>
+        <p>No lessons match those filters yet.</p>
+        <span>Try clearing a filter or searching something different.</span>
+      </div>
+    );
+  }
+  return (
+    <div className="grid">
+      {lessons.map((l, i) => (
+        <LessonCard key={l.id} lesson={l} favorited={favorites.has(l.id)} toggleFavorite={toggleFavorite} delay={i * 30} />
+      ))}
+    </div>
+  );
+}
+
+function LessonCard({ lesson, favorited, toggleFavorite, delay = 0 }) {
+  return (
+    <article className={`card accent-${lesson.accent}`} style={{ animationDelay: `${delay}ms` }}>
+      <div className="card-top">
+        <div className="card-meta">
+          <span className="badge level">{lesson.level}</span>
+          <span className="badge age">{lesson.age}</span>
+        </div>
+        <button
+          className={`fav ${favorited ? 'on' : ''}`}
+          onClick={() => toggleFavorite(lesson.id)}
+          aria-label="Bookmark"
+        >
+          {favorited ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
+        </button>
+      </div>
+
+      <div className="card-type">
+        <span className="card-type-dot" />
+        {lesson.type} · {lesson.topic}
+      </div>
+
+      <h3 className="card-title">{lesson.title}</h3>
+
+      <div className="card-tags">
+        {lesson.tags.map(t => (
+          <span key={t} className="tag">#{t}</span>
+        ))}
+      </div>
+
+      <div className="card-foot">
+        <span className="card-updated">Updated {lesson.updated}</span>
+        <div className="card-actions">
+          <button className="card-btn ghost" title="Teacher Notes">
+            <FileText size={13} />
+          </button>
+          <button className="card-btn ghost" title="Download PPT">
+            <Download size={13} />
+          </button>
+          <button className="card-btn primary">
+            Open <ChevronRight size={13} />
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function SectionStrip({ title, subtitle, icon: Icon, lessons, favorites, toggleFavorite }) {
+  if (!lessons.length) return null;
+  return (
+    <section className="strip">
+      <div className="strip-head">
+        <div>
+          <h2 className="strip-title"><Icon size={18} /> {title}</h2>
+          <p className="strip-sub">{subtitle}</p>
+        </div>
+        <button className="strip-more">View all <ArrowRight size={14} /></button>
+      </div>
+      <div className="strip-grid">
+        {lessons.map((l, i) => (
+          <LessonCard key={l.id} lesson={l} favorited={favorites.has(l.id)} toggleFavorite={toggleFavorite} delay={i * 40} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function QuickAccess({ setPage }) {
+  const items = [
+    { key: 'grammar', label: 'Grammar Bank', desc: 'Tenses, modals, conditionals & more', icon: Brain, accent: 'sage' },
+    { key: 'vocabulary', label: 'Vocabulary Bank', desc: 'Topic-based wordlists by level', icon: Library, accent: 'terracotta' },
+    { key: 'map', label: 'Lesson Map', desc: 'Curriculum view, lesson by lesson', icon: MapIcon, accent: 'mustard' },
+    { key: 'games', label: 'Games & Quizzes', desc: 'Warm-ups and end-of-class fun', icon: Gamepad2, accent: 'plum' },
+  ];
+  return (
+    <section className="quick">
+      <div className="strip-head">
+        <div>
+          <h2 className="strip-title"><Sparkles size={18} /> Jump straight in</h2>
+          <p className="strip-sub">Special collections, pinned for quick lesson planning.</p>
+        </div>
+      </div>
+      <div className="quick-grid">
+        {items.map(it => (
+          <button key={it.key} className={`quick-card accent-${it.accent}`} onClick={() => setPage(it.key === 'games' ? 'home' : it.key)}>
+            <div className="quick-icon"><it.icon size={22} /></div>
+            <div className="quick-body">
+              <div className="quick-label">{it.label}</div>
+              <div className="quick-desc">{it.desc}</div>
+            </div>
+            <ArrowRight size={16} className="quick-arrow" />
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── Grammar Bank Page ──────────────────────────────────────────
+function GrammarBank({ setPage }) {
+  return (
+    <main className="page">
+      <PageHeader
+        eyebrow="Grammar Bank"
+        title="Every rule, with examples and lessons attached."
+        sub="Browse by category. Each topic comes with a short explanation, illustrative examples, and the lessons that teach it best."
+        onBack={() => setPage('home')}
+      />
+      <div className="grammar-grid">
+        {GRAMMAR_BANK.map((g, i) => (
+          <article key={g.cat} className="grammar-card" style={{ animationDelay: `${i * 50}ms` }}>
+            <div className="grammar-icon"><g.icon size={20} /></div>
+            <div className="grammar-count">{g.count} topics</div>
+            <h3 className="grammar-title">{g.cat}</h3>
+            <p className="grammar-blurb">{g.blurb}</p>
+            <div className="grammar-example">
+              <span className="ex-label">Example</span>
+              {g.cat === 'Tenses' && <em>"She has been teaching English since 2014."</em>}
+              {g.cat === 'Modals' && <em>"You should have called me yesterday."</em>}
+              {g.cat === 'Conditionals' && <em>"If I had known, I would have come."</em>}
+              {g.cat === 'Passive Voice' && <em>"The exam papers are being marked now."</em>}
+              {g.cat === 'Articles' && <em>"I saw a cat. The cat was on the roof."</em>}
+              {g.cat === 'Reported Speech' && <em>"He said he was tired."</em>}
+              {g.cat === 'Advanced Grammar' && <em>"Rarely had I seen such a sunset."</em>}
+            </div>
+            <div className="grammar-topics">
+              {g.topics.map(t => <span key={t} className="topic-pill">{t}</span>)}
+            </div>
+            <button className="card-btn primary full">
+              Explore {g.cat} <ChevronRight size={14} />
+            </button>
+          </article>
+        ))}
+      </div>
+    </main>
+  );
+}
+
+// ─── Vocabulary Bank Page ───────────────────────────────────────
+function VocabularyBank({ setPage }) {
+  return (
+    <main className="page">
+      <PageHeader
+        eyebrow="Vocabulary Bank"
+        title="Wordlists worth teaching, organized your way."
+        sub="Filter by topic, level, and age — copy them, adapt them, build flashcard sets, or send them home as study notes."
+        onBack={() => setPage('home')}
+      />
+      <div className="vocab-grid">
+        {VOCAB_BANK.map((v, i) => (
+          <article key={v.topic} className="vocab-card" style={{ animationDelay: `${i * 50}ms` }}>
+            <div className="vocab-emoji">{v.emoji}</div>
+            <h3 className="vocab-title">{v.topic}</h3>
+            <div className="vocab-meta">
+              <span className="badge level">{v.level}</span>
+              <span className="badge age">{v.age}</span>
+            </div>
+            <div className="vocab-count"><strong>{v.count}</strong> words & phrases</div>
+            <button className="card-btn primary full">Open wordlist <ChevronRight size={14} /></button>
+          </article>
+        ))}
+      </div>
+    </main>
+  );
+}
+
+// ─── Lesson Map Page ────────────────────────────────────────────
+function LessonMap({ setPage }) {
+  return (
+    <main className="page">
+      <PageHeader
+        eyebrow="Lesson Map"
+        title="Pre-Intermediate Course · Term 2"
+        sub="Lessons in the order they're taught. Track what's done, what's next, and what's coming up."
+        onBack={() => setPage('home')}
+      />
+      <div className="map-wrap">
+        <div className="map-line" aria-hidden />
+        <ol className="map-list">
+          {COURSE_MAP.map((u, i) => (
+            <li key={u.unit} className={`map-item ${u.done ? 'done' : ''} ${u.current ? 'current' : ''}`} style={{ animationDelay: `${i * 60}ms` }}>
+              <div className="map-node">
+                {u.done ? (
+                  <svg viewBox="0 0 16 16" width="14" height="14"><path d="M3 8 L7 12 L13 4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                ) : u.current ? (
+                  <span className="node-dot" />
+                ) : (
+                  <span className="node-num">{u.unit}</span>
+                )}
+              </div>
+              <div className="map-card">
+                <div className="map-meta">
+                  <span className="map-unit">Lesson {u.unit}</span>
+                  <span className="badge type">{u.type}</span>
+                  {u.current && <span className="badge current">In progress</span>}
+                </div>
+                <h3 className="map-title">{u.title}</h3>
+                <div className="map-actions">
+                  <button className="card-btn ghost"><FileText size={13} /> Notes</button>
+                  <button className="card-btn ghost"><Download size={13} /> PPT</button>
+                  <button className="card-btn primary">Open <ChevronRight size={13} /></button>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </main>
+  );
+}
+
+function PageHeader({ eyebrow, title, sub, onBack }) {
+  return (
+    <header className="page-header">
+      <button className="back-btn" onClick={onBack}>
+        <ChevronRight size={14} style={{ transform: 'rotate(180deg)' }} /> Back to library
+      </button>
+      <div className="page-eyebrow"><span className="dot" /> {eyebrow}</div>
+      <h1 className="page-title">{title}</h1>
+      <p className="page-sub">{sub}</p>
+    </header>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="footer-inner">
+        <div className="footer-brand">
+          <span className="brand-name">Inkwell</span>
+          <span className="footer-tag">A small library, lovingly kept.</span>
+        </div>
+        <div className="footer-cols">
+          <div>
+            <div className="footer-h">Library</div>
+            <a>Recent lessons</a><a>Favorites</a><a>Revision</a>
+          </div>
+          <div>
+            <div className="footer-h">Banks</div>
+            <a>Grammar</a><a>Vocabulary</a><a>Speaking</a>
+          </div>
+          <div>
+            <div className="footer-h">For teachers</div>
+            <a>Notes & tips</a><a>Lesson map</a><a>Games & quizzes</a>
+          </div>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <span>© 2026 Inkwell · Made with ☕ for English teachers</span>
+      </div>
+    </footer>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// STYLES
+// ═══════════════════════════════════════════════════════════════
+
+const styles = `
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; padding: 0; }
+
+:root {
+  --cream: #f5efe4;
+  --cream-2: #ece4d3;
+  --cream-3: #e2d8c2;
+  --paper: #faf6ee;
+  --ink: #2a2620;
+  --ink-2: #4a443b;
+  --ink-3: #786f60;
+  --line: #d8cdb6;
+  --line-soft: #e6dec9;
+
+  --sage: #9caf88;
+  --sage-deep: #6b7f5c;
+  --terracotta: #c97455;
+  --terracotta-deep: #a55a3e;
+  --mustard: #d6a85e;
+  --mustard-deep: #a87b3d;
+  --plum: #8e6b8a;
+  --plum-deep: #6b4d6c;
+
+  --shadow-sm: 0 1px 2px rgba(60, 45, 25, 0.06), 0 1px 3px rgba(60, 45, 25, 0.04);
+  --shadow-md: 0 4px 14px rgba(60, 45, 25, 0.08), 0 1px 3px rgba(60, 45, 25, 0.05);
+  --shadow-lg: 0 14px 40px rgba(60, 45, 25, 0.10), 0 2px 6px rgba(60, 45, 25, 0.05);
+
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+.dark {
+  --cream: #1c1a17;
+  --cream-2: #25221d;
+  --cream-3: #2e2a24;
+  --paper: #161412;
+  --ink: #f0e9db;
+  --ink-2: #c8c0af;
+  --ink-3: #8a8270;
+  --line: #3a352d;
+  --line-soft: #2c2823;
+
+  --sage: #a8bb96;
+  --sage-deep: #7d9070;
+  --terracotta: #d68870;
+  --terracotta-deep: #b56a52;
+  --mustard: #d9b070;
+  --mustard-deep: #b08749;
+  --plum: #a586a0;
+  --plum-deep: #7d627c;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 14px rgba(0,0,0,0.35);
+  --shadow-lg: 0 14px 40px rgba(0,0,0,0.45);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+.app-root {
+  position: relative;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── Background atmosphere ── */
+.bg-deco {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+}
+.bg-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.15 0 0 0 0 0.1 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.4; mix-blend-mode: multiply;
+}
+.dark .bg-grain { mix-blend-mode: screen; opacity: 0.15; }
+.bg-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); opacity: 0.35;
+}
+.bg-blob-1 {
+  top: -10%; right: -5%; width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--mustard), transparent 70%);
+}
+.bg-blob-2 {
+  top: 40%; left: -10%; width: 400px; height: 400px;
+  background: radial-gradient(circle, var(--sage), transparent 70%);
+  opacity: 0.25;
+}
+.dark .bg-blob { opacity: 0.18; }
+
+/* ── Nav ── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--paper) 85%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.nav-inner {
+  max-width: 1320px; margin: 0 auto;
+  padding: 14px 28px;
+  display: flex; align-items: center; gap: 24px;
+}
+.brand {
+  display: flex; align-items: center; gap: 12px;
+  background: none; border: 0; cursor: pointer; color: var(--ink);
+  padding: 0; font-family: inherit;
+}
+.brand-mark {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink);
+}
+.brand-text {
+  display: flex; flex-direction: column; align-items: flex-start; line-height: 1;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.brand-sub {
+  font-size: 11px; color: var(--ink-3);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  margin-top: 3px;
+}
+.nav-links {
+  display: flex; gap: 4px; margin-left: auto;
+}
+.nav-link {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 14px;
+  background: none; border: 0; cursor: pointer;
+  color: var(--ink-2); font-family: inherit; font-size: 14px; font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+.nav-link:hover {
+  background: var(--cream-2); color: var(--ink);
+}
+.nav-link.active {
+  background: var(--ink); color: var(--paper);
+}
+.nav-tools {
+  display: flex; align-items: center; gap: 8px;
+}
+.icon-btn {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  background: var(--cream-2); border: 1px solid var(--line);
+  border-radius: 9px; cursor: pointer;
+  color: var(--ink); transition: all 0.15s ease;
+}
+.icon-btn:hover { background: var(--cream-3); transform: translateY(-1px); }
+.teacher-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 12px 5px 5px;
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px; font-weight: 500; color: var(--ink);
+}
+.teacher-avatar {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--terracotta), var(--mustard));
+  color: white; font-weight: 700; font-size: 13px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+}
+.mobile-only { display: none; }
+
+/* ── Hero ── */
+.hero {
+  position: relative; z-index: 1;
+  max-width: 1320px; margin: 0 auto;
+  padding: 64px 28px 48px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px;
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px; color: var(--ink-2);
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+  width: fit-content;
+}
+.dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--terracotta);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  margin: 0 0 22px;
+  color: var(--ink);
+}
+.hero-title em {
+  font-style: italic; font-weight: 500;
+  color: var(--terracotta-deep);
+  background: linear-gradient(120deg, transparent 0%, transparent 30%, color-mix(in srgb, var(--mustard) 35%, transparent) 30%, color-mix(in srgb, var(--mustard) 35%, transparent) 95%, transparent 95%);
+  background-position: 0 0.78em;
+  background-size: 100% 0.32em;
+  background-repeat: no-repeat;
+  padding: 0 4px;
+}
+.hero-sub {
+  font-size: 17px; line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 580px;
+  margin: 0 0 32px;
+}
+
+.search-wrap { position: relative; max-width: 640px; margin-bottom: 22px; }
+.search-bar {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 4px 4px 0 var(--cream-3);
+  transition: all 0.2s ease;
+}
+.search-bar:focus-within {
+  box-shadow: 4px 4px 0 var(--terracotta);
+  transform: translate(-1px, -1px);
+}
+.search-icon { color: var(--ink-3); flex-shrink: 0; }
+.search-input {
+  flex: 1; border: 0; outline: 0; background: transparent;
+  font-family: inherit; font-size: 16px; color: var(--ink);
+}
+.search-input::placeholder { color: var(--ink-3); }
+.search-clear {
+  background: var(--cream-2); border: 0; cursor: pointer;
+  width: 24px; height: 24px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--ink-2);
+}
+.search-kbd {
+  font-family: inherit; font-size: 11px; font-weight: 600;
+  padding: 4px 8px; background: var(--cream-2);
+  border: 1px solid var(--line); border-radius: 6px;
+  color: var(--ink-3);
+}
+.search-suggestions {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  padding: 8px;
+  z-index: 10;
+}
+.suggestions-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--ink-3); padding: 6px 10px;
+}
+.suggestion {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; text-align: left;
+  padding: 9px 10px; border: 0; background: none; cursor: pointer;
+  font-family: inherit; font-size: 14px; color: var(--ink);
+  border-radius: 7px;
+}
+.suggestion:hover { background: var(--cream-2); }
+
+.quick-buttons {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 36px;
+}
+.quick-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer; font-family: inherit; font-size: 13px;
+  color: var(--ink); font-weight: 500;
+  transition: all 0.15s ease;
+}
+.quick-btn:hover {
+  background: var(--ink); color: var(--paper);
+  border-color: var(--ink); transform: translateY(-1px);
+}
+
+.hero-stats {
+  display: flex; align-items: center; gap: 28px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--line);
+  max-width: 640px;
+}
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.stat strong {
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.stat span { font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; }
+.stat-divider { width: 1px; height: 32px; background: var(--line); }
+
+.hero-illust {
+  color: var(--ink);
+  position: relative;
+}
+.hero-illust svg {
+  filter: drop-shadow(0 8px 24px rgba(60, 45, 25, 0.1));
+}
+
+/* ── Layout ── */
+.layout {
+  position: relative; z-index: 1;
+  max-width: 1320px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 32px;
+  padding: 0 28px 80px;
+  align-items: start;
+}
+.sidebar {
+  position: sticky; top: 84px;
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  transition: all 0.25s ease;
+}
+.sidebar.closed {
+  width: 56px; padding: 12px;
+}
+.sidebar-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.sidebar-toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 8px; padding: 7px 11px;
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  color: var(--ink); cursor: pointer;
+}
+.clear-btn {
+  background: none; border: 0; cursor: pointer;
+  font-family: inherit; font-size: 12px;
+  color: var(--terracotta-deep); font-weight: 600;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.sidebar-body { display: flex; flex-direction: column; gap: 22px; }
+
+.filter-group { }
+.filter-title {
+  font-family: var(--font-display); font-size: 14px;
+  font-weight: 600; color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.filter-title::before {
+  content: ''; width: 14px; height: 1.5px; background: var(--ink);
+}
+.filter-list { display: flex; flex-direction: column; gap: 2px; }
+.check {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 8px; border-radius: 7px;
+  cursor: pointer;
+  font-size: 13px; color: var(--ink-2);
+  transition: all 0.12s ease;
+}
+.check:hover { background: var(--paper); }
+.check.checked { color: var(--ink); font-weight: 500; }
+.check input { display: none; }
+.check-box {
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--ink-3);
+  border-radius: 4px;
+  display: grid; place-items: center;
+  background: var(--paper);
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+  color: var(--paper);
+}
+.check.checked .check-box {
+  background: var(--ink); border-color: var(--ink);
+}
+
+.sidebar-tip {
+  display: flex; gap: 10px;
+  padding: 12px;
+  background: var(--paper);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  font-size: 12px; color: var(--ink-2); line-height: 1.5;
+}
+.sidebar-tip svg { flex-shrink: 0; margin-top: 2px; color: var(--mustard-deep); }
+.sidebar-tip p { margin: 0; }
+
+.content { min-width: 0; display: flex; flex-direction: column; gap: 48px; }
+.content.wide { /* sidebar collapsed */ }
+
+.result-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 20px; gap: 16px;
+}
+.result-title {
+  font-family: var(--font-display); font-size: 28px;
+  font-weight: 600; letter-spacing: -0.02em;
+  margin: 0; color: var(--ink);
+}
+.result-title em { color: var(--terracotta-deep); font-style: italic; }
+.result-count { margin: 4px 0 0; color: var(--ink-3); font-size: 13px; }
+.result-sort select {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: inherit; font-size: 13px; color: var(--ink);
+  cursor: pointer;
+}
+
+/* ── Cards Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  --accent: var(--sage);
+  --accent-deep: var(--sage-deep);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: flex; flex-direction: column;
+  position: relative;
+  transition: all 0.2s ease;
+  animation: fadeUp 0.5s ease both;
+  overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent);
+}
+.card:hover::before { transform: scaleX(1); }
+
+.card.accent-sage { --accent: var(--sage); --accent-deep: var(--sage-deep); }
+.card.accent-terracotta { --accent: var(--terracotta); --accent-deep: var(--terracotta-deep); }
+.card.accent-mustard { --accent: var(--mustard); --accent-deep: var(--mustard-deep); }
+.card.accent-plum { --accent: var(--plum); --accent-deep: var(--plum-deep); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.card-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge {
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 8px; border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--cream-2); color: var(--ink-2);
+}
+.badge.level { background: color-mix(in srgb, var(--accent) 20%, var(--paper)); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); color: var(--accent-deep); }
+.badge.age { background: var(--cream-2); }
+.badge.type { background: var(--cream-3); color: var(--ink-2); }
+.badge.current { background: var(--terracotta); color: white; border-color: var(--terracotta-deep); }
+
+.fav {
+  width: 30px; height: 30px;
+  background: none; border: 0; cursor: pointer;
+  border-radius: 50%; display: grid; place-items: center;
+  color: var(--ink-3);
+  transition: all 0.15s ease;
+}
+.fav:hover { background: var(--cream-2); color: var(--ink); }
+.fav.on { color: var(--terracotta-deep); }
+
+.card-type {
+  font-size: 11.5px;
+  color: var(--ink-3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-type-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 500;
+  line-height: 1.25; letter-spacing: -0.01em;
+  margin: 0 0 14px; color: var(--ink);
+  flex: 1;
+}
+
+.card-tags {
+  display: flex; gap: 5px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.tag {
+  font-size: 11px; color: var(--ink-3);
+  padding: 2px 7px;
+  background: var(--cream-2);
+  border-radius: 5px;
+}
+
+.card-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+  gap: 8px;
+}
+.card-updated { font-size: 11px; color: var(--ink-3); font-style: italic; }
+.card-actions { display: flex; gap: 4px; }
+.card-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-family: inherit; font-size: 12px; font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.card-btn.ghost {
+  background: transparent; border: 1px solid var(--line); color: var(--ink-2);
+}
+.card-btn.ghost:hover { background: var(--cream-2); color: var(--ink); }
+.card-btn.primary {
+  background: var(--ink); border: 1px solid var(--ink); color: var(--paper);
+}
+.card-btn.primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.card-btn.full { width: 100%; justify-content: center; padding: 9px 12px; font-size: 13px; }
+
+/* ── Strips ── */
+.strip { display: flex; flex-direction: column; gap: 18px; }
+.strip-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding-top: 28px;
+  gap: 12px;
+}
+.strip-title {
+  font-family: var(--font-display); font-size: 22px;
+  font-weight: 600; letter-spacing: -0.015em;
+  margin: 0; color: var(--ink);
+  display: flex; align-items: center; gap: 10px;
+}
+.strip-title svg { color: var(--mustard-deep); }
+.strip-sub { margin: 4px 0 0; color: var(--ink-3); font-size: 13px; }
+.strip-more {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: none; border: 0; cursor: pointer;
+  color: var(--ink); font-family: inherit; font-size: 13px; font-weight: 600;
+  padding: 6px 10px; border-radius: 7px;
+}
+.strip-more:hover { background: var(--cream-2); }
+.strip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+/* ── Quick Access ── */
+.quick { display: flex; flex-direction: column; gap: 18px; }
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+.quick-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.quick-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--accent);
+}
+.quick-card.accent-sage { --accent: var(--sage); }
+.quick-card.accent-terracotta { --accent: var(--terracotta); }
+.quick-card.accent-mustard { --accent: var(--mustard); }
+.quick-card.accent-plum { --accent: var(--plum); }
+.quick-card:hover {
+  transform: translateY(-2px); box-shadow: var(--shadow-md);
+  border-color: var(--accent);
+}
+.quick-icon {
+  width: 44px; height: 44px;
+  background: color-mix(in srgb, var(--accent) 25%, var(--paper));
+  border-radius: 11px;
+  display: grid; place-items: center;
+  color: var(--ink); flex-shrink: 0;
+}
+.quick-body { flex: 1; }
+.quick-label {
+  font-family: var(--font-display); font-size: 16px;
+  font-weight: 600; color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.quick-desc { font-size: 12.5px; color: var(--ink-3); margin-top: 2px; }
+.quick-arrow {
+  color: var(--ink-3);
+  transition: transform 0.2s ease;
+}
+.quick-card:hover .quick-arrow { transform: translateX(4px); color: var(--ink); }
+
+/* ── Page wrappers ── */
+.page {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto;
+  padding: 48px 28px 80px;
+}
+.page-header { margin-bottom: 48px; max-width: 760px; }
+.back-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: none; border: 0; cursor: pointer;
+  color: var(--ink-2); font-family: inherit; font-size: 13px; font-weight: 500;
+  margin-bottom: 24px;
+  padding: 6px 10px 6px 6px;
+  border-radius: 7px;
+}
+.back-btn:hover { background: var(--cream-2); color: var(--ink); }
+.page-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--ink-2);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.5vw, 54px);
+  line-height: 1.05; font-weight: 500;
+  letter-spacing: -0.03em;
+  margin: 0 0 18px; color: var(--ink);
+}
+.page-sub {
+  font-size: 16px; color: var(--ink-2);
+  line-height: 1.6; max-width: 600px;
+}
+
+/* ── Grammar Bank ── */
+.grammar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
+.grammar-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex; flex-direction: column;
+  animation: fadeUp 0.5s ease both;
+  transition: all 0.2s ease;
+}
+.grammar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--sage);
+}
+.grammar-icon {
+  width: 44px; height: 44px;
+  background: var(--cream-2);
+  border-radius: 12px;
+  display: grid; place-items: center;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.grammar-count {
+  font-size: 11px; color: var(--ink-3);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.grammar-title {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px; color: var(--ink);
+}
+.grammar-blurb {
+  font-size: 14px; color: var(--ink-2);
+  line-height: 1.55; margin: 0 0 16px;
+}
+.grammar-example {
+  background: var(--cream-2);
+  border-left: 3px solid var(--terracotta);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+}
+.ex-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 10px; color: var(--ink-3);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.grammar-example em {
+  font-size: 15px; color: var(--ink);
+  font-style: italic; line-height: 1.4;
+}
+.grammar-topics {
+  display: flex; flex-wrap: wrap; gap: 5px;
+  margin-bottom: 18px;
+}
+.topic-pill {
+  font-size: 11.5px; padding: 4px 9px;
+  background: var(--cream-2);
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  color: var(--ink-2);
+}
+
+/* ── Vocabulary Bank ── */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.vocab-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex; flex-direction: column;
+  animation: fadeUp 0.5s ease both;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.vocab-card::after {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--mustard) 0%, transparent 70%);
+  opacity: 0.2;
+  transition: all 0.3s ease;
+}
+.vocab-card:hover {
+  transform: translateY(-3px); box-shadow: var(--shadow-md);
+  border-color: var(--mustard);
+}
+.vocab-card:hover::after { transform: scale(1.3); opacity: 0.35; }
+.vocab-emoji {
+  font-size: 32px; margin-bottom: 12px;
+  font-family: var(--font-display);
+  color: var(--terracotta-deep);
+  position: relative; z-index: 1;
+}
+.vocab-title {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px; color: var(--ink);
+  position: relative; z-index: 1;
+}
+.vocab-meta {
+  display: flex; gap: 5px; flex-wrap: wrap;
+  margin-bottom: 14px;
+  position: relative; z-index: 1;
+}
+.vocab-count {
+  font-size: 13px; color: var(--ink-2);
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.vocab-count strong {
+  font-family: var(--font-display); font-size: 18px;
+  color: var(--ink);
+}
+
+/* ── Lesson Map ── */
+.map-wrap {
+  position: relative;
+  padding-left: 28px;
+  max-width: 880px;
+}
+.map-line {
+  position: absolute; left: 13px; top: 12px; bottom: 12px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--line), var(--line) 60%, transparent);
+  z-index: 0;
+}
+.map-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px; }
+.map-item {
+  display: grid; grid-template-columns: 28px 1fr; gap: 18px;
+  align-items: start;
+  animation: fadeUp 0.5s ease both;
+}
+.map-node {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  display: grid; place-items: center;
+  color: var(--ink-3);
+  font-size: 12px; font-weight: 700;
+  font-family: var(--font-display);
+  position: relative; z-index: 1;
+  margin-top: 18px;
+}
+.map-item.done .map-node {
+  background: var(--sage); border-color: var(--sage-deep); color: white;
+}
+.map-item.current .map-node {
+  background: var(--terracotta); border-color: var(--terracotta-deep);
+}
+.node-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: white;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+.map-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  transition: all 0.2s ease;
+}
+.map-item.current .map-card {
+  border-color: var(--terracotta);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--terracotta) 15%, transparent);
+}
+.map-card:hover {
+  transform: translateX(3px); box-shadow: var(--shadow-md);
+}
+.map-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.map-unit {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.map-title {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px; color: var(--ink);
+}
+.map-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ── Empty ── */
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+  background: var(--cream-2);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--line);
+}
+.empty-mark {
+  font-family: var(--font-display);
+  font-size: 56px; font-weight: 300;
+  color: var(--ink-3); margin-bottom: 12px;
+}
+.empty p {
+  font-family: var(--font-display); font-size: 20px;
+  font-weight: 500; color: var(--ink); margin: 0 0 4px;
+}
+.empty span { font-size: 14px; color: var(--ink-3); }
+
+/* ── Footer ── */
+.footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--line-soft);
+  background: var(--cream);
+  margin-top: 40px;
+}
+.footer-inner {
+  max-width: 1320px; margin: 0 auto;
+  padding: 56px 28px 28px;
+  display: grid; grid-template-columns: 1.5fr 2fr;
+  gap: 48px;
+}
+.footer-brand { display: flex; flex-direction: column; gap: 6px; }
+.footer-brand .brand-name {
+  font-family: var(--font-display); font-size: 32px; font-weight: 600;
+  color: var(--ink); letter-spacing: -0.025em;
+}
+.footer-tag { color: var(--ink-3); font-size: 14px; font-style: italic; font-family: var(--font-display); }
+.footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.footer-h {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 600;
+  color: var(--ink); margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+.footer-cols a {
+  display: block; color: var(--ink-2);
+  font-size: 13px; padding: 4px 0;
+  cursor: pointer; transition: color 0.15s;
+}
+.footer-cols a:hover { color: var(--terracotta-deep); }
+.footer-bottom {
+  border-top: 1px solid var(--line-soft);
+  padding: 18px 28px;
+  text-align: center;
+  font-size: 12px; color: var(--ink-3);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 48px 24px 32px;
+  }
+  .hero-illust { display: none; }
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .sidebar {
+    position: static;
+    width: auto !important;
+  }
+  .sidebar.closed { padding: 18px; width: auto !important; }
+  .sidebar.closed .sidebar-body { display: none; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .nav-inner { padding: 12px 18px; gap: 12px; }
+  .nav-links {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; padding: 14px;
+    background: var(--paper); border-bottom: 1px solid var(--line-soft);
+    margin-left: 0;
+  }
+  .nav-links.open { display: flex; }
+  .teacher-chip { display: none; }
+  .mobile-only { display: grid; }
+  .hero { padding: 36px 18px 24px; }
+  .hero-stats { gap: 14px; flex-wrap: wrap; }
+  .stat-divider { display: none; }
+  .layout { padding: 0 18px 60px; }
+  .grid, .strip-grid { grid-template-columns: 1fr; }
+  .quick-grid { grid-template-columns: 1fr; }
+  .grammar-grid { grid-template-columns: 1fr; }
+  .vocab-grid { grid-template-columns: 1fr 1fr; }
+  .footer-cols { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .result-header { flex-direction: column; align-items: stretch; }
+  .page { padding: 32px 18px 60px; }
+}
+`;
