@@ -431,8 +431,31 @@ function StudentPicker() {
   );
 }
 
+// Структуровані нотатки вчителя: screen.teacher = { script, prompts, expected, followUps, notes }
+// (старе поле screen.teacherNotes теж підтримується)
+const TI_TEACHER_GROUPS = [
+  ['script', 'Сценарій'], ['prompts', 'Питання для обговорення'], ['expected', 'Очікувані відповіді / ключ'],
+  ['followUps', 'Додаткові питання'], ['notes', 'Нотатки'],
+];
+function teacherGroups(screen) {
+  if (!screen) return [];
+  const t = screen.teacher || {};
+  const out = TI_TEACHER_GROUPS.map(([k, title]) => ({ key: k, title, items: [].concat(t[k] || []) })).filter(g => g.items.length);
+  if (screen.teacherNotes) out.push({ key: 'legacy', title: 'Нотатки до екрана', items: [].concat(screen.teacherNotes) });
+  return out;
+}
+function TeacherNotesView({ screen }) {
+  const groups = teacherGroups(screen);
+  if (!groups.length) return <section><h4>Нотатки до екрана</h4><p className="ti-muted">Для цього екрана нотаток немає.</p></section>;
+  return groups.map(g => (
+    <section key={g.key} className={cx('ti-tnotes', `is-${g.key}`)}>
+      <h4>{g.title}</h4>
+      <ul>{g.items.map((n, i) => <li key={i}>{n}</li>)}</ul>
+    </section>
+  ));
+}
+
 function TeacherPanel({ open, setOpen, screen, sections, jumpTo, tools, setTools, onRestart, onReset, onOpenWindow, presenting }) {
-  const notes = screen && screen.teacherNotes ? [].concat(screen.teacherNotes) : [];
   const [timer, setTimer] = useState(0);
   return (
     <aside className={cx('ti-teacher', open && 'is-open')} aria-label="Teacher Studio">
@@ -441,14 +464,16 @@ function TeacherPanel({ open, setOpen, screen, sections, jumpTo, tools, setTools
       </button>
       {open && (
         <div className="ti-teacher-body">
-          {presenting && <p className="ti-teacher-warn"><TiIcon name="eye" size={14} /> Ця панель видима на спільному екрані. Для прихованих нотаток відкрий вікно вчителя.</p>}
-          <section><h4>Нотатки до екрана</h4>{notes.length ? <ul>{notes.map((n, i) => <li key={i}>{n}</li>)}</ul> : <p className="ti-muted">Для цього екрана нотаток немає.</p>}</section>
+          <p className="ti-teacher-warn"><TiIcon name="eye" size={14} /> {presenting
+            ? 'Ця панель видима на спільному екрані! Сховай її (Teacher ›) або відкрий окреме вікно вчителя.'
+            : 'Панель на цій сторінці бачать усі, хто бачить екран. Для прихованих нотаток під час Zoom — «Вікно вчителя» і демонструй лише вікно уроку.'}</p>
+          <TeacherNotesView screen={screen} />
           <section className="ti-teacher-toggles">
             <h4>Показ</h4>
             <label className="ti-switch"><input type="checkbox" checked={tools.reveal} onChange={(e) => setTools({ ...tools, reveal: e.target.checked })} /> Показати відповіді</label>
             <label className="ti-switch"><input type="checkbox" checked={!tools.hideExpl} onChange={(e) => setTools({ ...tools, hideExpl: !e.target.checked })} /> Показувати пояснення</label>
             <div className="ti-stack-row">
-              <TiButton size="sm" icon="refresh" onClick={onRestart}>Перезапустити вправу</TiButton>
+              <TiButton size="sm" icon="refresh" onClick={onRestart}>Скинути активність</TiButton>
               <TiButton size="sm" icon="replay" onClick={onReset}>Скинути демо</TiButton>
             </div>
           </section>
@@ -470,10 +495,18 @@ function TeacherPanel({ open, setOpen, screen, sections, jumpTo, tools, setTools
 }
 
 // Окреме вікно вчителя: нотатки й відповіді не потрапляють на спільний екран
-function TeacherWindow({ lessonId, getLesson }) {
+// (якщо в Zoom демонструється лише вікно/вкладка уроку, а не весь екран).
+function TeacherWindow({ lessonId, lessonMeta, content: given }) {
   const [state, setState] = useState(null);
   const [connected, setConnected] = useState(false);
+  const [content, setContent] = useState(given || null);
   const ch = useRef(null);
+  useEffect(() => {
+    if (given || !lessonMeta) return;
+    let alive = true;
+    loadLessonContent(lessonMeta).then(c => alive && setContent(c)).catch(() => {});
+    return () => { alive = false; };
+  }, [lessonId]);
   useEffect(() => {
     if (typeof BroadcastChannel === 'undefined') return;
     const c = new BroadcastChannel(`ti-teacher-${lessonId}`); ch.current = c;
@@ -482,9 +515,7 @@ function TeacherWindow({ lessonId, getLesson }) {
     return () => c.close();
   }, [lessonId]);
   const send = (action) => ch.current && ch.current.postMessage({ type: 'cmd', action });
-  const content = getLesson();
   const screen = content && state ? content.screens[state.index] : null;
-  const notes = screen && screen.teacherNotes ? [].concat(screen.teacherNotes) : [];
   return (
     <div className="ti-twin">
       <h1 className="ti-h2">Teacher window</h1>
@@ -493,8 +524,8 @@ function TeacherWindow({ lessonId, getLesson }) {
       {screen && (
         <>
           <div className="ti-eyebrow">Екран {state.index + 1} / {state.total} · {TI_SCREEN_TEMPLATES[screen.type] ? TI_SCREEN_TEMPLATES[screen.type].label : screen.type}</div>
-          <h2 className="ti-h3">{screen.title || '—'}</h2>
-          <section className="ti-panel"><h4>Нотатки</h4>{notes.length ? <ul>{notes.map((n, i) => <li key={i}>{n}</li>)}</ul> : <p className="ti-muted">Немає нотаток.</p>}</section>
+          <h2 className="ti-h3">{screen.navTitle || screen.title || '—'}</h2>
+          <div className="ti-panel ti-twin-notes"><TeacherNotesView screen={screen} /></div>
           {screen.exercise && <section className="ti-panel"><h4>Відповідь</h4><p>{tiAnswerText(screen.exercise) || '—'}</p>{screen.exercise.explanation && <p className="ti-muted">{screen.exercise.explanation}</p>}</section>}
         </>
       )}
@@ -502,59 +533,105 @@ function TeacherWindow({ lessonId, getLesson }) {
         <TiButton icon="left" onClick={() => send('prev')}>Назад</TiButton>
         <TiButton variant="primary" iconRight="right" onClick={() => send('next')}>Далі</TiButton>
         <TiButton icon="eye" onClick={() => send('toggle-reveal')}>Відповіді на екрані: {state && state.reveal ? 'показано' : 'приховано'}</TiButton>
+        <TiButton icon="refresh" onClick={() => send('reset-activity')}>Скинути активність</TiButton>
       </div>
     </div>
   );
 }
 
-/* ═══ Програвач уроку ═══════════════════════════════════════════ */
-function LessonPlayer({ lesson, unit, content, startIndex, onIndex, isTeacher, go, nextLesson, isDemo }) {
+/* ── Український переклад: глобальний перемикач, англійська лишається основною ── */
+const TI_UK_KEY = 'inkwell-ti-uk';
+function Uk({ show, children, className, block }) {
+  if (!show || !children) return null;
+  return <span className={cx('ti-uk ti-uk-line', block && 'is-block', className)} lang="uk">{children}</span>;
+}
+
+/* ═══ Програвач уроку ═══════════════════════════════════════════
+ * Додатково для уроків із власними інтерактивними екранами:
+ *  • ctx.sstate / ctx.setS — стан поточного екрана (зберігається в прогресі
+ *    учня як `lstate:<lessonId>`; у режимі вчителя — лише в пам'яті);
+ *  • content.completionCriteria.explicit — урок завершується не «дійшов до
+ *    кінця», а викликом ctx.completeLesson() (умови перевіряє сам екран);
+ *  • screen.optional — додаткові екрани після основних (не входять у прогрес).
+ * ═══════════════════════════════════════════════════════════════ */
+function LessonPlayer({ lesson, unit, content, startIndex, onIndex, isTeacher, go, nextLesson, upcomingLesson, isDemo }) {
   const ti = useTi();
   const screens = content.screens || [];
+  const coreCount = screens.filter(s => !s.optional).length || screens.length;
   const [index, setIndex] = useState(() => clamp(startIndex || 0, 0, Math.max(0, screens.length - 1)));
   const [focus, setFocus] = useState(false);
   const [presenting, setPresenting] = useState(false);
   const [teacherMode, setTeacherMode] = useState(false);
   const [panelOpen, setPanelOpen] = useState(true);
+  const [outlineOpen, setOutlineOpen] = useState(false);
   const [tools, setTools] = useState({ reveal: false, hideExpl: false });
   const [exNonce, setExNonce] = useState(0);
   const [stats, setStats] = useState({ n: 0, ok: 0 });
+  const [showUk, setShowUkRaw] = useState(() => { try { return localStorage.getItem(TI_UK_KEY) === '1'; } catch (e) { return false; } });
+  const setShowUk = (v) => { setShowUkRaw(v); try { localStorage.setItem(TI_UK_KEY, v ? '1' : '0'); } catch (e) {} };
   const rootRef = useRef(null);
   const screen = screens[index];
   const persist = !isDemo && ti && ti.mode !== 'demo';
+  const explicit = !!(content.completionCriteria && content.completionCriteria.explicit);
+  const isT = isTeacher && teacherMode;
 
-  // Розділи: з content.sections або з поля screen.section
+  // Стан екранів уроку
+  const stateKey = `lstate:${lesson.id}`;
+  const [memState, setMemState] = useState({});
+  const [memDone, setMemDone] = useState(false);
+  const lstate = persist ? (ti.get(stateKey) || {}) : memState;
+  const tiUpdate = ti && ti.update;
+  const setLState = useCallback((sid, fn) => {
+    const apply = (s) => { const cur = s || {}; const prev = cur[sid] || {}; return { ...cur, [sid]: typeof fn === 'function' ? fn(prev) : { ...prev, ...fn } }; };
+    if (persist) tiUpdate(stateKey, apply); else setMemState(apply);
+  }, [persist, tiUpdate, stateKey]);
+  const resetScreenState = useCallback((sid) => {
+    const drop = (s) => { const n = { ...(s || {}) }; delete n[sid]; return n; };
+    if (persist) tiUpdate(stateKey, drop); else setMemState(drop);
+  }, [persist, tiUpdate, stateKey]);
+  const lessonProgress = (persist && ti.get(`lesson:${lesson.id}`)) || {};
+  const lessonCompleted = persist ? !!lessonProgress.completedAt : memDone;
+  const completeLesson = useCallback(() => {
+    setMemDone(true);
+    if (persist) tiUpdate(`lesson:${lesson.id}`, (p) => (p.completedAt ? p : { ...p, completedAt: new Date().toISOString() }));
+  }, [persist, tiUpdate, lesson.id]);
+
+  // Розділи: з поля screen.section
   const sections = useMemo(() => {
     const out = []; screens.forEach((s, i) => { const t = s.section || (s.type === 'cover' ? 'Intro' : null); if (t && !out.some(o => o.title === t)) out.push({ title: t, index: i }); });
     return out;
   }, [content]);
   const currentSection = useMemo(() => { let cur = null; sections.forEach(s => { if (s.index <= index) cur = s; }); return cur; }, [sections, index]);
 
-  // Прогрес: позиція й завершення (лише учень і лише урок із контентом)
+  // Прогрес: позиція, відвідані екрани, завершення (лише учень і лише урок із контентом)
   useEffect(() => {
     onIndex && onIndex(index);
+    if (screen && !((lstate._nav || {}).visited || []).includes(screen.id)) setLState('_nav', (p) => ({ ...p, visited: [...(p.visited || []), screen.id] }));
     if (!persist) return;
-    const last = index >= screens.length - 1;
+    const last = index >= coreCount - 1;
     ti.update(`lesson:${lesson.id}`, (p) => ({
-      ...p, screen: index, total: screens.length, maxScreen: Math.max(p.maxScreen || 0, index),
+      ...p, screen: index, total: coreCount, maxScreen: Math.max(p.maxScreen || 0, Math.min(index, coreCount - 1)),
       startedAt: p.startedAt || new Date().toISOString(),
-      completedAt: p.completedAt || (last ? new Date().toISOString() : undefined),
+      completedAt: p.completedAt || (!explicit && last ? new Date().toISOString() : undefined),
     }));
     ti.update('course', (c) => ({ ...c, lastLesson: lesson.id, lastAt: new Date().toISOString() }));
   }, [index]);
 
-  const go2 = useCallback((i) => { setIndex(clamp(i, 0, screens.length - 1)); setExNonce(n => n + 1); }, [screens.length]);
+  const go2 = useCallback((i) => { setIndex(clamp(i, 0, screens.length - 1)); setExNonce(n => n + 1); setOutlineOpen(false); }, [screens.length]);
   const prev = () => go2(index - 1), next = () => go2(index + 1);
 
-  // Клавіатура: ← → (не в полях вводу), Esc — вийти з Focus
+  // Клавіатура: ← → (не в полях вводу й не всередині власних радіогруп/вкладок), Esc — вийти з Focus
   useEffect(() => {
     const onKey = (e) => {
+      if (e.defaultPrevented) return;
       const tag = (e.target.tagName || '').toLowerCase();
       const textInput = tag === 'input' && !['checkbox', 'radio', 'button', 'range'].includes((e.target.type || '').toLowerCase());
       if (textInput || tag === 'textarea' || tag === 'select' || e.target.isContentEditable) return;
+      const local = e.target.closest && e.target.closest('[role="radiogroup"],[role="tablist"],[data-ti-keys]');
+      if (e.key === 'Escape') { setOutlineOpen(false); if ((focus || presenting) && !document.fullscreenElement) { setFocus(false); setPresenting(false); } return; }
+      if (local) return;
       if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); setIndex(i => clamp(i + 1, 0, screens.length - 1)); setExNonce(n => n + 1); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); setIndex(i => clamp(i - 1, 0, screens.length - 1)); setExNonce(n => n + 1); }
-      else if (e.key === 'Escape' && (focus || presenting) && !document.fullscreenElement) { setFocus(false); setPresenting(false); }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -582,13 +659,18 @@ function LessonPlayer({ lesson, unit, content, startIndex, onIndex, isTeacher, g
   };
 
   // Вікно вчителя (BroadcastChannel)
-  const post = useTeacherChannel(lesson.id, isTeacher && teacherMode, (cmd) => {
-    if (cmd.action === 'next') setIndex(i => clamp(i + 1, 0, screens.length - 1));
-    if (cmd.action === 'prev') setIndex(i => clamp(i - 1, 0, screens.length - 1));
+  const post = useTeacherChannel(lesson.id, isT, (cmd) => {
+    if (cmd.action === 'next') { setIndex(i => clamp(i + 1, 0, screens.length - 1)); setExNonce(n => n + 1); }
+    if (cmd.action === 'prev') { setIndex(i => clamp(i - 1, 0, screens.length - 1)); setExNonce(n => n + 1); }
     if (cmd.action === 'toggle-reveal') setTools(t => ({ ...t, reveal: !t.reveal }));
-    if (cmd.action === 'sync') setExNonce(n => n);
+    if (cmd.action === 'reset-activity') restartActivityRef.current();
+    if (cmd.action === 'sync') syncRef.current && syncRef.current();
   });
+  const syncRef = useRef(null);
+  syncRef.current = () => post({ type: 'state', index, total: screens.length, reveal: tools.reveal });
   useEffect(() => { post({ type: 'state', index, total: screens.length, reveal: tools.reveal }); }, [index, tools.reveal, teacherMode]);
+  const restartActivity = () => { if (screen) resetScreenState(screen.id); setExNonce(n => n + 1); };
+  const restartActivityRef = useRef(restartActivity); restartActivityRef.current = restartActivity;
 
   const onResult = (r) => {
     setStats(s => ({ n: s.n + (r.self ? 0 : 1), ok: s.ok + (r.correct && !r.self ? 1 : 0) }));
@@ -596,43 +678,80 @@ function LessonPlayer({ lesson, unit, content, startIndex, onIndex, isTeacher, g
     const ex = r.exercise || {}; const t = ex.tags || {};
     ti.recordAttempt({ itemId: `lesson:${lesson.id}:${screen.id}:${ex.id || ''}`, correct: !!r.correct, score: r.score, ms: r.ms, timed: !!r.timed, skill: r.self ? 'natural' : (t.skill || 'recognition'), selfRating: r.selfRating, world: t.world, aspect: t.aspect, pair: t.pair });
   };
+  const sid = screen ? screen.id : 'x';
   const ctx = {
-    exKey: `${screen ? screen.id : 'x'}:${exNonce}`, onResult,
-    revealAnswers: isTeacher && teacherMode && tools.reveal,
-    hideExplanation: isTeacher && teacherMode && tools.hideExpl,
-    stats, demo: !persist, nextLesson,
+    exKey: `${sid}:${exNonce}`, onResult,
+    revealAnswers: isT && tools.reveal,
+    hideExplanation: isT && tools.hideExpl,
+    stats, demo: !persist, nextLesson, upcomingLesson,
     goNextLesson: () => nextLesson && go(`lesson/${nextLesson.id}`), goGym: () => go('gym'), goCourse: () => go(''),
+    // для інтерактивних екранів
+    index, screens, coreCount, next, prev, goTo: go2,
+    goToScreen: (id) => { const i = screens.findIndex(s => s.id === id); if (i >= 0) go2(i); },
+    lstate, sstate: lstate[sid] || {}, setS: (fn) => setLState(sid, fn), setLState, resetScreen: () => resetScreenState(sid),
+    showUk, setShowUk, teacherMode: isT, isTeacher, persist,
+    completeLesson, lessonCompleted, visited: (lstate._nav || {}).visited || [],
   };
   if (!screen) return <LessonPlaceholder lesson={lesson} unit={unit} go={go} />;
-  const pct = screens.length > 1 ? (index / (screens.length - 1)) * 100 : 100;
+  const coreIdx = Math.min(index, coreCount - 1);
+  const pct = coreCount > 1 ? (coreIdx / (coreCount - 1)) * 100 : 100;
+  const doneOf = (s) => !!(lstate[s.id] && lstate[s.id].done);
+  const visitedOf = (s) => ctx.visited.includes(s.id);
+  const screenName = (s) => s.navTitle || s.title || (TI_SCREEN_TEMPLATES[s.type] || {}).label || s.type;
 
   return (
-    <div ref={rootRef} className={cx('ti-player', focus && 'is-focus', presenting && 'is-present', isTeacher && teacherMode && 'is-teacher')}>
+    <div ref={rootRef} className={cx('ti-player', focus && 'is-focus', presenting && 'is-present', isT && 'is-teacher')}>
       <div className="ti-topbar" role="toolbar" aria-label="Керування уроком">
-        <TiButton icon="back" onClick={() => go('')} className="ti-topbar-back">{focus || presenting ? '' : 'Course'}</TiButton>
+        <TiButton icon="back" onClick={() => go('')} className="ti-topbar-back" aria-label="Повернутися до курсу">{focus || presenting ? '' : 'Course'}</TiButton>
         <div className="ti-topbar-title">
+          <span className="ti-topbar-crumb">{isDemo ? 'Tense Instinct' : `Tense Instinct · Unit ${unit.number}`}</span>
           <span className="ti-topbar-lesson">{isDemo ? 'Component gallery' : `${String(lesson.number).padStart(2, '0')} · ${lesson.title}`}</span>
           {currentSection && <span className="ti-topbar-section">{currentSection.title}</span>}
         </div>
-        <div className="ti-topbar-progress" role="progressbar" aria-label="Прогрес уроку" aria-valuemin={1} aria-valuemax={screens.length} aria-valuenow={index + 1}><span style={{ width: `${pct}%` }} /></div>
+        <div className="ti-topbar-progress" role="progressbar" aria-label="Прогрес уроку" aria-valuemin={1} aria-valuemax={coreCount} aria-valuenow={coreIdx + 1}><span style={{ width: `${pct}%` }} /></div>
         <div className="ti-topbar-tools">
+          {isTeacher
+            ? <div className="ti-seg is-small ti-mode-seg" role="radiogroup" aria-label="Режим навчання">
+                <button type="button" role="radio" aria-checked={!teacherMode} className={cx('ti-seg-btn', !teacherMode && 'is-on')} onClick={() => setTeacherMode(false)}>Self-Study</button>
+                <button type="button" role="radio" aria-checked={teacherMode} className={cx('ti-seg-btn', teacherMode && 'is-on')} onClick={() => setTeacherMode(true)}>Teacher</button>
+              </div>
+            : <span className="ti-chip ti-mode-chip" title="Режим самостійного навчання">Self-Study</span>}
+          <TiButton icon="layers" onClick={() => setOutlineOpen(o => !o)} aria-expanded={outlineOpen} aria-controls="ti-outline" title="План уроку">Outline</TiButton>
+          <TiButton onClick={() => setShowUk(!showUk)} aria-pressed={showUk} title="Український переклад і пояснення" aria-label="Український переклад" className="ti-uk-toggle"><b className="ti-uk-flag" aria-hidden="true">UA</b></TiButton>
           <TiButton icon="focus" onClick={() => setFocus(f => !f)} aria-pressed={focus} title="Focus Mode">{focus ? 'Exit focus' : 'Focus'}</TiButton>
-          {isTeacher && <TiButton icon="notes" onClick={() => setTeacherMode(m => !m)} aria-pressed={teacherMode} className={teacherMode ? 'is-on' : ''}>Teacher</TiButton>}
-          {isTeacher && teacherMode && <TiButton icon="monitor" onClick={togglePresent} aria-pressed={presenting}>{presenting ? 'Stop' : 'Present'}</TiButton>}
-          <TiButton icon={document.fullscreenElement ? 'compress' : 'expand'} onClick={toggleFullscreen} aria-label="На весь екран" title="На весь екран" />
+          {isT && <TiButton icon="monitor" onClick={togglePresent} aria-pressed={presenting}>{presenting ? 'Stop' : 'Present'}</TiButton>}
+          <TiButton icon={document.fullscreenElement ? 'compress' : 'expand'} onClick={toggleFullscreen} aria-label="На весь екран" title="На весь екран" className="ti-fs-btn" />
         </div>
       </div>
 
+      {outlineOpen && (
+        <nav id="ti-outline" className="ti-outline" aria-label="План уроку">
+          <div className="ti-outline-head"><strong>Lesson outline</strong><TiButton size="sm" icon="x" onClick={() => setOutlineOpen(false)} aria-label="Закрити план" /></div>
+          <ol>
+            {screens.map((s, i) => (
+              <li key={s.id}>
+                <button type="button" className={cx('ti-outline-item', i === index && 'is-on', s.optional && 'is-optional')} onClick={() => go2(i)} aria-current={i === index ? 'step' : undefined}>
+                  <span className="ti-outline-n">{s.optional ? '+' : String(i + 1).padStart(2, '0')}</span>
+                  <span className="ti-outline-t">{screenName(s)}{s.minutes ? <small> · {s.minutes} min</small> : null}</span>
+                  <span className="ti-outline-st">{doneOf(s) ? <><TiIcon name="check" size={14} /> done</> : visitedOf(s) ? 'seen' : ''}</span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+
       <div className="ti-workspace">
-        <main className={cx('ti-canvas', `scr-${screen.type}`)} aria-live="polite" aria-label={`Екран ${index + 1} з ${screens.length}`}>
-          <div className="ti-canvas-inner" key={`${index}:${exNonce > 0 ? '' : ''}`}>
+        <main className={cx('ti-canvas', `scr-${screen.type}`)} aria-label={`Екран ${index + 1} з ${screens.length}`}>
+          <p className="ti-sr-only" aria-live="polite">{`Screen ${index + 1}: ${screenName(screen)}`}</p>
+          <div className="ti-canvas-inner" key={index}>
             <ScreenRenderer screen={screen} lesson={lesson} ctx={ctx} />
           </div>
         </main>
-        {isTeacher && teacherMode && (
+        {isT && (
           <TeacherPanel open={panelOpen} setOpen={setPanelOpen} screen={screen} sections={sections} jumpTo={go2} tools={tools} setTools={setTools} presenting={presenting}
-            onRestart={() => setExNonce(n => n + 1)}
-            onReset={() => { ti && ti.resetDemo(); setStats({ n: 0, ok: 0 }); setTools({ reveal: false, hideExpl: false }); go2(0); }}
+            onRestart={restartActivity}
+            onReset={() => { ti && ti.resetDemo(); setMemState({}); setMemDone(false); setStats({ n: 0, ok: 0 }); setTools({ reveal: false, hideExpl: false }); go2(0); }}
             onOpenWindow={() => window.open(`${window.location.pathname}${window.location.search}#/${'tense-instinct'}/teacher/${lesson.id}`, `ti-teacher-${lesson.id}`, 'width=520,height=760')} />
         )}
       </div>
@@ -641,11 +760,11 @@ function LessonPlayer({ lesson, unit, content, startIndex, onIndex, isTeacher, g
         <TiButton icon="left" onClick={prev} disabled={index === 0}>Previous</TiButton>
         <div className="ti-dots" aria-hidden="true">
           {sections.length > 1
-            ? sections.map((s, i) => { const end = i + 1 < sections.length ? sections[i + 1].index : screens.length; const on = index >= s.index && index < end; const done = index >= end; return <span key={s.index} className={cx('ti-dot is-section', on && 'is-on', done && 'is-done')} style={{ flex: end - s.index }} />; })
+            ? sections.map((s, i) => { const end = i + 1 < sections.length ? sections[i + 1].index : screens.length; const on = index >= s.index && index < end; const done = index >= end; return <span key={s.index} className={cx('ti-dot is-section', on && 'is-on', done && 'is-done', screens[s.index].optional && 'is-optional')} style={{ flex: end - s.index }} />; })
             : screens.map((s, i) => <span key={i} className={cx('ti-dot', i === index && 'is-on', i < index && 'is-done')} />)}
         </div>
-        <span className="ti-counter">{index + 1} / {screens.length}</span>
-        <TiButton variant="primary" iconRight="right" onClick={next} disabled={index >= screens.length - 1}>Next</TiButton>
+        <span className="ti-counter">{screen.optional ? 'Extra' : `${coreIdx + 1} / ${coreCount}`}</span>
+        <TiButton variant="primary" iconRight="right" onClick={next} disabled={index >= screens.length - 1}>{index === coreCount - 1 && screens.length > coreCount ? 'Extras' : 'Next'}</TiButton>
       </nav>
     </div>
   );

@@ -58,7 +58,7 @@ function TiRoot({ course, initialPath, session, isTeacher, canSeeLesson, isLesso
   else if (top === 'gym') body = <TenseGym key="gym" initial={seg.slice(1).join('/')} navigate={navigate} />;
   else if (top === 'gallery') body = <LessonPlayer key="gallery" lesson={TI_DEMO_LESSON} unit={{ number: 0, title: 'Gallery' }} content={TI_DEMO_LESSON} isDemo isTeacher={isTeacher}
     startIndex={Math.max(0, (parseInt(seg[1], 10) || 1) - 1)} onIndex={(i) => navigate(`gallery/${i + 1}`, { replace: true })} go={navigate} />;
-  else if (top === 'teacher' && isTeacher) body = <TeacherWindow lessonId={seg[1]} getLesson={() => (seg[1] === 'gallery' ? TI_DEMO_LESSON : (window.INKWELL.tiLessons || {})[seg[1]])} />;
+  else if (top === 'teacher' && isTeacher) body = <TeacherWindow key={seg[1]} lessonId={seg[1]} content={seg[1] === 'gallery' ? TI_DEMO_LESSON : null} lessonMeta={(allLessons.find(x => x.lesson.id === seg[1]) || {}).lesson} />;
   else body = <CourseLanding ctx={ctx} />;
 
   const inSubpage = top && top !== 'lesson' && top !== 'gallery' && top !== 'teacher';
@@ -83,6 +83,7 @@ function TiRoot({ course, initialPath, session, isTeacher, canSeeLesson, isLesso
 
 /* ── Маршрут уроку: доступ → контент → програвач / заглушка ── */
 function LessonRoute({ lessonId, screenNo, ctx }) {
+  const ti = useTi();
   const found = ctx.allLessons.find(x => x.lesson.id === lessonId);
   const [state, setState] = useState({ status: 'loading', content: null, error: null });
   const lesson = found && found.lesson;
@@ -97,14 +98,15 @@ function LessonRoute({ lessonId, screenNo, ctx }) {
   if (!found) return <div className="ti-panel"><h2 className="ti-h3">Урок не знайдено</h2><TiButton icon="map" onClick={() => ctx.navigate('')}>До курсу</TiButton></div>;
   const idx = ctx.allLessons.indexOf(found);
   const nextFound = ctx.allLessons[idx + 1];
-  if (state.status === 'loading') return <div className="ti-loading" role="status"><span className="ti-spinner" /> Завантажую урок…</div>;
+  if (state.status === 'loading' || (state.status === 'ready' && ti && !ti.ready)) return <div className="ti-loading" role="status"><span className="ti-spinner" /> Завантажую урок…</div>;
   if (state.status === 'error') return <div className="ti-panel"><h2 className="ti-h3">Не вдалося завантажити урок</h2><p>{state.error}</p><TiButton onClick={() => ctx.navigate('')}>До курсу</TiButton></div>;
   if (state.status === 'empty' || !state.content || !(state.content.screens || []).length) return <LessonPlaceholder lesson={lesson} unit={found.unit} go={ctx.navigate} locked={st.locked} />;
   const saved = (st.progress && st.progress.screen) || 0;
   const start = screenNo ? Math.max(0, parseInt(screenNo, 10) - 1) : saved;
   return <LessonPlayer lesson={lesson} unit={found.unit} content={state.content} startIndex={start} isTeacher={ctx.isTeacher}
     onIndex={(i) => ctx.navigate(`lesson/${lesson.id}/${i + 1}`, { replace: true })} go={ctx.navigate}
-    nextLesson={nextFound && !ctx.lessonState(nextFound.lesson).locked ? nextFound.lesson : null} />;
+    nextLesson={nextFound && lessonHasContent(nextFound.lesson) && !ctx.lessonState(nextFound.lesson).locked ? nextFound.lesson : null}
+    upcomingLesson={nextFound ? nextFound.lesson : null} />;
 }
 
 /* ═══ Лендинг курсу ════════════════════════════════════════════ */
@@ -265,7 +267,7 @@ function CourseRoadmap({ ctx }) {
                     </div>
                     <h4 className="ti-node-title">{l.title}</h4>
                     <p className="ti-node-desc">{l.description}</p>
-                    {status === 'progress' && st.progress.total > 0 && <div className="ti-node-bar"><span style={{ width: `${((st.progress.maxScreen + 1) / st.progress.total) * 100}%` }} /></div>}
+                    {status === 'progress' && st.progress.total > 0 && <div className="ti-node-bar"><span style={{ width: `${Math.min(100, ((st.progress.maxScreen + 1) / st.progress.total) * 100)}%` }} /></div>}
                     {isOpen && (
                       <div className="ti-node-more">
                         {l.titleUk && <p className="ti-uk">{l.titleUk}</p>}

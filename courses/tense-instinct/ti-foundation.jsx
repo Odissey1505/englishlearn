@@ -375,6 +375,11 @@ function wavePath(x1, x2, y, amp = 6, len = 18) {
   return d;
 }
 
+// Додаткові (необов'язкові) поля специфікації — сумісні зі старими:
+//   spec.refs: [{ x, label }]           — ще точки відліку, крім ref
+//   point: { label, below, done }       — підпис; done = позначка «завершено»
+//   span / repeat / interrupt: { label } — підпис над елементом
+//   { t: 'duration', from, to, label }  — дужка тривалості під віссю
 function Timeline({ spec, label, compact, animate = true, className, showZones = true, highlight }) {
   const reduced = useReducedMotion();
   const anim = animate && !reduced;
@@ -382,10 +387,14 @@ function Timeline({ spec, label, compact, animate = true, className, showZones =
   const nowX = tlX(TI_NOW);
   const items = (spec && spec.items) || [];
   const ref = spec && spec.ref;
+  const refs = (spec && spec.refs) || [];
+  const hasDuration = items.some(it => it.t === 'duration');
+  const H = TL_H + (hasDuration ? 36 : 0);
   let delay = 0; const d = () => { delay += 0.18; return { animationDelay: `${delay}s` }; };
+  const itemLabel = (x, y, text, cls) => text ? <text x={x} y={y} textAnchor="middle" className={cx('tl-label tl-item-label', cls)}>{text}</text> : null;
   return (
     <figure className={cx('ti-timeline', compact && 'ti-timeline-compact', anim && 'ti-tl-anim', className)}>
-      <svg viewBox={`0 0 ${TL_W} ${TL_H}`} role="img" aria-label={label || 'Timeline'} preserveAspectRatio="xMidYMid meet">
+      <svg viewBox={`0 0 ${TL_W} ${H}`} role="img" aria-label={label || 'Timeline'} preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id={`${id}-axis`} x1="0" x2="1">
             <stop offset="0" stopColor="var(--ti-past)" /><stop offset={TI_NOW / 100} stopColor="var(--ti-now)" /><stop offset="1" stopColor="var(--ti-future)" />
@@ -403,16 +412,27 @@ function Timeline({ spec, label, compact, animate = true, className, showZones =
         <text x={nowX} y={TL_Y + 34} textAnchor="middle" className="tl-label tl-label-now">NOW</text>
         <text x={TL_PAD + 4} y={TL_Y + 34} className="tl-label">PAST</text>
         <text x={TL_W - TL_PAD - 4} y={TL_Y + 34} textAnchor="end" className="tl-label">FUTURE</text>
-        {ref && ref.x !== TI_NOW && <g className="tl-item" style={d()}>
-          <line x1={tlX(ref.x)} y1={TL_Y - 58} x2={tlX(ref.x)} y2={TL_Y + 12} className="tl-ref-line" />
-        </g>}
-        {ref && ref.label && <text x={tlX(ref.x)} y={TL_Y - 62} textAnchor="middle" className="tl-label tl-label-ref">{ref.label}</text>}
+        {[ref, ...refs].filter(Boolean).map((r, i) => (
+          <g key={`ref${i}`}>
+            {r.x !== TI_NOW && <g className="tl-item" style={d()}><line x1={tlX(r.x)} y1={TL_Y - 58} x2={tlX(r.x)} y2={TL_Y + 12} className="tl-ref-line" /></g>}
+            {r.label && <text x={tlX(r.x)} y={TL_Y - 62} textAnchor="middle" className="tl-label tl-label-ref">{r.label}</text>}
+          </g>
+        ))}
         {items.map((it, i) => {
-          if (it.t === 'point') return <circle key={i} cx={tlX(it.x)} cy={TL_Y} r={it.faint ? 6.5 : 8.5} className={cx('tl-item tl-point', it.faint && 'is-faint')} style={d()} />;
-          if (it.t === 'interrupt') return <g key={i} className="tl-item" style={d()}><path d={`M ${tlX(it.x)} ${TL_Y - 34} L ${tlX(it.x) - 7} ${TL_Y - 16} L ${tlX(it.x) + 3} ${TL_Y - 16} L ${tlX(it.x) - 4} ${TL_Y + 2}`} className="tl-interrupt" /></g>;
+          if (it.t === 'point') {
+            const cxp = tlX(it.x);
+            return (
+              <g key={i} className="tl-item" style={d()}>
+                <circle cx={cxp} cy={TL_Y} r={it.done ? 10.5 : it.faint ? 6.5 : 8.5} className={cx('tl-point', it.faint && 'is-faint', it.done && 'is-done')} />
+                {it.done && <path d={`M ${cxp - 4.5} ${TL_Y} l 3 3.2 l 6 -6.4`} className="tl-check" />}
+                {itemLabel(cxp, it.below ? TL_Y + 50 : TL_Y - 18, it.label)}
+              </g>
+            );
+          }
+          if (it.t === 'interrupt') return <g key={i} className="tl-item" style={d()}><path d={`M ${tlX(it.x)} ${TL_Y - 34} L ${tlX(it.x) - 7} ${TL_Y - 16} L ${tlX(it.x) + 3} ${TL_Y - 16} L ${tlX(it.x) - 4} ${TL_Y + 2}`} className="tl-interrupt" />{itemLabel(tlX(it.x), TL_Y - 40, it.label, 'is-gold')}</g>;
           if (it.t === 'repeat') {
             const n = it.n || 6; const step = (it.to - it.from) / (n - 1);
-            return <g key={i}>{Array.from({ length: n }, (_, k) => <circle key={k} cx={tlX(it.from + step * k)} cy={TL_Y} r="5.5" className="tl-item tl-point tl-repeat" style={d()} />)}</g>;
+            return <g key={i}>{Array.from({ length: n }, (_, k) => <circle key={k} cx={tlX(it.from + step * k)} cy={TL_Y} r="5.5" className="tl-item tl-point tl-repeat" style={d()} />)}{it.label && <g className="tl-item" style={d()}>{itemLabel(tlX((it.from + it.to) / 2), TL_Y - 18, it.label)}</g>}</g>;
           }
           if (it.t === 'span') {
             const x1 = tlX(it.from), x2 = tlX(it.to);
@@ -421,12 +441,22 @@ function Timeline({ spec, label, compact, animate = true, className, showZones =
                 <path d={it.ongoing ? wavePath(x1, x2, TL_Y - 22) : `M ${x1} ${TL_Y - 22} L ${x2} ${TL_Y - 22}`} className={cx('tl-span', it.ongoing && 'is-ongoing')} />
                 {(it.open === 'both' || it.open === 'start') && <text x={x1 - 4} y={TL_Y - 18} textAnchor="end" className="tl-ellipsis">…</text>}
                 {(it.open === 'both' || it.open === 'end') && <text x={x2 + 4} y={TL_Y - 18} className="tl-ellipsis">…</text>}
+                {itemLabel((x1 + x2) / 2, TL_Y - 38, it.label)}
               </g>
             );
           }
           if (it.t === 'link') {
             const x1 = tlX(it.from), x2 = tlX(it.to), mid = (x1 + x2) / 2;
             return <path key={i} d={`M ${x1} ${TL_Y - 10} Q ${mid} ${TL_Y - 58} ${x2 - 3} ${TL_Y - 12}`} className="tl-item tl-link" markerEnd={`url(#${id}-arrow)`} style={d()} />;
+          }
+          if (it.t === 'duration') {
+            const x1 = tlX(it.from), x2 = tlX(it.to), y = TL_Y + 46;
+            return (
+              <g key={i} className="tl-item" style={d()}>
+                <path d={`M ${x1} ${y - 7} L ${x1} ${y} L ${x2} ${y} L ${x2} ${y - 7}`} className="tl-duration" />
+                {itemLabel((x1 + x2) / 2, y + 18, it.label, 'is-duration')}
+              </g>
+            );
           }
           return null;
         })}
