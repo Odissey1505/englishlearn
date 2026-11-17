@@ -65,6 +65,7 @@
         'courses/tense-instinct/ti-lesson.jsx',
         'courses/tense-instinct/ti-scene.jsx',
         'courses/tense-instinct/ti-discovery.jsx',
+        'courses/tense-instinct/ti-worlds.jsx',      // Lesson 02 · Three Time Worlds
         'courses/tense-instinct/ti-app.jsx',
       ],
     },
@@ -91,10 +92,16 @@
         theme: 'blue',
         lessons: [
           lesson({
-            id: 'ti-02', number: 2, title: 'The Three Time Worlds', titleUk: 'Три світи часу',
-            description: 'Past, Present, and Future — where the action sits and where we are looking from.',
-            tags: ['past', 'present', 'future'],
-            plannedSections: ['Cover', 'Warm-up', 'Image-based situations', 'Interactive timeline', 'Practice', 'Speaking', 'Summary'],
+            id: 'ti-02', number: 2, title: 'Three Time Worlds', titleUk: 'Три світи часу',
+            subtitle: 'Think in time before you think in grammar.',
+            description: 'Think in time before you think in grammar. Help Alex repair the Chrono Compass and explore Past, Present and Future.',
+            tags: ['past', 'present', 'future', 'time-worlds'],
+            level: 'A1–A2',
+            status: 'ready',
+            contentFile: 'courses/tense-instinct/lessons/ti-02.js',
+            estimatedDuration: 33,
+            updated: 'Nov 2026',
+            plannedSections: ['Mission Briefing', 'Activate the Time Portal', 'Explore the Three Worlds', 'Time Detective', 'One Story, Three Worlds', 'The Time Shift Lab', 'Broken Timeline', 'My Three Time Worlds', 'Instinct Challenge', 'Mission Complete', 'Time Portal Roulette (optional)'],
           }),
         ],
       },
