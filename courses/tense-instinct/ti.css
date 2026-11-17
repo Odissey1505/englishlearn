@@ -1072,9 +1072,6 @@ body.ti-focus .ti-outline { top: 84px; }
 @keyframes twFade { from { opacity: 0; } to { opacity: 1; } }
 .tw-scene.is-compact { box-shadow: none; border-radius: 12px; }
 .tw-scene.is-idle .tw-scene-art, .tw-scene.is-idle > img { filter: grayscale(0.85) brightness(0.55); }
-.tw-tone { position: absolute; inset: 0; pointer-events: none; }
-.tw-tone-past { background: linear-gradient(180deg, rgba(242, 160, 70, 0.18), rgba(120, 60, 20, 0.28)); mix-blend-mode: multiply; }
-.tw-tone-future { background: radial-gradient(circle at 70% 20%, rgba(150, 160, 255, 0.25), rgba(30, 30, 110, 0.35)); mix-blend-mode: screen; }
 .tw-scene-badge { position: absolute; left: 14px; bottom: 14px; display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px 6px 10px; border-radius: 999px; background: rgba(8, 11, 24, 0.78); color: #F3F5FF; font-size: 13.5px; font-weight: 700; backdrop-filter: blur(6px); }
 .tw-scene-badge i { width: 10px; height: 10px; border-radius: 50%; background: var(--tw-present); box-shadow: 0 0 8px currentColor; }
 .tw-w-past .tw-scene-badge i { background: var(--tw-past); } .tw-w-future .tw-scene-badge i { background: var(--tw-future); } .tw-w-lab .tw-scene-badge i { background: var(--ti-gold); }
@@ -1416,6 +1413,63 @@ body.ti-focus .ti-outline { top: 84px; }
 .tw-round-task strong { color: var(--w); }
 .tw-selfrate { display: grid; gap: 6px; margin-top: 8px; }
 
+/* ═══ Фото-сцени: анімації світів (TwPhotoFx) ═══ */
+.tw-fx { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.tw-fx > * { position: absolute; }
+/* Past — спогад */
+.tw-scene.is-photo.tw-w-past > img { filter: saturate(0.76) sepia(0.12) contrast(0.95) brightness(1.03); animation: twMemory 1.6s ease-out both; }
+@keyframes twMemory { 0% { opacity: 0; filter: saturate(0.4) sepia(0.3) contrast(0.9) brightness(1.15) blur(8px); transform: scale(1.06); } 60% { opacity: 1; } 100% { opacity: 1; filter: saturate(0.76) sepia(0.12) contrast(0.95) brightness(1.03) blur(0); transform: scale(1); } }
+.tw-fx-past .tw-fx-haze { inset: 0; background: linear-gradient(180deg, rgba(255, 236, 205, 0.12), rgba(255, 226, 190, 0.05) 45%, rgba(255, 236, 205, 0.1)); mix-blend-mode: screen; animation: twHaze 7s ease-in-out infinite; }
+@keyframes twHaze { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+.tw-fx-past .tw-fx-grain { inset: -50%; opacity: 0.07; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"); animation: twGrain 0.9s steps(3) infinite; }
+@keyframes twGrain { 0% { transform: translate(0, 0); } 33% { transform: translate(-3%, 2%); } 66% { transform: translate(2%, -3%); } 100% { transform: translate(0, 0); } }
+.tw-fx-past .tw-fx-vignette { inset: 0; background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(40, 22, 10, 0.42) 100%); }
+/* Present — зараз */
+.tw-scene.is-photo.tw-w-present > img { animation: twFade .5s ease, twNow 16s ease-in-out infinite alternate; }
+@keyframes twNow { from { transform: scale(1); } to { transform: scale(1.035); } }
+.tw-fx-present .tw-fx-sheen { top: 0; bottom: 0; left: -40%; width: 30%; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.16), transparent); animation: twSheen 6s ease-in-out infinite; }
+@keyframes twSheen { 0%, 55% { transform: translateX(0); opacity: 0; } 60% { opacity: 1; } 100% { transform: translateX(520%); opacity: 0; } }
+.tw-scene.is-photo.tw-w-present .tw-scene-badge i { animation: twLive 1.6s ease-in-out infinite; }
+@keyframes twLive { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--tw-present) 70%, transparent); } 60% { box-shadow: 0 0 0 7px transparent; } }
+/* Future — ще не сталося */
+.tw-scene.is-photo.tw-w-future > img { animation: twProject 1.2s ease-out both, twAhead 18s ease-in-out 1.2s infinite alternate; }
+@keyframes twProject { from { opacity: 0; transform: scale(1.05) translateX(2%); filter: blur(3px) hue-rotate(-12deg) brightness(1.2); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes twAhead { from { transform: scale(1); } to { transform: scale(1.05) translateX(-1%); } }
+.tw-fx-future .tw-fx-scan { top: 0; bottom: 0; left: 0; width: 22%; background: linear-gradient(90deg, transparent, rgba(150, 165, 255, 0.2), rgba(200, 210, 255, 0.32), transparent); mix-blend-mode: screen; animation: twScan 5.5s ease-in-out infinite; }
+@keyframes twScan { 0% { transform: translateX(-110%); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateX(560%); opacity: 0; } }
+.tw-fx-future i { width: 6px; height: 6px; border-radius: 50%; background: #E2E6FF; box-shadow: 0 0 12px 3px rgba(160, 175, 255, 0.8); opacity: 0; animation: twSpark 3.2s ease-in-out infinite; animation-delay: calc(var(--i) * 0.45s); }
+@keyframes twSpark { 0%, 100% { opacity: 0; transform: scale(0.4); } 50% { opacity: 0.9; transform: scale(1); } }
+.tw-fx-future .tw-fx-corners { inset: 7%; border: 0; background:
+  linear-gradient(#C7CEFF, #C7CEFF) 0 0 / 34px 3px no-repeat, linear-gradient(#C7CEFF, #C7CEFF) 0 0 / 3px 34px no-repeat,
+  linear-gradient(#C7CEFF, #C7CEFF) 100% 0 / 34px 3px no-repeat, linear-gradient(#C7CEFF, #C7CEFF) 100% 0 / 3px 34px no-repeat,
+  linear-gradient(#C7CEFF, #C7CEFF) 0 100% / 34px 3px no-repeat, linear-gradient(#C7CEFF, #C7CEFF) 0 100% / 3px 34px no-repeat,
+  linear-gradient(#C7CEFF, #C7CEFF) 100% 100% / 34px 3px no-repeat, linear-gradient(#C7CEFF, #C7CEFF) 100% 100% / 3px 34px no-repeat;
+  opacity: 0.75; animation: twCorners 2.8s ease-in-out infinite; }
+@keyframes twCorners { 0%, 100% { opacity: 0.45; inset: 7%; } 50% { opacity: 0.85; inset: 6%; } }
+.tw-scene.is-compact .tw-fx-corners { inset: 9%; background-size: 18px 2px, 2px 18px, 18px 2px, 2px 18px, 18px 2px, 2px 18px, 18px 2px, 2px 18px; animation: none; }
+/* Lab — збій → увімкнення → спокій */
+.tw-scene.is-photo.tw-k-lab.is-broken > img { animation: twBroken 3.2s steps(1) infinite; filter: saturate(0.35) brightness(0.55) contrast(1.08); }
+@keyframes twBroken { 0%, 100% { filter: saturate(0.35) brightness(0.55) contrast(1.08); } 7% { filter: saturate(0.6) brightness(0.85) contrast(1.1); } 9% { filter: saturate(0.3) brightness(0.45) contrast(1.08); } 46% { filter: saturate(0.35) brightness(0.55) contrast(1.08); } 48% { filter: saturate(0.5) brightness(0.78) contrast(1.1); transform: translateX(-0.4%); } 50% { filter: saturate(0.35) brightness(0.5) contrast(1.08); transform: none; } }
+.tw-fx-lab .tw-fx-dim { inset: 0; background: radial-gradient(ellipse at 50% 60%, transparent 40%, rgba(3, 5, 14, 0.55)); }
+.tw-fx-lab .tw-fx-glitch { left: 0; right: 0; height: 3%; top: 30%; background: linear-gradient(90deg, transparent, rgba(120, 220, 255, 0.35) 20%, rgba(255, 90, 180, 0.25) 60%, transparent); mix-blend-mode: screen; opacity: 0; animation: twGlitch 3.2s steps(1) infinite; }
+.tw-fx-lab .tw-fx-glitch.is-2 { top: 62%; height: 1.6%; animation-delay: 1.5s; }
+@keyframes twGlitch { 0%, 100% { opacity: 0; } 7% { opacity: 1; transform: translateX(-2%); } 9% { opacity: 0; } 48% { opacity: 0.8; transform: translateX(3%) scaleY(1.6); } 51% { opacity: 0; } }
+.tw-scene.is-photo.tw-k-lab.is-active > img { animation: twPowerOn 2.4s ease-out both; }
+@keyframes twPowerOn { 0% { filter: saturate(0.35) brightness(0.55); } 22% { filter: saturate(0.6) brightness(1.7) blur(2px); } 45% { filter: saturate(1.1) brightness(1.15); } 100% { filter: none; } }
+.tw-fx-lab .tw-fx-portal { width: 21%; height: 58%; top: 12%; left: calc(var(--x) - 10.5%); border-radius: 50% 50% 18% 18% / 40% 40% 12% 12%; background: radial-gradient(ellipse at 50% 55%, var(--c) 0%, transparent 68%); mix-blend-mode: screen; opacity: 0.25; animation: twGlowBreath 4.5s ease-in-out infinite; animation-delay: calc(var(--i) * 0.8s); }
+.tw-fx-lab .tw-fx-portal.is-past { --x: 19.5%; --c: rgba(255, 170, 70, 0.55); }
+.tw-fx-lab .tw-fx-portal.is-present { --x: 50%; --c: rgba(110, 240, 210, 0.5); }
+.tw-fx-lab .tw-fx-portal.is-future { --x: 80%; --c: rgba(170, 130, 255, 0.55); }
+@keyframes twGlowBreath { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.55; } }
+.tw-fx-lab.is-active .tw-fx-portal { animation: twPortalBurst 1.4s ease-out both, twGlowBreath 4.5s ease-in-out 2.6s infinite; animation-delay: calc(0.5s + var(--i) * 0.45s), calc(2.6s + var(--i) * 0.8s); }
+@keyframes twPortalBurst { 0% { opacity: 0; transform: scale(0.7); } 45% { opacity: 1; transform: scale(1.08); } 100% { opacity: 0.3; transform: scale(1); } }
+.tw-fx-lab .tw-fx-flash { left: 50%; top: 66%; width: 70%; aspect-ratio: 1; transform: translate(-50%, -50%) scale(0.2); border-radius: 50%; background: radial-gradient(circle, rgba(255, 236, 190, 0.95), rgba(255, 210, 120, 0.35) 35%, transparent 65%); mix-blend-mode: screen; opacity: 0; animation: twFlash 1.3s ease-out 0.25s both; }
+@keyframes twFlash { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.6); } }
+.tw-fx-lab .tw-fx-dust { inset: 0; background-image: radial-gradient(circle, rgba(255, 240, 200, 0.8) 0 1.2px, transparent 2px), radial-gradient(circle, rgba(200, 220, 255, 0.7) 0 1px, transparent 1.8px); background-size: 140px 160px, 90px 110px; background-position: 0 0, 40px 60px; opacity: 0.35; animation: twDust 14s linear infinite; }
+@keyframes twDust { from { background-position: 0 0, 40px 60px; } to { background-position: 30px -320px, 70px -160px; } }
+/* Бейдж-фото */
+.tw-badge.is-img { width: 150px; height: auto; object-fit: contain; filter: drop-shadow(0 12px 26px rgba(245, 199, 107, 0.3)); }
+
 /* ── Адаптивність ── */
 @media (max-width: 960px) {
   .ti-l02 .tw-split, .tw-brief-row, .tw-complete-hero { grid-template-columns: 1fr; }
@@ -1453,4 +1507,7 @@ body.ti-focus .ti-outline { top: 84px; }
   .ti-root .tw-lab .tw-needle { transform: rotate(0deg); }
   .ti-root .tw-lab.is-broken .tw-needle { transform: rotate(160deg); }
   .ti-root .tw-cd-needle, .ti-root .tw-lever-knob { transition: none !important; }
+  .ti-root .tw-scene.is-photo > img, .ti-root .tw-fx, .ti-root .tw-fx * { animation: none !important; }
+  .ti-root .tw-scene.is-photo.tw-k-lab.is-active > img { filter: none; }
+  .ti-root .tw-fx-lab .tw-fx-portal { opacity: 0.35; } .ti-root .tw-fx-flash, .ti-root .tw-fx-glitch, .ti-root .tw-fx-future i, .ti-root .tw-fx-scan, .ti-root .tw-fx-sheen { display: none; }
 }

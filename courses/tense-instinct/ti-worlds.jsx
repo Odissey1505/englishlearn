@@ -292,6 +292,35 @@ function TwMiniArt({ world }) {
   );
 }
 
+// Анімації поверх фото: вони пояснюють «характер» кожного світу.
+// Past — спогад: проявляється з розмиття, приглушені кольори, легка імла й зерно.
+// Present — «зараз»: чітко, живе світло, пульсує позначка «now».
+// Future — ще не сталося: прохолодне сяйво, сканування вперед, рамка «прогнозу».
+// Lab — збій (мерехтіння, перешкоди) → увімкнення (спалах, портали по черзі) → спокійне сяйво.
+function TwPhotoFx({ world, kind, state }) {
+  if (kind === 'lab') {
+    const st = state || 'broken';
+    return (
+      <div className={cx('tw-fx tw-fx-lab', `is-${st}`)} aria-hidden="true">
+        {st === 'broken' && <><span className="tw-fx-glitch" /><span className="tw-fx-glitch is-2" /><span className="tw-fx-dim" /></>}
+        {st !== 'broken' && TW_WORLDS.map((w, i) => <span key={w.key} className={`tw-fx-portal is-${w.key}`} style={{ '--i': i }} />)}
+        {st === 'active' && <span className="tw-fx-flash" />}
+        {st !== 'broken' && <span className="tw-fx-dust" />}
+      </div>
+    );
+  }
+  if (world === 'past') return <div className="tw-fx tw-fx-past" aria-hidden="true"><span className="tw-fx-haze" /><span className="tw-fx-grain" /><span className="tw-fx-vignette" /></div>;
+  if (world === 'present') return <div className="tw-fx tw-fx-present" aria-hidden="true"><span className="tw-fx-sheen" /></div>;
+  if (world === 'future') return (
+    <div className="tw-fx tw-fx-future" aria-hidden="true">
+      <span className="tw-fx-scan" />
+      {[[8, 18], [22, 42], [37, 12], [51, 30], [63, 52], [74, 20], [86, 38], [93, 10]].map(([x, y], i) => <i key={i} style={{ '--i': i, left: `${x}%`, top: `${y}%` }} />)}
+      {kind !== 'story' && <span className="tw-fx-corners" />}
+    </div>
+  );
+  return null;
+}
+
 function TwScene({ scene, className, children, compact }) {
   const s = scene || {};
   const [failed, setFailed] = useState(null);
@@ -309,7 +338,7 @@ function TwScene({ scene, className, children, compact }) {
       {usePhoto
         ? <img src={s.image} alt={s.alt || ''} decoding="async" onError={() => setFailed(s.image)} />
         : <div className="tw-scene-art" role="img" aria-label={s.alt || ''}>{art}</div>}
-      {usePhoto && (world === 'past' || world === 'future') && <div className={`tw-tone tw-tone-${world}`} aria-hidden="true" />}
+      {usePhoto && <TwPhotoFx world={world} kind={s.kind} state={s.state} />}
       {s.badge && <figcaption className="tw-scene-badge"><i aria-hidden="true" />{s.badge}</figcaption>}
       {children}
     </figure>
@@ -591,8 +620,10 @@ function TwOrderBoard({ cards, order, onOrder, locked, showWorld, showUk }) {
 }
 
 /* ═══ Бейдж Time Explorer (локальна ілюстрація уроку) ═════════════ */
-function TwBadge({ title, subtitle }) {
+function TwBadge({ title, subtitle, image }) {
   const u = useTwUid('bd');
+  const [failed, setFailed] = useState(false);
+  if (image && !failed) return <img className="tw-badge is-img" src={image} alt={`${title} — ${subtitle}`} onError={() => setFailed(true)} decoding="async" />;
   return (
     <svg viewBox="0 0 240 260" className="tw-badge" role="img" aria-label={`${title} — ${subtitle}`}>
       <defs><linearGradient id={`${u}-g`} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#FBE3A2" /><stop offset="0.5" stopColor="#D9A441" /><stop offset="1" stopColor="#8A5F1C" /></linearGradient></defs>
@@ -801,7 +832,7 @@ function ScreenTwWorlds({ screen, ctx }) {
           <div id="tw-world-card" aria-live="polite">
             {sel ? (
               <div className={cx('tw-wcard', `is-${sel.key}`)} key={sel.key}>
-                <div className="tw-wcard-art"><TwScene scene={{ kind: 'mini', world: sel.key, alt: `${sel.label}: ${sel.zone}` }} compact /></div>
+                <div className="tw-wcard-art"><TwScene scene={sel.scene || { kind: 'mini', world: sel.key, alt: `${sel.label}: ${sel.zone}` }} compact /></div>
                 <div className="tw-wcard-body">
                   <h3 className="ti-h3"><span className={cx('tw-dot', `is-${sel.key}`)} aria-hidden="true" /> {sel.label} — {sel.zone}</h3>
                   <p className="tw-wcard-def">{sel.definition}<Uk show={ctx.showUk} block>{sel.definitionUk}</Uk></p>
@@ -1362,7 +1393,7 @@ function ScreenTwComplete({ screen, ctx }) {
       <section className={cx('ti-final-status tw-status', allOk && 'is-complete')} aria-live="polite">
         {allOk ? (
           <div className="tw-award">
-            <TwBadge title={c.badge.title} subtitle={c.badge.subtitle} />
+            <TwBadge title={c.badge.title} subtitle={c.badge.subtitle} image={c.badge.image} />
             <div>
               <div className="ti-eyebrow"><TiIcon name="award" size={15} /> Badge earned</div>
               <h3 className="ti-h2">{c.badge.title}</h3>

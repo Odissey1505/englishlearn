@@ -15,8 +15,10 @@
 (function () {
   var IMG = 'courses/tense-instinct/assets/l02/';
   var PHOTOS = [
-    // 'lab-broken', 'lab-restored', 'football-past', 'football-present', 'football-future',
-    // 'story-past', 'story-present', 'story-future',
+    'lab-broken', 'lab-restored', 'football-past', 'football-present', 'football-future',
+    'story-past', 'story-present', 'story-future',
+    'world-past', 'world-present', 'world-future',
+    'ui-badge-time-explorer',
   ];
   function photo(name) { return PHOTOS.indexOf(name) >= 0 ? IMG + name + '.webp' : null; }
   function scene(kind, world, name, alt, badge, extra) {
@@ -141,7 +143,7 @@
           instructions: 'Open each world on the timeline.',
           instructionsUk: 'Відкрий кожен світ на часовій осі.',
           worlds: [
-            { key: 'past', label: 'Past', zone: 'Before now', zoneUk: 'До теперішнього моменту',
+            { key: 'past', label: 'Past', scene: scene('mini', 'past', 'world-past', 'Warm autumn sunset over hills: the past, before now.'), zone: 'Before now', zoneUk: 'До теперішнього моменту',
               definition: 'Events or situations before now.', definitionUk: 'Події чи ситуації до теперішнього моменту.',
               examples: [
                 { en: 'I watched a movie last night.', verb: 'watched', uk: 'Учора ввечері я дивився (дивилася) фільм.' },
@@ -151,7 +153,7 @@
               observe: { id: 'o-past', prompt: 'Have these events already happened?', promptUk: 'Ці події вже відбулися?', options: YESNO, answer: 'yes',
                 hint: 'Look at the verbs: watched, visited, played.', hintUk: 'Подивися на дієслова: watched, visited, played.',
                 explanation: 'Yes. All three are before now — and all three verbs are past forms.', explanationUk: 'Так. Усі три — до теперішнього моменту, і всі три дієслова — у формі минулого.' } },
-            { key: 'present', label: 'Present', zone: 'Now / generally', zoneUk: 'Зараз / загалом',
+            { key: 'present', label: 'Present', scene: scene('mini', 'present', 'world-present', 'A bright, ordinary day with a house in clear daylight: now and generally.'), zone: 'Now / generally', zoneUk: 'Зараз / загалом',
               definition: 'Things happening now, habits, states and general truths.', definitionUk: 'Те, що відбувається зараз, звички, стани й загальні істини.',
               examples: [
                 { en: 'I live in Ukraine.', verb: 'live', uk: 'Я живу в Україні.' },
@@ -162,7 +164,7 @@
                 options: [{ id: 'a', text: 'Yes, right now.' }, { id: 'b', text: 'No, she can’t play.' }, { id: 'c', text: 'Not necessarily — it’s something she can do / usually does.' }],
                 hint: 'Is the sentence about this second — or about her life in general?', hintUk: 'Речення про цю секунду — чи про її життя загалом?',
                 explanation: 'Present doesn’t always mean “right now”. “She plays the piano” is true about her in general.', explanationUk: 'Теперішнє не завжди означає «саме зараз». «She plays the piano» — це правда про неї загалом.' } },
-            { key: 'future', label: 'Future', zone: 'After now', zoneUk: 'Після теперішнього моменту',
+            { key: 'future', label: 'Future', scene: scene('mini', 'future', 'world-future', 'A calm night horizon with stars and a glowing path ahead: after now.'), zone: 'After now', zoneUk: 'Після теперішнього моменту',
               definition: 'Events, plans or predictions about a later time.', definitionUk: 'Події, плани чи прогнози про пізніший час.',
               examples: [
                 { en: 'I will call you tonight.', verb: 'will call', uk: 'Я зателефоную тобі сьогодні ввечері.' },
@@ -580,7 +582,7 @@
           finalSub: 'First understand WHEN something happens. Then think about HOW to express it.',
           finalUk: 'Не починай із граматичного правила. Спочатку зрозумій значення.',
           finalSubUk: 'Спершу зрозумій, КОЛИ щось відбувається. Потім подумай, ЯК це висловити.',
-          badge: { title: 'Time Explorer', subtitle: 'Three Worlds Discovered', subtitleUk: 'Три світи відкрито' },
+          badge: { title: 'Time Explorer', subtitle: 'Three Worlds Discovered', subtitleUk: 'Три світи відкрито', image: photo('ui-badge-time-explorer') },
         },
         teacher: {
           expected: ['1 Past, Present, Future · 2 Yes · 3 Context, verb forms and sometimes time expressions'],
