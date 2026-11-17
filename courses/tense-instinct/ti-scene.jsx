@@ -36,13 +36,150 @@ function sceneArc(cx0, cy0, r, fromDeg, toDeg) {
   return `M ${cx0} ${cy0} L ${a.x} ${a.y} A ${r} ${r} 0 ${large} 1 ${b.x} ${b.y} Z`;
 }
 
+/* ═══ Фото-режим: scene.image + анімований шар scene.fx ═════════
+ * Координати fx — у пікселях зображення 1560×1020 (пропорція 52:34).
+ * Типи fx:
+ *   { t: 'writing', x, y, label }          — дія в процесі (хвилі біля ручки)
+ *   { t: 'clockRing', x, y, r, label }     — точка відліку (пульс навколо годинника)
+ *   { t: 'clockSweep', x, y, r, from, to, label } — тривалість: дуга від години from до to
+ *   { t: 'ticks', pts: [[x,y]…], r, once, label, lx, ly } — повторення (loop) або завершені кроки (once)
+ *   { t: 'pop', x, y, r }                  — щойно завершено
+ *   { t: 'ring', x, y, rx, ry, label }     — виділення майбутньої/іншої точки відліку
+ *   { t: 'link', from: [x,y], to: [x,y], label } — зв'язок раннішої дії з точкою відліку
+ *   { t: 'ringing', x, y, label }          — коротка подія, що «перериває» процес
+ *   { t: 'snapshot', x, y, w, h, label }   — подія як завершене ціле («кадр»)
+ *   { t: 'label', x, y, text }             — підпис
+ * Якщо файл не завантажився — показується векторна сцена (нижче).
+ * ═══════════════════════════════════════════════════════════════ */
+const FX_W = 1560, FX_H = 1020;
+const fxPt = (x, y, r, deg) => { const a = (deg - 90) * Math.PI / 180; return [x + Math.cos(a) * r, y + Math.sin(a) * r]; };
+function FxLabel({ x, y, text, delay = 0.5, tone }) {
+  if (!text) return null;
+  const fs = 34, w = Math.round(text.length * fs * 0.56 + 44), h = 58;
+  const left = clamp(x - w / 2, 12, FX_W - w - 12), top = clamp(y - h / 2, 12, FX_H - h - 12);
+  return (
+    <g className={cx('fx-label', tone && `is-${tone}`)} style={{ animationDelay: `${delay}s` }}>
+      <rect x={left} y={top} width={w} height={h} rx={h / 2} />
+      <text x={left + w / 2} y={top + h / 2 + fs * 0.35} textAnchor="middle">{text}</text>
+    </g>
+  );
+}
+function FxLayer({ fx, mid }) {
+  return (fx || []).map((f, i) => {
+    const d = f.delay || 0;
+    const st = (extra = 0) => ({ animationDelay: `${d + extra}s` });
+    switch (f.t) {
+      case 'writing': return (
+        <g key={i} className="fx-writing">
+          {[0, 0.6, 1.2].map(k => <circle key={k} cx={f.x} cy={f.y} r="26" className="fx-ripple" style={st(k)} />)}
+          <g className="fx-dots">{[0, 1, 2].map(k => <circle key={k} cx={f.x + 46 + k * 26} cy={f.y - 58} r="9" style={st(k * 0.25)} />)}</g>
+          <FxLabel x={f.lx || f.x} y={f.ly || f.y - 130} text={f.label} delay={d + 0.4} />
+        </g>
+      );
+      case 'clockRing': return (
+        <g key={i} className="fx-clockring">
+          <circle cx={f.x} cy={f.y} r={f.r + 12} className="fx-ring-solid" style={st()} />
+          <circle cx={f.x} cy={f.y} r={f.r + 12} className="fx-ring-pulse" style={st(0.3)} />
+          <FxLabel x={f.lx || f.x} y={f.ly || f.y + f.r + 62} text={f.label} delay={d + 0.5} />
+        </g>
+      );
+      case 'clockSweep': {
+        const R = f.r + 16, a0 = (f.from % 12) * 30, a1 = (f.to % 12) * 30 + (((f.to % 12) * 30) <= a0 ? 360 : 0);
+        const [x0, y0] = fxPt(f.x, f.y, R, a0), [x1, y1] = fxPt(f.x, f.y, R, a1);
+        const large = a1 - a0 > 180 ? 1 : 0;
+        return (
+          <g key={i} className="fx-sweep">
+            <circle cx={f.x} cy={f.y} r={R} className="fx-sweep-track" />
+            <path d={`M ${x0} ${y0} A ${R} ${R} 0 ${large} 1 ${x1} ${y1}`} pathLength="100" className="fx-sweep-arc" style={st()} />
+            <circle cx={x0} cy={y0} r="13" className="fx-sweep-start" />
+            <circle cx={x1} cy={y1} r="15" className="fx-sweep-end" style={st()} />
+            <FxLabel x={f.lx || f.x} y={f.ly || f.y + f.r + 70} text={f.label} delay={d + 0.8} />
+          </g>
+        );
+      }
+      case 'ticks': {
+        const n = f.pts.length, step = f.step || 0.35, period = n * step + 1.6;
+        return (
+          <g key={i} className={cx('fx-ticks', f.once ? 'is-once' : 'is-loop')}>
+            {f.pts.map(([x, y], k) => <circle key={k} cx={x} cy={y} r={f.r || 22} className="fx-tick" style={{ animationDelay: `${d + k * step}s`, animationDuration: f.once ? '0.6s' : `${period}s` }} />)}
+            <FxLabel x={f.lx} y={f.ly} text={f.label} delay={d + (f.once ? n * step : 0.4)} />
+          </g>
+        );
+      }
+      case 'pop': return <g key={i} className="fx-pop"><circle cx={f.x} cy={f.y} r={f.r || 34} className="fx-pop-ring" style={st()} /><circle cx={f.x} cy={f.y} r={(f.r || 34) + 16} className="fx-ring-pulse" style={st(0.5)} /><FxLabel x={f.lx || f.x} y={f.ly || f.y - (f.r || 34) - 50} text={f.label} delay={d + 0.4} /></g>;
+      case 'ring': return (
+        <g key={i} className="fx-ringel">
+          <ellipse cx={f.x} cy={f.y} rx={f.rx} ry={f.ry} className="fx-ring-solid" style={st()} />
+          <ellipse cx={f.x} cy={f.y} rx={f.rx} ry={f.ry} className="fx-ring-pulse" style={st(0.3)} />
+          <FxLabel x={f.lx || f.x} y={f.ly || f.y + f.ry + 52} text={f.label} delay={d + 0.5} />
+        </g>
+      );
+      case 'link': {
+        const [x0, y0] = f.from, [x1, y1] = f.to, mx = (x0 + x1) / 2, my = Math.min(y0, y1) - (f.bend != null ? f.bend : 120);
+        return (
+          <g key={i} className="fx-link">
+            <path d={`M ${x0} ${y0} Q ${mx} ${my} ${x1} ${y1}`} pathLength="100" markerEnd={`url(#${mid}-arr)`} style={st()} />
+            <circle cx={x1} cy={y1} r="14" className="fx-link-end" style={st(1.1)} />
+            <FxLabel x={f.lx || x1} y={f.ly || y1 + 60} text={f.label} delay={d + 1.1} />
+          </g>
+        );
+      }
+      case 'ringing': return (
+        <g key={i} className="fx-ringing">
+          {[0, 0.35, 0.7].map(k => <circle key={k} cx={f.x} cy={f.y} r="30" className="fx-ripple is-gold" style={st(k)} />)}
+          <path d={`M ${f.x - 16} ${f.y - 92} l -10 34 h 18 l -10 34`} className="fx-bolt" style={st()} />
+          <FxLabel x={f.lx || f.x} y={f.ly || f.y - 140} text={f.label} delay={d + 0.3} tone="gold" />
+        </g>
+      );
+      case 'snapshot': {
+        const c = 60, { x, y, w, h } = f;
+        const corners = [[x, y, 1, 1], [x + w, y, -1, 1], [x, y + h, 1, -1], [x + w, y + h, -1, -1]];
+        return (
+          <g key={i} className="fx-snapshot">
+            <rect x="0" y="0" width={FX_W} height={FX_H} className="fx-flash" style={st()} />
+            {corners.map(([cx0, cy0, sx, sy], k) => <path key={k} d={`M ${cx0} ${cy0 + sy * c} L ${cx0} ${cy0} L ${cx0 + sx * c} ${cy0}`} className="fx-corner" style={{ ...st(0.15), '--sx': sx, '--sy': sy }} />)}
+            <FxLabel x={f.lx || x + w / 2} y={f.ly || y + h + 50} text={f.label} delay={d + 0.7} />
+          </g>
+        );
+      }
+      case 'label': return <FxLabel key={i} x={f.x} y={f.y} text={f.text} delay={d || 0.4} tone={f.tone} />;
+      default: return null;
+    }
+  });
+}
+function MayaPhoto({ s, className, compact, onError }) {
+  const mid = useMemo(() => 'fx' + Math.random().toString(36).slice(2, 8), []);
+  const world = s.world || 'present';
+  return (
+    <figure className={cx('ti-scene is-photo', `is-${world}`, `is-${s.time || 'day'}`, compact && 'is-compact', className)}>
+      <div className="ms-kb" key={s.image}>
+        <img src={s.image} alt={s.alt || 'Maya at her desk'} onError={onError} decoding="async" />
+        <svg className={cx('ms-fx', `w-${world}`)} viewBox={`0 0 ${FX_W} ${FX_H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs><marker id={`${mid}-arr`} viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" className="fx-arrowhead" /></marker></defs>
+          <FxLayer fx={s.fx} mid={mid} />
+        </svg>
+      </div>
+      {world === 'past' && <div className="ms-tone-past" aria-hidden="true" />}
+      {world === 'future' && <div className="ms-tone-future" aria-hidden="true"><span /></div>}
+      {s.badge && <div className="ms-badge-html"><i className={`w-${world}`} />{s.badge}</div>}
+    </figure>
+  );
+}
+// Попереднє завантаження фото сцен (щоб перемикання не блимало)
+const tiPreloaded = new Set();
+function preloadScenes(scenes) {
+  (scenes || []).forEach(sc => { if (sc && sc.image && !tiPreloaded.has(sc.image)) { tiPreloaded.add(sc.image); const im = new Image(); im.src = sc.image; } });
+}
+
 function MayaScene({ scene, className, compact }) {
   const s = scene || {};
+  const [failed, setFailed] = useState(null);
+  const id = useMemo(() => 'ms' + Math.random().toString(36).slice(2, 8), []);
+  if (s.image && failed !== s.image) return <MayaPhoto s={s} className={className} compact={compact} onError={() => setFailed(s.image)} />;
   const time = s.time || 'day';
   const world = s.world || 'present';
   const pose = s.pose || 'writing';
   const sky = TI_SCENE_SKY[time];
-  const id = useMemo(() => 'ms' + Math.random().toString(36).slice(2, 8), []);
   const lampOn = time !== 'day';
   const future = world === 'future';
   const clock = s.clock;

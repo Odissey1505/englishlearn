@@ -204,14 +204,58 @@ function ConvergeMotif() {
     </svg>
   );
 }
+// Фото-версія мотиву: три промені часу сходяться в «одну систему».
+// Анімація: фото проявляється зліва направо, по кожному променю до ядра
+// летять світлові імпульси, ядро пульсує. Координати — у пікселях фото 1583×993.
+const HERO_W = 1583, HERO_H = 993;
+const HERO_PATHS = [
+  { k: 'past', d: 'M -10 150 C 450 180, 800 430, 1200 488', c: '#C4B5FD', begin: 1.6 },
+  { k: 'now', d: 'M -10 488 L 1200 488', c: '#7DD3FC', begin: 2.2 },
+  { k: 'future', d: 'M -10 828 C 450 770, 800 560, 1200 490', c: '#5EEAD4', begin: 2.8 },
+];
+function HeroMotif({ src, alt }) {
+  const reduced = useReducedMotion();
+  const [failed, setFailed] = useState(false);
+  if (failed) return <ConvergeMotif />;
+  return (
+    <figure className={cx('ti-hero-motif', !reduced && 'is-anim')}>
+      <img src={src} alt={alt || ''} onError={() => setFailed(true)} decoding="async" />
+      {!reduced && (
+        <svg viewBox={`0 0 ${HERO_W} ${HERO_H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <radialGradient id="hm-photon"><stop offset="0" stopColor="#fff" /><stop offset="0.35" stopColor="#fff" stopOpacity="0.85" /><stop offset="1" stopColor="#fff" stopOpacity="0" /></radialGradient>
+          </defs>
+          {HERO_PATHS.map(p => (
+            <g key={p.k}>
+              <path id={`hm-${p.k}`} d={p.d} fill="none" stroke="none" />
+              {[0, 1.6].map((off, i) => (
+                <g key={i} className="hm-photon">
+                  <circle r="34" fill={p.c} opacity="0.35" />
+                  <circle r="16" fill="url(#hm-photon)" />
+                  <animateMotion dur="3.2s" begin={`${p.begin + off}s`} repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.45 0 0.9 0.6">
+                    <mpath href={`#hm-${p.k}`} />
+                  </animateMotion>
+                  <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="3.2s" begin={`${p.begin + off}s`} repeatCount="indefinite" />
+                </g>
+              ))}
+            </g>
+          ))}
+          <circle cx="1250" cy="490" r="62" className="hm-core-ring" />
+          <circle cx="1250" cy="490" r="62" className="hm-core-ring is-2" />
+        </svg>
+      )}
+    </figure>
+  );
+}
+
 function ScreenIntroHero({ screen, ctx }) {
   const c = screen.content || {};
   const mood = ctx.sstate.mood;
   const chosen = (c.mood && c.mood.options || []).find(o => o.id === mood);
   return (
     <div className="ti-ihero">
-      <section className="ti-ihero-main">
-        <div className="ti-ihero-art"><ConvergeMotif /></div>
+      <section className={cx('ti-ihero-main', c.heroImage && 'has-photo')}>
+        <div className={cx('ti-ihero-art', c.heroImage && 'is-photo')}>{c.heroImage ? <HeroMotif src={c.heroImage} alt={c.heroAlt} /> : <ConvergeMotif />}</div>
         <div className="ti-ihero-text">
           <div className="ti-eyebrow">{c.kicker}</div>
           <h1 className="ti-cover-title">{c.title}</h1>
@@ -260,6 +304,7 @@ function ScreenPerspectiveCards({ screen, ctx }) {
   const qs = S.q || {};
   const allQ = (c.questions || []).every(q => qDone(qs[q.id]));
   useEffect(() => { if (allQ && !S.done) ctx.setS(p => ({ ...p, done: true })); }, [allQ]);
+  useEffect(() => { preloadScenes([c.scene, ...(c.cards || []).map(k => k.scene)]); }, []);
   const open = (id) => ctx.setS(p => ({ ...p, sel: id, opened: (p.opened || []).includes(id) ? p.opened : [...(p.opened || []), id] }));
   const questions = (c.questions || []).map(q => ({ ...q, options: q.options || (c.cards || []).map(k => ({ id: k.id, key: k.id, text: k.text })) }));
   return (
@@ -477,6 +522,7 @@ function FourLensSimulator({ ctx, lenses, active, onPick }) {
   const lens = lenses.find(l => l.key === active) || lenses[0];
   const lensDone = (l) => (l.questions || []).every(q => qDone(qs[q.id]));
   const refs = useRef([]);
+  useEffect(() => { preloadScenes(lenses.map(l => l.scene)); }, []);
   const idx = lenses.indexOf(lens);
   const onKeys = (e) => {
     const d = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
@@ -690,6 +736,7 @@ function TenseLab({ ctx, content }) {
   const allExp = exps.every(e => qDone(expState[e.id]));
   const free = !!S.free;
   const exp = !free && expIdx < exps.length ? exps[expIdx] : null;
+  useEffect(() => { preloadScenes(c.tenses.map(x => x.scene)); }, []);
   const atTarget = exp && time === exp.target.time && aspect === exp.target.aspect;
   const set = (patch) => ctx.setS(p => {
     const nt = patch.time || p.time || c.default.time, na = patch.aspect || p.aspect || c.default.aspect;

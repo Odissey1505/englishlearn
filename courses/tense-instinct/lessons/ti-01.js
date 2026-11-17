@@ -9,14 +9,23 @@
  * ───────────────────────────────────────────────────────────── */
 (function () {
   var NOW = 60;
+  // Фото-сцени (1560×1020). Координати fx — у пікселях цих зображень.
+  var IMG = 'courses/tense-instinct/assets/l01/';
+  var WEEK13 = [[886, 148], [948, 148], [1012, 148], [1076, 148], [1140, 148], [1206, 148], [1272, 148]];
+  var WEEK12 = [[840, 160], [912, 160], [984, 160], [1056, 160], [1128, 160], [1200, 160], [1272, 160]];
 
   /* ── Сцени Маї (MayaScene) ── */
   var SC = {
-    habit: { week: true, pose: 'writing', time: 'day', badge: 'Every day', alt: 'Maya at her desk. A weekly planner shows a tick for every day: studying is her routine.' },
-    progress: { pose: 'writing', time: 'day', clock: { h: 16, m: 30 }, badge: 'Right now', alt: 'Maya is at her desk, writing notes at this moment.' },
-    finished: { pose: 'relaxed', homework: 'done', time: 'day', badge: 'Homework: done', alt: 'Maya stretches and smiles. Her homework is finished and marked with a tick.' },
-    duration: { pose: 'writing', time: 'evening', clock: { h: 20, m: 0, from: 18 }, badge: 'For two hours', alt: 'Evening. Maya is still writing. The clock shows two hours have passed since she started.' },
-    intro: { pose: 'writing', time: 'day', badge: 'Maya · 19 · exam on Friday', alt: 'Maya, a 19-year-old student with brown hair, studying at her desk.' },
+    habit: { week: true, pose: 'writing', time: 'day', badge: 'Every day', alt: 'Maya at her desk. A weekly planner shows a tick for every day: studying is her routine.',
+      image: IMG + 'maya-habit.webp', fx: [{ t: 'ticks', pts: WEEK13, r: 22, label: 'every day — again and again', lx: 1080, ly: 240 }] },
+    progress: { pose: 'writing', time: 'day', clock: { h: 16, m: 30 }, badge: 'Right now', alt: 'Maya is at her desk, writing notes at this moment.',
+      image: IMG + 'maya-in-progress.webp', fx: [{ t: 'clockRing', x: 1254, y: 200, r: 120, label: 'now' }, { t: 'writing', x: 970, y: 790, label: 'in progress…', delay: 0.3 }] },
+    finished: { pose: 'relaxed', homework: 'done', time: 'day', badge: 'Homework: done', alt: 'Maya stretches and smiles. Her homework is finished and marked with a tick.',
+      image: IMG + 'maya-homework-finished.webp', fx: [{ t: 'pop', x: 1034, y: 702, r: 40 }, { t: 'link', from: [1060, 680], to: [1320, 560], bend: 90, label: 'now: free time', delay: 0.6 }] },
+    duration: { pose: 'writing', time: 'evening', clock: { h: 20, m: 0, from: 18 }, badge: 'For two hours', alt: 'Evening. Maya is still writing. The clock shows two hours have passed since she started.',
+      image: IMG + 'maya-two-hours.webp', fx: [{ t: 'clockSweep', x: 1302, y: 192, r: 124, from: 6, to: 8, label: '6 p.m. → now: 2 hours' }, { t: 'writing', x: 952, y: 794, delay: 0.4 }] },
+    intro: { pose: 'writing', time: 'day', badge: 'Maya · 19 · exam on Friday', alt: 'Maya, a 19-year-old student with brown hair, studying at her desk.',
+      image: IMG + 'maya-intro.webp', fx: [{ t: 'writing', x: 970, y: 810 }] },
   };
 
   /* ── 12 комбінацій: курований набір (для матриці й Tense Lab) ── */
@@ -29,7 +38,7 @@
       structure: 'verb + -ed  /  2nd form', structureNote: 'Regular: study → studied. Irregular: go → went, write → wrote.',
       timeline: { ref: { x: 30, label: 'yesterday' }, items: [{ t: 'span', from: 24, to: 36, label: 'the whole event' }] },
       timelineLabel: 'One complete event before now', ref: 'yesterday — before now',
-      scene: { world: 'past', time: 'day', pose: 'writing', badge: 'Yesterday', alt: 'Yesterday: Maya studied at her desk. The scene is tinted to show the past.' } },
+      scene: { world: 'past', time: 'day', pose: 'writing', badge: 'Yesterday', alt: 'Yesterday: Maya studied at her desk. The scene is tinted to show the past.', image: IMG + 'lab-past-simple.webp', fx: [{ t: 'snapshot', x: 560, y: 120, w: 820, h: 820, label: 'yesterday: one complete event', ly: 70 }] } },
 
     { id: 'past-continuous', name: 'Past Continuous', time: 'past', aspect: 'continuous', combo: 'Past + Process',
       iForm: 'I was studying.', iHl: 'was studying',
@@ -42,7 +51,7 @@
       mxTimelineLabel: 'An ongoing past activity, interrupted by a shorter event',
       timelineLabel: 'In progress around a moment in the past', ref: '8 p.m. yesterday',
       extra: [{ en: 'I was studying when my phone rang.', uk: 'Я займався (займалася), коли задзвонив мій телефон.' }],
-      scene: { world: 'past', time: 'evening', pose: 'writing', clock: { h: 20, m: 0 }, badge: 'Yesterday · 8 p.m.', alt: 'Yesterday at 8 p.m.: Maya was in the middle of writing notes.' } },
+      scene: { world: 'past', time: 'evening', pose: 'writing', clock: { h: 20, m: 0 }, badge: 'Yesterday · 8 p.m.', alt: 'Yesterday at 8 p.m.: Maya was in the middle of writing notes.', image: IMG + 'lab-past-continuous.webp', fx: [{ t: 'clockRing', x: 1312, y: 206, r: 100, label: '8 p.m. yesterday' }, { t: 'writing', x: 930, y: 766, label: 'in progress at that moment', delay: 0.5 }] } },
 
     { id: 'past-perfect', name: 'Past Perfect', time: 'past', aspect: 'perfect', combo: 'Past + Connection',
       iForm: 'I had studied.', iHl: 'had studied',
@@ -53,7 +62,7 @@
       timeline: { ref: { x: 42, label: 'dinner' }, items: [{ t: 'point', x: 20, done: true, label: '2 tests done' }, { t: 'link', from: 20, to: 42 }] },
       timelineLabel: 'Completed before a later past moment', ref: 'dinner — a moment in the past',
       note: 'We often use Past Perfect when the order of two past events matters.',
-      scene: { world: 'past', time: 'evening', pose: 'relaxed', tests: { total: 2, done: 2 }, plate: true, badge: 'Before dinner', alt: 'Yesterday evening: two finished practice tests on the desk, and dinner is waiting.' } },
+      scene: { world: 'past', time: 'evening', pose: 'relaxed', tests: { total: 2, done: 2 }, plate: true, badge: 'Before dinner', alt: 'Yesterday evening: two finished practice tests on the desk, and dinner is waiting.', image: IMG + 'lab-past-perfect.webp', fx: [{ t: 'ticks', once: true, pts: [[1304, 578], [1304, 636]], r: 20, step: 0.5 }, { t: 'link', from: [1200, 700], to: [600, 860], bend: 60, label: 'dinner: later', lx: 600, ly: 960, delay: 1.2 }, { t: 'label', x: 1230, y: 470, text: 'done first', delay: 1 }] } },
 
     { id: 'past-perfectContinuous', name: 'Past Perfect Continuous', time: 'past', aspect: 'perfectContinuous', combo: 'Past + Duration',
       iForm: 'I had been studying.', iHl: 'had been studying',
@@ -63,7 +72,7 @@
       structure: 'had been + verb-ing',
       timeline: { ref: { x: 44, label: 'friend called' }, items: [{ t: 'span', from: 14, to: 44, ongoing: true, open: 'none', label: 'studying' }, { t: 'interrupt', x: 44 }, { t: 'duration', from: 14, to: 44, label: 'two hours' }] },
       timelineLabel: 'Duration up to a past moment', ref: 'when her friend called',
-      scene: { world: 'past', time: 'evening', pose: 'writing', phone: 'ring', clock: { h: 20, m: 0, from: 18 }, badge: 'Two hours… then a call', alt: 'Yesterday evening: Maya had been studying for two hours when her phone rang.' } },
+      scene: { world: 'past', time: 'evening', pose: 'writing', phone: 'ring', clock: { h: 20, m: 0, from: 18 }, badge: 'Two hours… then a call', alt: 'Yesterday evening: Maya had been studying for two hours when her phone rang.', image: IMG + 'lab-past-perfectContinuous.webp', fx: [{ t: 'clockSweep', x: 1224, y: 180, r: 124, from: 6, to: 8, label: 'two hours of studying', ly: 360 }, { t: 'ringing', x: 1086, y: 664, label: 'then her friend called', delay: 2.4 }] } },
 
     { id: 'present-simple', name: 'Present Simple', time: 'present', aspect: 'simple', combo: 'Present + Whole action',
       iForm: 'I study.', iHl: 'study',
@@ -74,7 +83,7 @@
       timeline: { items: [{ t: 'repeat', from: 8, to: 92, n: 9, label: 'every evening' }] },
       timelineLabel: 'A routine — true now, not only at this moment', ref: 'her routine (no single moment)',
       note: 'Simple is not only for habits: it also presents facts (“Water boils at 100°C”) and timetables (“The exam starts at 9 a.m. on Friday”).',
-      scene: { week: true, time: 'evening', pose: 'writing', badge: 'Every evening', alt: 'A weekly planner with a tick for every evening: Maya’s study routine.' } },
+      scene: { week: true, time: 'evening', pose: 'writing', badge: 'Every evening', alt: 'A weekly planner with a tick for every evening: Maya’s study routine.', image: IMG + 'lab-present-simple.webp', fx: [{ t: 'ticks', pts: WEEK12, r: 24, label: 'every evening — a routine', lx: 1056, ly: 260 }] } },
 
     { id: 'present-continuous', name: 'Present Continuous', time: 'present', aspect: 'continuous', combo: 'Present + Process',
       iForm: 'I am studying.', iHl: 'am studying',
@@ -85,7 +94,7 @@
       timeline: { ref: { x: NOW }, items: [{ t: 'span', from: 46, to: 74, ongoing: true, open: 'both', label: 'studying…' }] },
       timelineLabel: 'In progress around NOW', ref: 'now',
       note: 'Not only “right now”: also temporary situations (“I’m staying with my aunt this week”) and arranged plans (“I’m meeting Sam tomorrow”).',
-      scene: { time: 'evening', pose: 'writing', badge: 'Right now', alt: 'Right now: Maya is writing notes at her desk.' } },
+      scene: { time: 'evening', pose: 'writing', badge: 'Right now', alt: 'Right now: Maya is writing notes at her desk.', image: IMG + 'lab-present-continuous.webp', fx: [{ t: 'clockRing', x: 1194, y: 190, r: 124, label: 'now' }, { t: 'writing', x: 930, y: 810, label: 'in progress…', delay: 0.3 }] } },
 
     { id: 'present-perfect', name: 'Present Perfect', time: 'present', aspect: 'perfect', combo: 'Present + Connection',
       iForm: 'I have studied.', iHl: 'have studied',
@@ -96,7 +105,7 @@
       timeline: { ref: { x: NOW, label: 'so far' }, items: [{ t: 'point', x: 22, done: true }, { t: 'point', x: 34, done: true }, { t: 'point', x: 46, done: true, label: '3 tests' }, { t: 'link', from: 46, to: NOW }] },
       timelineLabel: 'Earlier events, seen from now', ref: 'now (“so far”)',
       note: 'Perfect is not only about results: “We’ve known each other since 2020” describes a situation that continues up to now.',
-      scene: { time: 'evening', pose: 'relaxed', tests: { total: 4, done: 3 }, badge: 'So far: 3 tests', alt: 'A stack of practice tests: three are finished, one is still waiting.' } },
+      scene: { time: 'evening', pose: 'relaxed', tests: { total: 4, done: 3 }, badge: 'So far: 3 tests', alt: 'A stack of practice tests: three are finished, one is still waiting.', image: IMG + 'lab-present-perfect.webp', fx: [{ t: 'ticks', once: true, pts: [[1310, 508], [1310, 550], [1310, 594]], r: 17, step: 0.45 }, { t: 'ring', x: 1300, y: 644, rx: 26, ry: 22, delay: 1.4 }, { t: 'label', x: 1210, y: 820, text: '3 done so far → matters now', delay: 1.6 }] } },
 
     { id: 'present-perfectContinuous', name: 'Present Perfect Continuous', time: 'present', aspect: 'perfectContinuous', combo: 'Present + Duration',
       iForm: 'I have been studying.', iHl: 'have been studying',
@@ -106,7 +115,7 @@
       structure: 'have / has been + verb-ing', structureNote: 'for + a period (for two hours) · since + a starting point (since 6 p.m.)',
       timeline: { ref: { x: NOW, label: 'now' }, refs: [{ x: 30, label: '6 p.m.' }], items: [{ t: 'span', from: 30, to: NOW, ongoing: true, open: 'none' }, { t: 'duration', from: 30, to: NOW, label: 'since 6 p.m.' }] },
       timelineLabel: 'From a starting point up to now', ref: 'now',
-      scene: { time: 'night', pose: 'writing', clock: { h: 21, m: 0, from: 18 }, badge: 'Since 6 p.m.', alt: 'Night. The clock shows Maya has been studying since 6 p.m.' } },
+      scene: { time: 'night', pose: 'writing', clock: { h: 21, m: 0, from: 18 }, badge: 'Since 6 p.m.', alt: 'Night. The clock shows Maya has been studying since 6 p.m.', image: IMG + 'lab-present-perfectContinuous.webp', fx: [{ t: 'clockSweep', x: 1254, y: 200, r: 124, from: 6, to: 9, label: 'since 6 p.m. → still going' }, { t: 'writing', x: 956, y: 790, delay: 0.4 }] } },
 
     { id: 'future-simple', name: 'Future Simple (will)', time: 'future', aspect: 'simple', combo: 'Future + Whole action',
       iForm: 'I will study.', iHl: 'will study',
@@ -117,7 +126,7 @@
       timeline: { ref: { x: 82, label: 'tomorrow' }, items: [{ t: 'span', from: 76, to: 88, label: 'the whole event' }] },
       timelineLabel: 'One complete event after now', ref: 'tomorrow — after now',
       note: '“Will” is only one way to talk about the future. For plans, English often uses “be going to” (“Maya is going to study tomorrow”) or Present Continuous (“Maya is studying with Ola tomorrow”).',
-      scene: { world: 'future', time: 'day', pose: 'writing', calendar: { top: 'TOMORROW', label: 'Study' }, badge: 'Tomorrow', alt: 'Tomorrow (not yet happened): Maya will study. The calendar shows tomorrow’s plan.' } },
+      scene: { world: 'future', time: 'day', pose: 'writing', calendar: { top: 'TOMORROW', label: 'Study' }, badge: 'Tomorrow', alt: 'Tomorrow (not yet happened): Maya will study. The calendar shows tomorrow’s plan.', image: IMG + 'lab-future-simple.webp', fx: [{ t: 'ring', x: 1150, y: 262, rx: 104, ry: 62, label: 'tomorrow: one whole event' }] } },
 
     { id: 'future-continuous', name: 'Future Continuous', time: 'future', aspect: 'continuous', combo: 'Future + Process',
       iForm: 'I will be studying.', iHl: 'will be studying',
@@ -127,7 +136,7 @@
       structure: 'will be + verb-ing',
       timeline: { ref: { x: 84, label: '8 p.m. tomorrow' }, items: [{ t: 'span', from: 72, to: 96, ongoing: true, open: 'both', label: 'studying…' }] },
       timelineLabel: 'In progress around a future moment', ref: '8 p.m. tomorrow',
-      scene: { world: 'future', time: 'evening', pose: 'writing', clock: { h: 20, m: 0 }, badge: 'Tomorrow · 8 p.m.', alt: 'Tomorrow at 8 p.m. (imagined): Maya will be in the middle of studying.' } },
+      scene: { world: 'future', time: 'evening', pose: 'writing', clock: { h: 20, m: 0 }, badge: 'Tomorrow · 8 p.m.', alt: 'Tomorrow at 8 p.m. (imagined): Maya will be in the middle of studying.', image: IMG + 'lab-future-continuous.webp', fx: [{ t: 'clockRing', x: 1332, y: 210, r: 92, label: '8 p.m. tomorrow' }, { t: 'writing', x: 980, y: 690, label: 'will be in progress', delay: 0.5 }] } },
 
     { id: 'future-perfect', name: 'Future Perfect', time: 'future', aspect: 'perfect', combo: 'Future + Connection',
       iForm: 'I will have studied.', iHl: 'will have studied',
@@ -137,7 +146,7 @@
       structure: 'will have + past participle (3rd form)',
       timeline: { ref: { x: 92, label: 'Friday' }, items: [{ t: 'point', x: 76, done: true, label: 'revision done' }, { t: 'link', from: 76, to: 92 }] },
       timelineLabel: 'Completed before a future point — looking back from Friday', ref: 'Friday',
-      scene: { world: 'future', time: 'day', pose: 'relaxed', homework: 'done', calendar: { top: 'FRI', label: 'EXAM', circle: true }, badge: 'By Friday', alt: 'Friday is circled on the calendar. By then, Maya’s revision will be finished.' } },
+      scene: { world: 'future', time: 'day', pose: 'relaxed', homework: 'done', calendar: { top: 'FRI', label: 'EXAM', circle: true }, badge: 'By Friday', alt: 'Friday is circled on the calendar. By then, Maya’s revision will be finished.', image: IMG + 'lab-future-perfect.webp', fx: [{ t: 'ring', x: 1144, y: 244, rx: 100, ry: 64 }, { t: 'pop', x: 1014, y: 682, r: 36, delay: 0.8 }, { t: 'link', from: [1040, 650], to: [1110, 318], bend: -40, label: 'done before Friday', lx: 1330, ly: 470, delay: 1.2 }] } },
 
     { id: 'future-perfectContinuous', name: 'Future Perfect Continuous', time: 'future', aspect: 'perfectContinuous', combo: 'Future + Duration',
       iForm: 'I will have been studying.', iHl: 'will have been studying',
@@ -148,7 +157,7 @@
       timeline: { ref: { x: 92, label: 'Friday' }, items: [{ t: 'span', from: 40, to: 92, ongoing: true, open: 'none', label: 'preparing' }, { t: 'duration', from: 40, to: 92, label: 'two weeks' }] },
       timelineLabel: 'Duration up to a future point (it started before now)', ref: 'Friday',
       note: 'This form is rare in everyday conversation — but it fits the pattern perfectly.',
-      scene: { world: 'future', time: 'evening', pose: 'writing', calendar: { top: 'TO FRIDAY', streak: 14, filled: 14, label: '2 weeks' }, badge: 'By Friday: two weeks', alt: 'A two-week calendar, every day ticked, leading to Friday’s exam.' } },
+      scene: { world: 'future', time: 'evening', pose: 'writing', calendar: { top: 'TO FRIDAY', streak: 14, filled: 14, label: '2 weeks' }, badge: 'By Friday: two weeks', alt: 'A two-week calendar, every day ticked, leading to Friday’s exam.', image: IMG + 'lab-future-perfectContinuous.webp', fx: [{ t: 'ticks', once: true, step: 0.18, r: 17, pts: [[1020, 182], [1061, 182], [1101, 182], [1142, 182], [1182, 182], [1224, 182], [1020, 238], [1061, 238], [1101, 238], [1142, 238], [1182, 238], [1224, 238]] }, { t: 'ring', x: 1124, y: 312, rx: 100, ry: 52, label: '2 weeks of preparing → Friday', ly: 420, delay: 2.2 }, { t: 'writing', x: 930, y: 726, delay: 0.3 }] } },
   ];
 
   var WORLDS = [{ key: 'past', label: 'Past' }, { key: 'present', label: 'Present' }, { key: 'future', label: 'Future' }];
@@ -185,6 +194,8 @@
             { en: 'What if they’re all part of one system?', uk: 'Що, як усі вони — частини однієї системи?' },
           ],
           cta: 'Discover the System',
+          heroImage: IMG + 'hero-converge.webp',
+          heroAlt: 'Three glowing paths — Past, Present and Future — meet in one bright point labelled One System.',
           mood: {
             question: 'How do you feel about English tenses?', questionUk: 'Як ти ставишся до англійських часів?',
             note: 'This isn’t a test — there are no right or wrong answers here.',

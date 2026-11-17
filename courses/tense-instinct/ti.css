@@ -590,6 +590,64 @@ body.ti-focus .ti-outline { top: 84px; }
 .ti-scene .ms-glow { animation: msGlow 4s ease-in-out infinite; }
 @keyframes msGlow { 50% { opacity: 0.75; } }
 
+/* Scene · photo mode + animated FX layer */
+.ti-scene.is-photo { position: relative; background: #0B1020; }
+.ti-scene.is-photo .ms-kb { position: absolute; inset: 0; animation: msFade .45s ease, msKenBurns 22s ease-in-out .45s infinite alternate; transform-origin: 60% 40%; }
+.ti-scene.is-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ti-scene.is-photo .ms-fx { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+@keyframes msFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes msKenBurns { from { transform: scale(1); } to { transform: scale(1.04); } }
+.ti-scene.is-past img { filter: sepia(0.28) saturate(0.82) contrast(0.98); }
+.ms-tone-past { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, transparent 55%, rgba(40, 20, 70, 0.45) 100%); mix-blend-mode: multiply; }
+.ms-tone-past::after { content: ''; position: absolute; inset: 0; background: rgba(167, 139, 250, 0.08); }
+.ti-scene.is-future img { filter: saturate(0.92) brightness(1.03); }
+.ms-tone-future { position: absolute; inset: 6px; border-radius: 16px; border: 3px dashed rgba(45, 212, 191, 0.85); pointer-events: none; overflow: hidden; }
+.ms-tone-future span { position: absolute; top: -20%; bottom: -20%; width: 30%; left: -40%; background: linear-gradient(100deg, transparent, rgba(186, 255, 245, 0.16), transparent); transform: skewX(-12deg); animation: msShimmer 5.5s ease-in-out infinite; }
+@keyframes msShimmer { 0% { left: -40%; } 55%, 100% { left: 120%; } }
+.ms-badge-html { position: absolute; left: 14px; bottom: 14px; display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px 7px 11px; border-radius: 999px; background: rgba(11, 16, 32, 0.82); color: #F3F5FF; font: 700 13.5px var(--ti-font); letter-spacing: 0.02em; backdrop-filter: blur(6px); }
+.ms-badge-html i { width: 10px; height: 10px; border-radius: 50%; background: #38BDF8; box-shadow: 0 0 0 0 rgba(56, 189, 248, .6); animation: msLive 1.8s ease-out infinite; }
+.ms-badge-html i.w-past { background: #A78BFA; animation: none; } .ms-badge-html i.w-future { background: #2DD4BF; animation: none; }
+@keyframes msLive { 0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, .6); } 100% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); } }
+.ms-fx { --fx: #38BDF8; } .ms-fx.w-past { --fx: #C4B5FD; } .ms-fx.w-future { --fx: #5EEAD4; }
+.ms-fx * { transform-box: fill-box; transform-origin: center; }
+.fx-label { opacity: 0; animation: fxIn .5s ease forwards; scale: 1.12; }
+@media (max-width: 720px) { .fx-label { scale: 1.6; } .ms-badge-html { font-size: 12px; left: 10px; bottom: 10px; padding: 5px 11px 5px 9px; } }
+.fx-label rect { fill: rgba(11, 16, 32, 0.84); stroke: var(--fx); stroke-width: 2.5; }
+.fx-label text { fill: #F3F5FF; font: 700 34px var(--ti-font); letter-spacing: 0.01em; }
+.fx-label.is-gold rect { stroke: #F5C76B; }
+@keyframes fxIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.fx-ripple { fill: none; stroke: var(--fx); stroke-width: 5; opacity: 0; animation: fxRipple 1.8s ease-out infinite; }
+.fx-ripple.is-gold { stroke: #F5C76B; animation-duration: 1.05s; }
+@keyframes fxRipple { 0% { opacity: .95; transform: scale(.4); } 100% { opacity: 0; transform: scale(2.6); } }
+.fx-dots circle { fill: var(--fx); opacity: .2; animation: fxDot 1.2s ease-in-out infinite; }
+@keyframes fxDot { 0%, 100% { opacity: .2; } 40% { opacity: 1; } }
+.fx-ring-solid { fill: none; stroke: var(--fx); stroke-width: 6; opacity: 0; animation: fxIn .5s ease forwards; }
+.fx-ring-pulse { fill: none; stroke: var(--fx); stroke-width: 5; opacity: 0; animation: fxRingPulse 2.2s ease-out infinite; }
+@keyframes fxRingPulse { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.28); } }
+.fx-sweep-track { fill: none; stroke: rgba(255, 255, 255, 0.18); stroke-width: 12; }
+.fx-sweep-arc { fill: none; stroke: #2DD4BF; stroke-width: 14; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; animation: fxSweep 4.2s ease-in-out infinite; }
+.ms-fx.w-past .fx-sweep-arc { stroke: #C4B5FD; }
+@keyframes fxSweep { 0% { stroke-dashoffset: 100; } 55%, 88% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.fx-sweep-start { fill: #F3F5FF; stroke: #0B1020; stroke-width: 4; }
+.fx-sweep-end { fill: #F472B6; stroke: #0B1020; stroke-width: 4; animation: fxEndPulse 4.2s ease-in-out infinite; }
+@keyframes fxEndPulse { 0%, 50% { opacity: 0; transform: scale(.4); } 58% { opacity: 1; transform: scale(1.4); } 66%, 88% { opacity: 1; transform: scale(1); } 100% { opacity: 0; } }
+.fx-tick { fill: none; stroke: #F5C76B; stroke-width: 7; opacity: 0; }
+.fx-ticks.is-loop .fx-tick { animation-name: fxTickLoop; animation-iteration-count: infinite; animation-timing-function: ease-out; }
+@keyframes fxTickLoop { 0% { opacity: 0; transform: scale(.5); } 7% { opacity: 1; transform: scale(1.35); } 14% { opacity: 1; transform: scale(1); } 85% { opacity: .85; transform: scale(1); } 100% { opacity: 0; transform: scale(1); } }
+.fx-ticks.is-once .fx-tick { animation-name: fxTickOnce; animation-fill-mode: forwards; animation-timing-function: cubic-bezier(.2, 1.5, .4, 1); stroke: #34D399; }
+@keyframes fxTickOnce { 0% { opacity: 0; transform: scale(.3); } 60% { opacity: 1; transform: scale(1.35); } 100% { opacity: 1; transform: scale(1); } }
+.fx-pop-ring { fill: none; stroke: #34D399; stroke-width: 8; opacity: 0; animation: fxTickOnce .7s cubic-bezier(.2, 1.5, .4, 1) forwards; }
+.fx-link path { fill: none; stroke: #F5C76B; stroke-width: 7; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; animation: fxDraw 1.1s ease forwards; }
+.fx-arrowhead { fill: #F5C76B; }
+.fx-link-end { fill: #F5C76B; opacity: 0; animation: fxIn .4s ease forwards; }
+@keyframes fxDraw { to { stroke-dashoffset: 0; } }
+.fx-bolt { fill: none; stroke: #F5C76B; stroke-width: 7; stroke-linejoin: round; stroke-linecap: round; animation: fxBlink 1.05s steps(2, end) infinite; }
+@keyframes fxBlink { 50% { opacity: .25; } }
+.fx-flash { fill: #fff; opacity: 0; animation: fxFlash .7s ease-out 1; }
+@keyframes fxFlash { 0% { opacity: .55; } 100% { opacity: 0; } }
+.fx-corner { fill: none; stroke: #F3F5FF; stroke-width: 8; stroke-linecap: round; opacity: 0; animation: fxCorner .7s cubic-bezier(.2, 1.3, .4, 1) forwards; }
+@keyframes fxCorner { from { opacity: 0; transform: translate(calc(var(--sx) * -40px), calc(var(--sy) * -40px)); } to { opacity: .95; transform: none; } }
+
 /* Intro hero */
 .ti-ihero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 22px; align-items: stretch; }
 .ti-ihero-main { position: relative; overflow: hidden; border-radius: 26px; border: 1px solid var(--ti-line); padding: clamp(22px, 4vw, 44px); min-height: 440px; display: flex; flex-direction: column; justify-content: flex-end;
@@ -614,6 +672,20 @@ body.ti-focus .ti-outline { top: 84px; }
 .ti-mood-emoji { font-size: 22px; }
 .ti-mood-reply { display: flex; gap: 10px; align-items: flex-start; margin: 4px 0 0; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, var(--ti-violet) 14%, transparent); font-weight: 600; animation: tlIn .3s ease; }
 .ti-mood-reply .ti-icon { color: var(--ti-gold); margin-top: 3px; }
+
+.ti-ihero-art.is-photo { align-self: stretch; width: auto; margin: calc(-1 * clamp(22px, 4vw, 44px)) calc(-1 * clamp(22px, 4vw, 44px)) -24px; }
+.ti-hero-motif { position: relative; margin: 0; aspect-ratio: 1583 / 993; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent); mask-image: linear-gradient(to bottom, #000 72%, transparent); }
+.ti-hero-motif img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ti-hero-motif svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ti-ihero-main.has-photo .ti-cover-title { font-size: clamp(30px, 3.6vw, 48px); }
+.ti-ihero-main.has-photo .ti-ihero-lines { margin: 10px 0 16px; }
+.ti-hero-motif.is-anim img { animation: hmReveal 1.8s cubic-bezier(.4, 0, .2, 1) both, hmBreath 9s ease-in-out 1.8s infinite alternate; }
+@keyframes hmReveal { from { clip-path: inset(0 100% 0 0); filter: brightness(1.6); } to { clip-path: inset(0 0 0 0); filter: brightness(1); } }
+@keyframes hmBreath { from { transform: scale(1); } to { transform: scale(1.035); } }
+.hm-photon { mix-blend-mode: screen; }
+.hm-core-ring { fill: none; stroke: #FCD34D; stroke-width: 5; opacity: 0; transform-box: fill-box; transform-origin: center; animation: hmRing 3.2s ease-out 2.6s infinite; }
+.hm-core-ring.is-2 { animation-delay: 4.2s; }
+@keyframes hmRing { 0% { opacity: .85; transform: scale(1); } 100% { opacity: 0; transform: scale(2.4); } }
 
 /* Perspective cards */
 .ti-pcards-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 22px; align-items: start; }
@@ -937,7 +1009,12 @@ body.ti-focus .ti-outline { top: 84px; }
   .ti-reflex-bar { animation: none !important; opacity: 0.6; } /* таймер працює, але без руху */
   .ti-root .ti-ihero-line, .ti-root .ti-story-intro .ti-para, .ti-root .ti-mx-chip, .ti-root .ti-mx-cell, .ti-root .ti-final-eq > *, .ti-root .ti-final-formula span, .ti-root .ti-lab-finale p, .ti-root .ti-lab-director, .ti-root .cv-core, .ti-root .cv-glow { animation: none !important; opacity: 1 !important; }
   .ti-root .cv-path { animation: none !important; stroke-dashoffset: 0 !important; }
-  .ti-root .ms-pen, .ti-root .ms-ring, .ti-root .ms-glow { animation: none !important; }
+  .ti-root .ti-hero-motif img { animation: none !important; }
+  .ti-root .ms-pen, .ti-root .ms-ring, .ti-root .ms-glow, .ti-root .ms-kb, .ti-root .ms-tone-future span, .ti-root .ms-badge-html i { animation: none !important; }
+  .ti-root .ms-fx * { animation: none !important; }
+  .ti-root .fx-label, .ti-root .fx-ring-solid, .ti-root .fx-tick, .ti-root .fx-pop-ring, .ti-root .fx-link-end, .ti-root .fx-corner, .ti-root .fx-sweep-end, .ti-root .fx-dots circle { opacity: 1 !important; }
+  .ti-root .fx-ripple, .ti-root .fx-ring-pulse, .ti-root .fx-flash { display: none; }
+  .ti-root .fx-sweep-arc, .ti-root .fx-link path { stroke-dashoffset: 0 !important; }
   .ti-root .te-marker, .ti-root .te-label-g { transition: none !important; }
 }
 
